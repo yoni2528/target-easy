@@ -5,9 +5,13 @@ import { Star, CheckCircle, MapPin, Users, Crosshair, GraduationCap, Eye, PhoneC
 import Link from "next/link";
 import { useUserStore } from "../lib/user-store";
 import type { Instructor } from "../types";
+import { useLanguageStore } from "@/lib/language-store";
+import { useT, translateTrainingType } from "@/lib/translations";
 
 export function InstructorCard({ instructor, index }: { instructor: Instructor; index: number }) {
   const { toggleFavorite, isFavorite } = useUserStore();
+  const lang = useLanguageStore((s) => s.lang);
+  const t = useT(lang);
   const favorited = isFavorite(instructor.id);
   const mockViews = 120 + parseInt(instructor.id) * 37 + instructor.trainees;
 
@@ -62,7 +66,7 @@ export function InstructorCard({ instructor, index }: { instructor: Instructor; 
             {/* Price */}
             <div className="flex flex-col items-end justify-between">
               <div className="text-left">
-                <span className="text-xs text-[var(--text-muted)]">החל מ-</span>
+                <span className="text-xs text-[var(--text-muted)]">{t("from")}</span>
                 <div className="text-lg font-bold text-[var(--text-primary)]" style={{ fontFamily: "var(--font-rubik)" }}>₪{instructor.priceFrom}</div>
               </div>
             </div>
@@ -71,7 +75,7 @@ export function InstructorCard({ instructor, index }: { instructor: Instructor; 
           {/* Training type chips */}
           <div className="flex flex-wrap gap-1.5 mt-3">
             {instructor.trainingTypes.slice(0, 3).map((type) => (
-              <span key={type} className="px-2 py-0.5 text-[10px] font-medium rounded-md bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-subtle)]">{type}</span>
+              <span key={type} className="px-2 py-0.5 text-[10px] font-medium rounded-md bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-subtle)]">{translateTrainingType(type, lang)}</span>
             ))}
             {instructor.trainingTypes.length > 3 && (
               <span className="px-2 py-0.5 text-[10px] text-[var(--text-muted)]">+{instructor.trainingTypes.length - 3}</span>
@@ -89,7 +93,7 @@ export function InstructorCard({ instructor, index }: { instructor: Instructor; 
             <div className="flex items-center gap-1.5">
               <div className={`w-2 h-2 rounded-full ${instructor.available ? "bg-[var(--accent-green)] pulse-dot" : "bg-[var(--accent-red)]"}`} />
               <span className="text-xs text-[var(--text-secondary)]">
-                {instructor.available ? `פנוי - ${instructor.nextSlot}` : `תפוס - ${instructor.nextSlot}`}
+                {instructor.available ? `${t("available")} - ${instructor.nextSlot}` : `${t("unavailable")} - ${instructor.nextSlot}`}
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -102,7 +106,7 @@ export function InstructorCard({ instructor, index }: { instructor: Instructor; 
                 <PhoneCall className="w-3.5 h-3.5" />
               </span>
               <span className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-[var(--accent-green)] text-[var(--bg-primary)] group-hover:shadow-[0_0_15px_rgba(74,222,128,0.3)] transition-shadow">
-                קבע אימון
+                {t("bookTraining")}
               </span>
             </div>
           </div>

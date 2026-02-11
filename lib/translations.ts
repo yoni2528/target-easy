@@ -1,0 +1,422 @@
+import type { Lang } from "./language-store";
+
+const translations = {
+  // ── Common / Shared ──
+  results: { he: "תוצאות", en: "results" },
+  bookTraining: { he: "קבע אימון", en: "Book Training" },
+  back: { he: "חזרה", en: "Back" },
+  backHome: { he: "חזרה לדף הבית", en: "Back to Home" },
+  cancel: { he: "ביטול", en: "Cancel" },
+  clear: { he: "נקה", en: "Clear" },
+  clearAll: { he: "נקה הכל", en: "Clear All" },
+  send: { he: "שלח", en: "Send" },
+  save: { he: "שמור", en: "Save" },
+  close: { he: "סגור", en: "Close" },
+  startNow: { he: "התחל עכשיו", en: "Start Now" },
+  verified: { he: "מאומת", en: "Verified" },
+  available: { he: "פנוי", en: "Available" },
+  unavailable: { he: "תפוס", en: "Unavailable" },
+  trainees: { he: "חניכים", en: "trainees" },
+  yearsExp: { he: "שנות ניסיון", en: "years exp." },
+  from: { he: "החל מ-", en: "From " },
+  navigate: { he: "נווט", en: "Navigate" },
+  footer: { he: "EasyTarget v1.0 · אחים עם נשק", en: "EasyTarget v1.0 · Brothers in Arms" },
+
+  // ── Bottom Nav ──
+  navSearch: { he: "חיפוש", en: "Search" },
+  navQuiz: { he: "שאלון רמה", en: "Level Quiz" },
+  navFavorites: { he: "מועדפים", en: "Favorites" },
+  navHistory: { he: "היסטוריה", en: "History" },
+
+  // ── Sidebar / Homepage ──
+  verifiedLabel: { he: "מה זה מדריך מאומת?", en: "What is a Verified Instructor?" },
+  ratingLabel: { he: "כיצד נקבע הדירוג?", en: "How Ratings Work" },
+  lightMode: { he: "תצוגה בהירה", en: "Light Mode" },
+  darkMode: { he: "תצוגה כהה", en: "Dark Mode" },
+  settings: { he: "הגדרות", en: "Settings" },
+  instructorLogin: { he: "התחברות למדריכים", en: "Instructor Login" },
+  promote: { he: "קידום ממומן ב-EasyTarget", en: "Promote on EasyTarget" },
+  join: { he: "הצטרפות ל-EasyTarget", en: "Join EasyTarget" },
+  about: { he: "אודות EasyTarget", en: "About EasyTarget" },
+  share: { he: "שתפו את EasyTarget עם חברים", en: "Share EasyTarget with Friends" },
+  contact: { he: "יצירת קשר", en: "Contact Us" },
+  shareText: { he: "מצא את מדריך הירי המושלם עבורך", en: "Find your perfect shooting instructor" },
+  linkCopied: { he: "הקישור הועתק!", en: "Link copied!" },
+  adminRole: { he: "מנהל מערכת", en: "System Admin" },
+  instructorRole: { he: "מדריך", en: "Instructor" },
+  filterResults: { he: "סינון תוצאות", en: "Filter Results" },
+
+  // ── Search / Filters ──
+  searchPlaceholder: { he: "מה אתה מחפש?", en: "What are you looking for?" },
+  filterCity: { he: "עיר", en: "City" },
+  filterDay: { he: "יום", en: "Day" },
+  filterPrice: { he: "מחיר", en: "Price" },
+  filterLevel: { he: "רמה", en: "Level" },
+  filterSpecial: { he: "מיוחד", en: "Special" },
+  filterRange: { he: "אווירה", en: "Range" },
+  filterStars: { he: "דירוג", en: "Rating" },
+  filterRefresh: { he: "רענון", en: "Refresh" },
+  filterDeal: { he: "דיל", en: "Deal" },
+  filterVerified: { he: "מאומתים", en: "Verified" },
+  filterAvailable: { he: "פנויים", en: "Available" },
+  filterDate: { he: "תאריך", en: "Date" },
+  dateFrom: { he: "מתאריך", en: "From date" },
+  dateTo: { he: "עד תאריך", en: "To date" },
+  clearDates: { he: "נקה תאריכים", en: "Clear dates" },
+  verifiedOnly: { he: "מאומתים בלבד", en: "Verified only" },
+  availableOnly: { he: "פנויים בלבד", en: "Available only" },
+  yes: { he: "כן", en: "Yes" },
+  no: { he: "לא", en: "No" },
+  byRating: { he: "לפי דירוג", en: "By Rating" },
+  byDistance: { he: "לפי מרחק", en: "By Distance" },
+  sortRating: { he: "דירוג", en: "Rating" },
+  sortDistance: { he: "מרחק", en: "Distance" },
+  sortBalanced: { he: "מאוזן", en: "Balanced" },
+  trainingLevel: { he: "רמת אימון", en: "Training Level" },
+
+  // ── Days ──
+  daySun: { he: "ראשון", en: "Sun" },
+  dayMon: { he: "שני", en: "Mon" },
+  dayTue: { he: "שלישי", en: "Tue" },
+  dayWed: { he: "רביעי", en: "Wed" },
+  dayThu: { he: "חמישי", en: "Thu" },
+  dayFri: { he: "שישי", en: "Fri" },
+  daySat: { he: "שבת", en: "Sat" },
+  dayPrefix: { he: "יום ", en: "" },
+
+  // ── Filter tree ──
+  catNew: { he: "למתחמשים חדשים", en: "New Gun Owners" },
+  catNewTraining: { he: "הכשרה ראשונית", en: "Initial Training" },
+  catNewStores: { he: "לבתי סחר מומלצים", en: "Recommended Stores" },
+  catNewHelp: { he: "לסיוע בהגשת בקשה", en: "Application Help" },
+  catRefresh: { he: "לרענון לאקדח", en: "Pistol Refresh" },
+  catRefreshAnnual: { he: "רענון שנתי", en: "Annual Refresh" },
+  catRefreshCombo: { he: "אימון + רענון", en: "Training + Refresh" },
+  catRefreshInstructor: { he: "מדריך לרענון", en: "Refresh Instructor" },
+  catRenewal: { he: "לחדש רישיון", en: "Renew License" },
+  catRenewalSchedule: { he: "תיאום חידוש רישיון", en: "Schedule Renewal" },
+  catRenewalForms: { he: "טפסים רלוונטים", en: "Relevant Forms" },
+  catRenewalGuide: { he: "מדריך לחידוש", en: "Renewal Guide" },
+  catRenewalMissed: { he: "פספסתי את המועד", en: "Missed Deadline" },
+  catTrain: { he: "להתאמן", en: "Train" },
+  catTrainSingle: { he: "אימון בודד", en: "Single Session" },
+  catTrainWorkshop: { he: "סדנאות ירי", en: "Workshops" },
+  catWorkshop2: { he: "סדנה 2 אימונים", en: "2-Session Workshop" },
+  catWorkshop3: { he: "סדנה 3 אימונים", en: "3-Session Workshop" },
+  catWorkshopCombat: { he: "ירי + קרב מגע", en: "Shooting + CQB" },
+  catWorkshopLegal: { he: "ירי + משפטי", en: "Shooting + Legal" },
+  catSpecial: { he: "אימונים מיוחדים", en: "Special Training" },
+  catSpecialConversion: { he: "אימון לערכות הסבה", en: "Conversion Kits" },
+  catSpecialSights: { he: "אימון לכוונות השלכה", en: "Sight Training" },
+  catSpecialWomen: { he: "אימון נשים", en: "Women's Training" },
+  catSpecialNight: { he: "אימון לילה", en: "Night Training" },
+
+  // ── Training levels ──
+  levelBeginner: { he: "מתחילים 1200+", en: "Beginner 1200+" },
+  levelAdvanced: { he: "מתקדמים 1400+", en: "Advanced 1400+" },
+  levelExpert: { he: "מומחים 1600+", en: "Expert 1600+" },
+  levelChampion: { he: "אלופים 1800+", en: "Champion 1800+" },
+  levelBeginnerShort: { he: "מתחילים", en: "Beginner" },
+  levelAdvancedShort: { he: "מתקדמים", en: "Advanced" },
+  levelExpertShort: { he: "מומחים", en: "Expert" },
+  levelChampionShort: { he: "אלופים", en: "Champion" },
+
+  // ── ELO labels ──
+  eloBeginnerShooting: { he: "מתחיל", en: "Beginner" },
+  eloBasicShooting: { he: "בסיסי", en: "Basic" },
+  eloIntermediateShooting: { he: "בינוני", en: "Intermediate" },
+  eloAdvancedShooting: { he: "מתקדם", en: "Advanced" },
+  eloExpertShooting: { he: "מומחה", en: "Expert" },
+  eloEliteShooting: { he: "עילית", en: "Elite" },
+  eloBeginnerInstruction: { he: "מתחיל", en: "Beginner" },
+  eloBasicInstruction: { he: "בסיסי", en: "Basic" },
+  eloExperienced: { he: "מנוסה", en: "Experienced" },
+  eloExpertInstruction: { he: "מומחה", en: "Expert" },
+  eloSenior: { he: "בכיר", en: "Senior" },
+  eloEliteInstruction: { he: "עילית", en: "Elite" },
+
+  // ── Special trainings ──
+  specialConversion: { he: "ערכות הסבה", en: "Conversion Kits" },
+  specialSights: { he: "כוונות", en: "Sights" },
+  specialWomen: { he: "נשים בלבד", en: "Women Only" },
+  specialNight: { he: "לילה", en: "Night" },
+  specialMoving: { he: "מטרות נעות", en: "Moving Targets" },
+
+  // ── Range types / Deals ──
+  rangeIndoor: { he: "מטווח סגור", en: "Indoor Range" },
+  rangeOutdoor: { he: "מטווח פתוח", en: "Outdoor Range" },
+  dealMilitary: { he: "הטבה לכוחות הביטחון", en: "Military Discount" },
+  dealStudent: { he: "הטבה לסטודנטים", en: "Student Discount" },
+  dealSenior: { he: "הטבת גמלאי", en: "Senior Discount" },
+
+  // ── Featured Instructor ──
+  featuredBadge: { he: "מדריך השבוע", en: "Instructor of the Week" },
+  viewProfile: { he: "צפה בפרופיל", en: "View Profile" },
+
+  // ── Instructor Card / Detail ──
+  instructorNotFound: { he: "מדריך לא נמצא", en: "Instructor not found" },
+  metricService: { he: "שירות", en: "Service" },
+  metricProfessionalism: { he: "מקצועיות", en: "Professionalism" },
+  metricQuality: { he: "איכות הדרכה", en: "Quality" },
+  trainingTypes: { he: "סוגי אימונים", en: "Training Types" },
+  ranges: { he: "מטווחים", en: "Ranges" },
+  gallery: { he: "גלריה", en: "Gallery" },
+  demoVideos: { he: "סרטוני הדגמה", en: "Demo Videos" },
+  verifiedReviews: { he: "ביקורות מאומתות", en: "Verified Reviews" },
+  pricing: { he: "מחירים", en: "Pricing" },
+  basicTraining: { he: "אימון בסיסי", en: "Basic Training" },
+  proTraining: { he: "אימון מקצועי", en: "Professional Training" },
+  fivePack: { he: "חבילת 5 אימונים", en: "5-Session Package" },
+
+  // ── Review form ──
+  addReview: { he: "הוסף תגובה ודירוג", en: "Add Review & Rating" },
+  addComment: { he: "הוסף תגובה", en: "Add Review" },
+  reviewRating: { he: "דירוג", en: "Rating" },
+  reviewName: { he: "שם", en: "Name" },
+  reviewNamePlaceholder: { he: "השם שלך", en: "Your name" },
+  reviewComment: { he: "תגובה", en: "Review" },
+  reviewCommentPlaceholder: { he: "ספר על החוויה שלך...", en: "Tell us about your experience..." },
+  sendReview: { he: "שלח תגובה", en: "Submit Review" },
+  reviewSent: { he: "התגובה נשלחה בהצלחה!", en: "Review submitted successfully!" },
+  reviewPending: { he: "התגובה תופיע לאחר אישור המערכת", en: "Your review will appear after system approval" },
+
+  // ── Favorites ──
+  favoritesTitle: { he: "מועדפים", en: "Favorites" },
+  noFavorites: { he: "אין מועדפים עדיין", en: "No favorites yet" },
+  noFavoritesDesc: { he: "לחצו על הלב בכרטיס מדריך כדי להוסיף אותו למועדפים", en: "Tap the heart on an instructor card to add them to favorites" },
+
+  // ── History ──
+  historyTitle: { he: "היסטוריה", en: "History" },
+  clearHistory: { he: "נקה היסטוריה", en: "Clear History" },
+  noHistory: { he: "אין היסטוריה עדיין", en: "No history yet" },
+  noHistoryDesc: { he: "מדריכים שתצפו בהם יופיעו כאן", en: "Instructors you view will appear here" },
+
+  // ── Quiz ──
+  quizTitle: { he: "שאלון התאמת מדריך", en: "Instructor Match Quiz" },
+  quizQuestion: { he: "שאלה", en: "Question" },
+  quizOf: { he: "מתוך", en: "of" },
+  quizRecommended: { he: "המדריכים המומלצים עבורך", en: "Recommended Instructors for You" },
+  quizResultDesc: { he: "בהתאם לתשובות שלך, אלו המדריכים המתאימים ביותר", en: "Based on your answers, these are the best matches" },
+  quizBestMatch: { he: "התאמה הכי גבוהה", en: "Best Match" },
+  quizTryAgain: { he: "נסה שוב", en: "Try Again" },
+  quizAllInstructors: { he: "לכל המדריכים", en: "All Instructors" },
+  quizBack: { he: "חזור לשאלה הקודמת", en: "Back to previous question" },
+  // Quiz questions
+  quizExpQ: { he: "מה רמת הניסיון שלך בירי?", en: "What is your shooting experience level?" },
+  quizExpNone: { he: "אין לי ניסיון בכלל", en: "No experience at all" },
+  quizExpBasic: { he: "יריתי כמה פעמים בצבא/מטווח", en: "Shot a few times in the army/range" },
+  quizExpInter: { he: "יש לי נשק ואני יורה מדי פעם", en: "I own a gun and shoot occasionally" },
+  quizExpAdv: { he: "יורה מנוסה, מחפש להשתפר", en: "Experienced shooter, looking to improve" },
+  quizGoalQ: { he: "מה המטרה העיקרית שלך?", en: "What is your main goal?" },
+  quizGoalLicense: { he: "הוצאת רישיון / התחמשות", en: "Getting a license / arming up" },
+  quizGoalRefresh: { he: "רענון / חידוש רישיון", en: "Refresh / license renewal" },
+  quizGoalImprove: { he: "שיפור דיוק וטכניקה", en: "Improve accuracy and technique" },
+  quizGoalTactical: { he: "אימון מבצעי / מתקדם", en: "Tactical / advanced training" },
+  quizLocationQ: { he: "באיזה אזור אתה מחפש?", en: "What area are you looking in?" },
+  quizLocCenter: { he: "מרכז (תל אביב, השרון)", en: "Center (Tel Aviv, Sharon)" },
+  quizLocNorth: { he: "צפון (חיפה, גליל)", en: "North (Haifa, Galilee)" },
+  quizLocSouth: { he: "דרום (באר שבע, נגב)", en: "South (Beer Sheva, Negev)" },
+  quizLocJerusalem: { he: "ירושלים והסביבה", en: "Jerusalem area" },
+  quizBudgetQ: { he: "מה התקציב שלך לאימון?", en: "What is your training budget?" },
+  quizBudgetLow: { he: "עד ₪200", en: "Up to ₪200" },
+  quizBudgetMid: { he: "₪200-300", en: "₪200-300" },
+  quizBudgetHigh: { he: "₪300-400", en: "₪300-400" },
+  quizBudgetAny: { he: "לא משנה, חשוב לי איכות", en: "Budget doesn't matter, quality first" },
+
+  // ── About Page ──
+  aboutTitle: { he: "אודות EasyTarget", en: "About EasyTarget" },
+  aboutTagline: { he: "הפלטפורמה המובילה למציאת מדריכי ירי בישראל", en: "The leading platform for finding shooting instructors in Israel" },
+  aboutMission: { he: "המשימה שלנו", en: "Our Mission" },
+  aboutMissionText: { he: "EasyTarget נוסדה כדי לחבר בין מתאמנים למדריכי ירי מוסמכים ומקצועיים בכל רחבי הארץ. אנחנו מאמינים שכל מחזיק נשק זכאי להדרכה מקצועית, בטוחה ונגישה. המערכת שלנו מבוססת על דירוג ELO ייחודי שמבטיח שתמצאו את המדריך המתאים ביותר עבורכם.", en: "EasyTarget was founded to connect trainees with certified and professional shooting instructors across the country. We believe every gun owner deserves professional, safe, and accessible training. Our system is based on a unique ELO rating that ensures you find the most suitable instructor for you." },
+  aboutSafety: { he: "בטיחות", en: "Safety" },
+  aboutSafetyDesc: { he: "כל המדריכים מאומתים ומוסמכים", en: "All instructors are verified and certified" },
+  aboutProfessionalism: { he: "מקצועיות", en: "Professionalism" },
+  aboutProfessionalismDesc: { he: "דירוג ELO מבוסס ביצועים", en: "Performance-based ELO rating" },
+  aboutCommunity: { he: "קהילה", en: "Community" },
+  aboutCommunityDesc: { he: "אלפי מתאמנים ומדריכים", en: "Thousands of trainees and instructors" },
+  aboutCare: { he: "אכפתיות", en: "Care" },
+  aboutCareDesc: { he: "תמיכה ושירות אישי", en: "Personal support and service" },
+  aboutOrg: { he: "אחים עם נשק", en: "Brothers in Arms" },
+  aboutOrgDesc: { he: "EasyTarget הינו פרויקט של עמותת \"אחים עם נשק\" - ארגון המקדם תרבות ירי בטוחה ואחראית בישראל. הארגון פועל למען הנגשת עולם הירי, הדרכה מקצועית ובניית קהילת יורים איכותית.", en: "EasyTarget is a project of the \"Brothers in Arms\" organization — promoting safe and responsible shooting culture in Israel. The organization works to make shooting accessible, provide professional training, and build a quality shooting community." },
+
+  // ── Verified Page ──
+  verifiedTitle: { he: "מה זה מדריך מאומת?", en: "What is a Verified Instructor?" },
+  verifiedHero: { he: "מדריך מאומת", en: "Verified Instructor" },
+  verifiedSubtitle: { he: "רק מדריכים שעמדו בכל הבדיקות מקבלים את סמל האימות הירוק", en: "Only instructors who pass all checks receive the green verification badge" },
+  verifiedStep1: { he: "בדיקת רישיון", en: "License Check" },
+  verifiedStep1Desc: { he: "אימות תעודת מדריך ירי ורישיון בתוקף", en: "Verification of shooting instructor certificate and valid license" },
+  verifiedStep2: { he: "בדיקת רקע", en: "Background Check" },
+  verifiedStep2Desc: { he: "בדיקת עבר פלילי ואישורי ביטחון", en: "Criminal background check and security clearances" },
+  verifiedStep3: { he: "מבחן שטח", en: "Field Test" },
+  verifiedStep3Desc: { he: "ביצוע אימון מעשי מול צוות ההערכה", en: "Practical training session with our assessment team" },
+  verifiedStep4: { he: "ביקורות תלמידים", en: "Student Reviews" },
+  verifiedStep4Desc: { he: "אישור מינימלי של ביקורות חיוביות מתלמידים", en: "Minimum threshold of positive student reviews required" },
+  verifiedNote: { he: "80% מהמדריכים באתר הם מדריכים מאומתים", en: "80% of instructors on the site are verified" },
+
+  // ── Rating Page ──
+  ratingTitle: { he: "כיצד נקבע הדירוג?", en: "How Ratings Work" },
+  ratingSystem: { he: "שיטת דירוג ELO", en: "ELO Rating System" },
+  ratingDesc: { he: "אותה שיטה שמדרגת שחמטאים ברחבי העולם. מתמטית, הוגנת, ובלתי אפשרי לזייף.", en: "The same system used to rank chess players worldwide. Mathematical, fair, and impossible to fake." },
+  ratingShooting: { he: "דירוג ירי", en: "Shooting Rating" },
+  ratingShootingDesc: { he: "מודד רמת ירי אישית. מתעדכן אחרי כל אימון מדוד במטווח מוסמך.", en: "Measures personal shooting level. Updated after each measured training at a certified range." },
+  ratingInstruction: { he: "דירוג הדרכה", en: "Instruction Rating" },
+  ratingInstructionDesc: { he: "מודד איכות הוראה. מבוסס על חוות דעת תלמידים ומדדי שיפור.", en: "Measures teaching quality. Based on student feedback and improvement metrics." },
+  ratingLevels: { he: "רמות הדירוג", en: "Rating Levels" },
+  ratingLevelBeginner: { he: "מתחילים", en: "Beginners" },
+  ratingLevelBeginnerDesc: { he: "מדריכים בתחילת דרכם, מתאימים לאימון בסיסי", en: "New instructors, suitable for basic training" },
+  ratingLevelAdvanced: { he: "מתקדמים", en: "Advanced" },
+  ratingLevelAdvancedDesc: { he: "מדריכים עם ניסיון, מתאימים לרמה בינונית-גבוהה", en: "Experienced instructors, suitable for mid-high level" },
+  ratingLevelExpert: { he: "מומחים", en: "Experts" },
+  ratingLevelExpertDesc: { he: "מדריכים מקצועיים ברמה גבוהה מאוד", en: "Professional instructors at a very high level" },
+  ratingLevelChampion: { he: "אלופים", en: "Champions" },
+  ratingLevelChampionDesc: { he: "הטובים ביותר. ברמה תחרותית ארצית", en: "The best. Nationally competitive level" },
+  ratingHow: { he: "איך ELO עובד — בפשטות", en: "How ELO Works — Simply" },
+  ratingHowDesc: { he: "דמיינו שני מדריכים מתחרים בתרגיל ירי מדוד:", en: "Imagine two instructors competing in a measured shooting drill:" },
+  ratingWinUp: { he: "מדריך 1600 מנצח 1800", en: "1600 beats 1800" },
+  ratingWinUpPts: { he: "+32 נקודות!", en: "+32 points!" },
+  ratingWinUpNote: { he: "ניצח חזק ממנו", en: "Beat a stronger opponent" },
+  ratingWinDown: { he: "מדריך 1800 מנצח 1600", en: "1800 beats 1600" },
+  ratingWinDownPts: { he: "+8 נקודות", en: "+8 points" },
+  ratingWinDownNote: { he: "היה צפוי", en: "Expected result" },
+  ratingEarned: { he: "כל נקודה בדירוג הורווחה, לא ניתנה.", en: "Every rating point was earned, not given." },
+  ratingStars: { he: "דירוג כוכבים", en: "Star Rating" },
+  ratingStarsDesc: { he: "בנוסף ל-ELO, כל מדריך מקבל כוכבים מ-1 עד 5 על סמך ממוצע הביקורות של המתאמנים. 5 כוכבים = שירות מושלם. הדירוג מתעדכן בזמן אמת עם כל ביקורת חדשה.", en: "In addition to ELO, each instructor receives 1-5 stars based on average trainee reviews. 5 stars = perfect service. Updated in real-time with every new review." },
+
+  // ── Settings Page ──
+  settingsTitle: { he: "הגדרות", en: "Settings" },
+  settingsNotifications: { he: "התראות", en: "Notifications" },
+  settingsNotificationsDesc: { he: "קבל עדכונים על מדריכים חדשים", en: "Get updates about new instructors" },
+  settingsLocation: { he: "שירותי מיקום", en: "Location Services" },
+  settingsLocationDesc: { he: "מצא מדריכים קרובים אליך", en: "Find instructors near you" },
+  settingsRadius: { he: "רדיוס חיפוש (ק\"מ)", en: "Search Radius (km)" },
+  settingsAllCountry: { he: "כל הארץ", en: "Entire Country" },
+  settingsPrivacy: { he: "פרטיות", en: "Privacy" },
+  settingsPrivacyText1: { he: "המידע שלך מאובטח ולא משותף עם צד שלישי.", en: "Your information is secure and not shared with third parties." },
+  settingsPrivacyText2: { he: "היסטוריית חיפוש נשמרת מקומית על המכשיר בלבד.", en: "Search history is saved locally on your device only." },
+  settingsAboutApp: { he: "אודות האפליקציה", en: "About the App" },
+  settingsDevBy: { he: "פותח ע\"י אחים עם נשק", en: "Developed by Brothers in Arms" },
+  settingsLanguage: { he: "שפה", en: "Language" },
+
+  // ── Contact Page ──
+  contactTitle: { he: "יצירת קשר", en: "Contact Us" },
+  contactPhone: { he: "טלפון", en: "Phone" },
+  contactEmail: { he: "אימייל", en: "Email" },
+  contactMessageSent: { he: "ההודעה נשלחה!", en: "Message sent!" },
+  contactWeReply: { he: "נחזור אליך בהקדם", en: "We'll get back to you soon" },
+  contactSendMsg: { he: "שלח לנו הודעה", en: "Send us a message" },
+  contactNameLabel: { he: "שם", en: "Name" },
+  contactNamePlaceholder: { he: "השם שלך", en: "Your name" },
+  contactPhoneLabel: { he: "טלפון", en: "Phone" },
+  contactEmailLabel: { he: "אימייל", en: "Email" },
+  contactMsgLabel: { he: "הודעה", en: "Message" },
+  contactMsgPlaceholder: { he: "איך נוכל לעזור?", en: "How can we help?" },
+  contactSendBtn: { he: "שלח הודעה", en: "Send Message" },
+
+  // ── Join Page ──
+  joinTitle: { he: "הצטרפות ל-EasyTarget", en: "Join EasyTarget" },
+  joinHeading: { he: "הצטרף כמדריך ירי", en: "Join as a Shooting Instructor" },
+  joinSubtitle: { he: "הגע לאלפי לקוחות חדשים ונהל את העסק שלך בקלות", en: "Reach thousands of new clients and manage your business easily" },
+  joinBenefit1: { he: "פרופיל מדריך מקצועי", en: "Professional instructor profile" },
+  joinBenefit2: { he: "מערכת הזמנות", en: "Booking system" },
+  joinBenefit3: { he: "דירוג ELO", en: "ELO rating" },
+  joinBenefit4: { he: "לוח בקרה וסטטיסטיקות", en: "Dashboard & statistics" },
+  joinNameLabel: { he: "שם מלא", en: "Full Name" },
+  joinNamePlaceholder: { he: "שם פרטי ומשפחה", en: "First and last name" },
+  joinPhonePlaceholder: { he: "050-1234567", en: "050-1234567" },
+  joinCityLabel: { he: "עיר", en: "City" },
+  joinCityPlaceholder: { he: "עיר מגורים", en: "City of residence" },
+  joinExpLabel: { he: "ניסיון בהדרכה (שנים)", en: "Teaching experience (years)" },
+  joinAboutLabel: { he: "ספר לנו על עצמך", en: "Tell us about yourself" },
+  joinAboutPlaceholder: { he: "ניסיון, התמחות, רישיונות...", en: "Experience, specialization, licenses..." },
+  joinSubmitBtn: { he: "שלח בקשת הצטרפות", en: "Submit Application" },
+  joinSuccess: { he: "הבקשה נשלחה בהצלחה!", en: "Application submitted successfully!" },
+  joinSuccessDesc: { he: "ניצור איתך קשר תוך 24 שעות לסיום תהליך ההרשמה", en: "We'll contact you within 24 hours to complete the registration process" },
+
+  // ── Promote Page ──
+  promoteTitle: { he: "קידום ממומן ב-EasyTarget", en: "Promote on EasyTarget" },
+  promoteHeading: { he: "הגדל את החשיפה שלך", en: "Increase Your Exposure" },
+  promoteSubtitle: { he: "הגע ללקוחות חדשים עם קידום ממומן ב-EasyTarget", en: "Reach new clients with paid promotion on EasyTarget" },
+  promoteViews: { he: "צפיות חודשיות", en: "Monthly views" },
+  promoteUsers: { he: "משתמשים פעילים", en: "Active users" },
+  promoteGrowth: { he: "גידול בהזמנות", en: "Booking growth" },
+  promotePlanBasic: { he: "בסיסי", en: "Basic" },
+  promotePlanPro: { he: "מקצועי", en: "Professional" },
+  promotePlanPremium: { he: "פרימיום", en: "Premium" },
+  promoteMonth: { he: "חודש", en: "month" },
+  promoteMostPopular: { he: "הכי פופולרי", en: "Most Popular" },
+  promoteFeatureTopResults: { he: "הופעה בראש התוצאות", en: "Appear at top of results" },
+  promoteFeaturePromotedTag: { he: "תג 'מקודם'", en: "'Promoted' badge" },
+  promoteFeature50Views: { he: "50 חשיפות מובטחות", en: "50 guaranteed views" },
+  promoteFeatureAll: { he: "הכל בבסיסי", en: "Everything in Basic" },
+  promoteFeatureBanner: { he: "באנר מודגש", en: "Highlighted banner" },
+  promoteFeature200Views: { he: "200 חשיפות מובטחות", en: "200 guaranteed views" },
+  promoteFeatureStats: { he: "סטטיסטיקות מתקדמות", en: "Advanced statistics" },
+  promoteFeatureAllPro: { he: "הכל במקצועי", en: "Everything in Professional" },
+  promoteFeatureProfile: { he: "עמוד פרופיל מיוחד", en: "Special profile page" },
+  promoteFeatureUnlimited: { he: "חשיפות ללא הגבלה", en: "Unlimited views" },
+  promoteFeatureSupport: { he: "תמיכה אישית", en: "Personal support" },
+
+  // ── Training types (data-level) ──
+  ttNewGun: { he: "מתחמש חדש", en: "New Gun Owner" },
+  ttRefresh: { he: "רענון", en: "Refresh" },
+  ttRenewal: { he: "חידוש", en: "Renewal" },
+  ttPro: { he: "ירי מקצועי", en: "Pro Shooting" },
+  ttWorkshop: { he: "סדנת ירי", en: "Workshop" },
+  ttConversion: { he: "ערכות הסבה", en: "Conversion Kits" },
+  ttSights: { he: "כוונות השלכה", en: "Sights Training" },
+  ttWomen: { he: "אימון נשים", en: "Women's Training" },
+  ttNight: { he: "אימון לילה", en: "Night Training" },
+  ttGroup: { he: "אימון קבוצתי", en: "Group Training" },
+  ttMovingTargets: { he: "מטרות נעות", en: "Moving Targets" },
+} as const;
+
+export type TranslationKey = keyof typeof translations;
+
+export function t(key: TranslationKey, lang: Lang): string {
+  return translations[key][lang];
+}
+
+// Helper for batch translations
+export function useT(lang: Lang) {
+  return (key: TranslationKey) => translations[key][lang];
+}
+
+// Training type translation helper (maps Hebrew training type to the current language)
+const TRAINING_TYPE_MAP: Record<string, TranslationKey> = {
+  "מתחמש חדש": "ttNewGun",
+  "רענון": "ttRefresh",
+  "חידוש": "ttRenewal",
+  "ירי מקצועי": "ttPro",
+  "סדנת ירי": "ttWorkshop",
+  "ערכות הסבה": "ttConversion",
+  "כוונות השלכה": "ttSights",
+  "אימון נשים": "ttWomen",
+  "אימון לילה": "ttNight",
+  "אימון קבוצתי": "ttGroup",
+  "מטרות נעות": "ttMovingTargets",
+};
+
+export function translateTrainingType(hebrewType: string, lang: Lang): string {
+  if (lang === "he") return hebrewType;
+  const key = TRAINING_TYPE_MAP[hebrewType];
+  return key ? translations[key].en : hebrewType;
+}
+
+// Day translation
+const DAY_KEYS: TranslationKey[] = ["daySun", "dayMon", "dayTue", "dayWed", "dayThu", "dayFri", "daySat"];
+const HEBREW_DAYS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
+
+export function translateDay(hebrewDay: string, lang: Lang): string {
+  if (lang === "he") return hebrewDay;
+  const idx = HEBREW_DAYS.indexOf(hebrewDay);
+  return idx >= 0 ? translations[DAY_KEYS[idx]].en : hebrewDay;
+}
+
+export function getDays(lang: Lang): string[] {
+  return DAY_KEYS.map((k) => translations[k][lang]);
+}
+
+// Get day values (always Hebrew since mock data uses Hebrew)
+export function getDayValues(): string[] {
+  return HEBREW_DAYS;
+}

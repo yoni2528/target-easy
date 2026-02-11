@@ -3,31 +3,37 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
-import { QUIZ_QUESTIONS } from "../lib/quiz-data";
+import { getQuizQuestions } from "../lib/quiz-data";
 import { matchInstructors } from "../lib/matching";
 import { MOCK_INSTRUCTORS, InstructorCard } from "@/modules/instructors";
 import type { QuizAnswers } from "../types";
 import Link from "next/link";
+import { useLanguageStore } from "@/lib/language-store";
+import { useT } from "@/lib/translations";
 
 export function QuizWizard() {
+  const lang = useLanguageStore((s) => s.lang);
+  const t = useT(lang);
+  const questions = getQuizQuestions(lang);
+
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [results, setResults] = useState<ReturnType<typeof matchInstructors> | null>(null);
 
-  const currentQ = QUIZ_QUESTIONS[step];
-  const isComplete = step >= QUIZ_QUESTIONS.length;
-  const progress = ((step) / QUIZ_QUESTIONS.length) * 100;
+  const currentQ = questions[step];
+  const isComplete = step >= questions.length;
+  const progress = ((step) / questions.length) * 100;
 
   const handleSelect = (value: string) => {
     const newAnswers = { ...answers, [currentQ.id]: value };
     setAnswers(newAnswers);
 
-    if (step < QUIZ_QUESTIONS.length - 1) {
+    if (step < questions.length - 1) {
       setTimeout(() => setStep(step + 1), 300);
     } else {
       const matched = matchInstructors(MOCK_INSTRUCTORS, newAnswers as unknown as QuizAnswers);
       setResults(matched);
-      setTimeout(() => setStep(QUIZ_QUESTIONS.length), 300);
+      setTimeout(() => setStep(questions.length), 300);
     }
   };
 
@@ -38,8 +44,8 @@ export function QuizWizard() {
           <div className="w-12 h-12 rounded-full bg-[var(--accent-green)]/10 flex items-center justify-center mx-auto mb-3">
             <CheckCircle2 className="w-6 h-6 text-[var(--accent-green)]" />
           </div>
-          <h2 className="text-lg font-bold">המדריכים המומלצים עבורך</h2>
-          <p className="text-xs text-[var(--text-muted)] mt-1">בהתאם לתשובות שלך, אלו המדריכים המתאימים ביותר</p>
+          <h2 className="text-lg font-bold">{t("quizRecommended")}</h2>
+          <p className="text-xs text-[var(--text-muted)] mt-1">{t("quizResultDesc")}</p>
         </motion.div>
 
         <div className="space-y-3">
@@ -53,7 +59,7 @@ export function QuizWizard() {
               <div className="relative">
                 {i === 0 && (
                   <div className="absolute -top-2 right-3 z-10 px-2 py-0.5 rounded-md bg-[var(--accent-green)] text-[var(--bg-primary)] text-[10px] font-bold">
-                    התאמה הכי גבוהה
+                    {t("quizBestMatch")}
                   </div>
                 )}
                 <InstructorCard instructor={r.instructor} index={i} />
@@ -67,10 +73,10 @@ export function QuizWizard() {
             onClick={() => { setStep(0); setAnswers({}); setResults(null); }}
             className="flex-1 h-11 rounded-xl border border-[var(--border-subtle)] text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--bg-card)] transition-colors"
           >
-            נסה שוב
+            {t("quizTryAgain")}
           </button>
           <Link href="/" className="flex-1 h-11 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] text-sm font-bold flex items-center justify-center">
-            לכל המדריכים
+            {t("quizAllInstructors")}
           </Link>
         </div>
       </div>
@@ -82,7 +88,7 @@ export function QuizWizard() {
       {/* Progress */}
       <div className="space-y-2">
         <div className="flex justify-between text-[10px] text-[var(--text-muted)]">
-          <span>שאלה {step + 1} מתוך {QUIZ_QUESTIONS.length}</span>
+          <span>{t("quizQuestion")} {step + 1} {t("quizOf")} {questions.length}</span>
           <span>{Math.round(progress)}%</span>
         </div>
         <div className="h-1.5 rounded-full bg-[var(--bg-elevated)]">
@@ -129,7 +135,7 @@ export function QuizWizard() {
           className="flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors"
         >
           <ArrowRight className="w-3.5 h-3.5" />
-          חזור לשאלה הקודמת
+          {t("quizBack")}
         </button>
       )}
     </div>

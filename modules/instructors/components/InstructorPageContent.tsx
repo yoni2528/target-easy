@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 import { ArrowRight, Star, CheckCircle, MapPin, Users, Clock, Award, Shield, Calendar, Navigation, Phone, Crosshair, GraduationCap, Send, MessageSquarePlus } from "lucide-react";
 import Link from "next/link";
 import { MOCK_INSTRUCTORS } from "../lib/mock-data";
-import { getShootingLevel, getInstructionLevel } from "../lib/elo-utils";
+import { getShootingLevelLabel, getInstructionLevelLabel } from "../lib/elo-utils";
 import { useUserStore } from "../lib/user-store";
 import { VideoSection } from "./VideoSection";
 import { BottomNav } from "@/components/BottomNav";
+import { useLanguageStore } from "@/lib/language-store";
+import { useT, translateTrainingType } from "@/lib/translations";
 
 export default function InstructorPageContent({ id }: { id: string }) {
   const instructor = MOCK_INSTRUCTORS.find((i) => i.id === id);
@@ -19,6 +21,9 @@ export default function InstructorPageContent({ id }: { id: string }) {
   const [reviewText, setReviewText] = useState("");
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
+  const lang = useLanguageStore((s) => s.lang);
+  const t = useT(lang);
+
   useEffect(() => {
     if (instructor) {
       addToHistory(instructor.id);
@@ -28,15 +33,15 @@ export default function InstructorPageContent({ id }: { id: string }) {
   if (!instructor) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-[var(--text-muted)]">מדריך לא נמצא</p>
+        <p className="text-[var(--text-muted)]">{t("instructorNotFound")}</p>
       </div>
     );
   }
 
   const metrics = [
-    { label: "שירות", value: instructor.metrics.service },
-    { label: "מקצועיות", value: instructor.metrics.professionalism },
-    { label: "איכות הדרכה", value: instructor.metrics.quality },
+    { label: t("metricService"), value: instructor.metrics.service },
+    { label: t("metricProfessionalism"), value: instructor.metrics.professionalism },
+    { label: t("metricQuality"), value: instructor.metrics.quality },
   ];
 
   return (
@@ -76,7 +81,7 @@ export default function InstructorPageContent({ id }: { id: string }) {
                 <h2 className="text-xl font-bold">{instructor.name}</h2>
                 {instructor.verified && (
                   <span className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-[var(--accent-green)]/10 text-[var(--accent-green)] border border-[var(--accent-green)]/20">
-                    מאומת
+                    {t("verified")}
                   </span>
                 )}
               </div>
@@ -88,14 +93,14 @@ export default function InstructorPageContent({ id }: { id: string }) {
                   <span className="text-base font-bold text-[var(--accent-amber)]" style={{ fontFamily: "var(--font-rubik)" }}>
                     {instructor.eloShooting}
                   </span>
-                  <span className="text-[10px] text-[var(--accent-amber)]/70">{getShootingLevel(instructor.eloShooting).label}</span>
+                  <span className="text-[10px] text-[var(--accent-amber)]/70">{getShootingLevelLabel(instructor.eloShooting, lang)}</span>
                 </div>
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[var(--accent-blue)]/10 border border-[var(--accent-blue)]/20">
                   <GraduationCap className="w-3.5 h-3.5 text-[var(--accent-blue)]" />
                   <span className="text-base font-bold text-[var(--accent-blue)]" style={{ fontFamily: "var(--font-rubik)" }}>
                     {instructor.eloInstruction}
                   </span>
-                  <span className="text-[10px] text-[var(--accent-blue)]/70">{getInstructionLevel(instructor.eloInstruction).label}</span>
+                  <span className="text-[10px] text-[var(--accent-blue)]/70">{getInstructionLevelLabel(instructor.eloInstruction, lang)}</span>
                 </div>
               </div>
               <div className="flex items-center gap-0.5 mt-1.5">
@@ -107,8 +112,8 @@ export default function InstructorPageContent({ id }: { id: string }) {
 
               {/* Quick stats */}
               <div className="flex items-center gap-4 mt-2 text-xs text-[var(--text-muted)]">
-                <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5" />{instructor.trainees.toLocaleString()} חניכים</span>
-                <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{instructor.experience} שנות ניסיון</span>
+                <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5" />{instructor.trainees.toLocaleString()} {t("trainees")}</span>
+                <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{instructor.experience} {t("yearsExp")}</span>
               </div>
             </div>
           </div>
@@ -135,12 +140,12 @@ export default function InstructorPageContent({ id }: { id: string }) {
         <div className="px-4 mt-5">
           <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
             <Award className="w-4 h-4 text-[var(--accent-green)]" />
-            סוגי אימונים
+            {t("trainingTypes")}
           </h3>
           <div className="flex flex-wrap gap-2">
             {instructor.trainingTypes.map((type) => (
               <span key={type} className="px-3 py-1.5 text-xs font-medium rounded-lg bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-subtle)]">
-                {type}
+                {translateTrainingType(type, lang)}
               </span>
             ))}
           </div>
@@ -150,7 +155,7 @@ export default function InstructorPageContent({ id }: { id: string }) {
         <div className="px-4 mt-5">
           <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
             <MapPin className="w-4 h-4 text-[var(--accent-blue)]" />
-            מטווחים
+            {t("ranges")}
           </h3>
           <div className="space-y-2">
             {instructor.ranges.map((range) => (
@@ -158,7 +163,7 @@ export default function InstructorPageContent({ id }: { id: string }) {
                 <span className="text-sm text-[var(--text-secondary)]">{range}</span>
                 <button className="text-xs text-[var(--accent-blue)] flex items-center gap-1">
                   <Navigation className="w-3.5 h-3.5" />
-                  נווט
+                  {t("navigate")}
                 </button>
               </div>
             ))}
@@ -168,7 +173,7 @@ export default function InstructorPageContent({ id }: { id: string }) {
         {/* Gallery */}
         {instructor.gallery.length > 0 && (
           <div className="px-4 mt-5">
-            <h3 className="text-sm font-semibold mb-2">גלריה</h3>
+            <h3 className="text-sm font-semibold mb-2">{t("gallery")}</h3>
             <div className="flex gap-2 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
               {instructor.gallery.map((img, i) => (
                 <img key={i} src={img} alt="" className="w-48 h-32 rounded-xl object-cover flex-shrink-0 border border-[var(--border-subtle)]" />
@@ -184,7 +189,7 @@ export default function InstructorPageContent({ id }: { id: string }) {
         <div className="px-4 mt-5">
           <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
             <Shield className="w-4 h-4 text-[var(--accent-amber)]" />
-            ביקורות מאומתות ({instructor.reviews.length})
+            {t("verifiedReviews")} ({instructor.reviews.length})
           </h3>
           <div className="space-y-3">
             {instructor.reviews.map((review) => (
@@ -214,8 +219,8 @@ export default function InstructorPageContent({ id }: { id: string }) {
           {reviewSubmitted ? (
             <div className="bg-[var(--accent-green)]/5 border border-[var(--accent-green)]/20 rounded-2xl p-4 text-center">
               <CheckCircle className="w-8 h-8 text-[var(--accent-green)] mx-auto mb-2" />
-              <p className="text-sm font-bold text-[var(--accent-green)]">התגובה נשלחה בהצלחה!</p>
-              <p className="text-xs text-[var(--text-muted)] mt-1">התגובה תופיע לאחר אישור המערכת</p>
+              <p className="text-sm font-bold text-[var(--accent-green)]">{t("reviewSent")}</p>
+              <p className="text-xs text-[var(--text-muted)] mt-1">{t("reviewPending")}</p>
             </div>
           ) : !showReviewForm ? (
             <button
@@ -223,17 +228,17 @@ export default function InstructorPageContent({ id }: { id: string }) {
               className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-[var(--border-default)] text-sm font-semibold text-[var(--text-secondary)] hover:border-[var(--accent-green)]/40 hover:text-[var(--accent-green)] transition-all"
             >
               <MessageSquarePlus className="w-5 h-5" />
-              הוסף תגובה ודירוג
+              {t("addReview")}
             </button>
           ) : (
             <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-4 space-y-3">
               <h3 className="text-sm font-bold flex items-center gap-2">
                 <MessageSquarePlus className="w-4 h-4 text-[var(--accent-green)]" />
-                הוסף תגובה
+                {t("addComment")}
               </h3>
               {/* Star rating */}
               <div>
-                <label className="text-xs text-[var(--text-muted)] mb-1.5 block">דירוג</label>
+                <label className="text-xs text-[var(--text-muted)] mb-1.5 block">{t("reviewRating")}</label>
                 <div className="flex gap-1">
                   {[1, 2, 3, 4, 5].map((n) => (
                     <button key={n} onClick={() => setReviewRating(n)} className="p-0.5 transition-transform hover:scale-110">
@@ -244,22 +249,22 @@ export default function InstructorPageContent({ id }: { id: string }) {
               </div>
               {/* Name */}
               <div>
-                <label className="text-xs text-[var(--text-muted)] mb-1.5 block">שם</label>
+                <label className="text-xs text-[var(--text-muted)] mb-1.5 block">{t("reviewName")}</label>
                 <input
                   type="text"
                   value={reviewName}
                   onChange={(e) => setReviewName(e.target.value)}
-                  placeholder="השם שלך"
+                  placeholder={t("reviewNamePlaceholder")}
                   className="w-full h-10 px-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-green)]"
                 />
               </div>
               {/* Text */}
               <div>
-                <label className="text-xs text-[var(--text-muted)] mb-1.5 block">תגובה</label>
+                <label className="text-xs text-[var(--text-muted)] mb-1.5 block">{t("reviewComment")}</label>
                 <textarea
                   value={reviewText}
                   onChange={(e) => setReviewText(e.target.value)}
-                  placeholder="ספר על החוויה שלך..."
+                  placeholder={t("reviewCommentPlaceholder")}
                   rows={3}
                   className="w-full px-3 py-2.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-green)] resize-none"
                 />
@@ -270,7 +275,7 @@ export default function InstructorPageContent({ id }: { id: string }) {
                   onClick={() => setShowReviewForm(false)}
                   className="flex-1 h-10 rounded-xl border border-[var(--border-subtle)] text-xs font-medium text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
                 >
-                  ביטול
+                  {t("cancel")}
                 </button>
                 <button
                   onClick={() => {
@@ -283,7 +288,7 @@ export default function InstructorPageContent({ id }: { id: string }) {
                   className="flex-1 h-10 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] text-xs font-bold flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110 transition-all"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  שלח תגובה
+                  {t("sendReview")}
                 </button>
               </div>
             </div>
@@ -292,18 +297,18 @@ export default function InstructorPageContent({ id }: { id: string }) {
 
         {/* Pricing */}
         <div className="px-4 mt-5">
-          <h3 className="text-sm font-semibold mb-2">מחירים</h3>
+          <h3 className="text-sm font-semibold mb-2">{t("pricing")}</h3>
           <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-[var(--text-secondary)]">אימון בסיסי</span>
+              <span className="text-sm text-[var(--text-secondary)]">{t("basicTraining")}</span>
               <span className="font-bold text-[var(--text-primary)]" style={{ fontFamily: "var(--font-rubik)" }}>₪{instructor.priceFrom}</span>
             </div>
             <div className="flex items-center justify-between mt-2 pt-2 border-t border-[var(--border-subtle)]">
-              <span className="text-sm text-[var(--text-secondary)]">אימון מקצועי</span>
+              <span className="text-sm text-[var(--text-secondary)]">{t("proTraining")}</span>
               <span className="font-bold text-[var(--text-primary)]" style={{ fontFamily: "var(--font-rubik)" }}>₪{instructor.priceFrom + 100}</span>
             </div>
             <div className="flex items-center justify-between mt-2 pt-2 border-t border-[var(--border-subtle)]">
-              <span className="text-sm text-[var(--text-secondary)]">חבילת 5 אימונים</span>
+              <span className="text-sm text-[var(--text-secondary)]">{t("fivePack")}</span>
               <span className="font-bold text-[var(--accent-green)]" style={{ fontFamily: "var(--font-rubik)" }}>₪{Math.round(instructor.priceFrom * 4.5)}</span>
             </div>
           </div>
@@ -324,7 +329,7 @@ export default function InstructorPageContent({ id }: { id: string }) {
             className="flex-1 h-12 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] font-bold text-sm flex items-center justify-center gap-2 glow-green hover:brightness-110 transition-all"
           >
             <Calendar className="w-4 h-4" />
-            קבע אימון
+            {t("bookTraining")}
           </Link>
         </div>
       </div>

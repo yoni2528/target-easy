@@ -4,8 +4,13 @@ import { motion } from "framer-motion";
 import { Trophy, Star, Crosshair, GraduationCap, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import type { Instructor } from "../types";
+import { useLanguageStore } from "@/lib/language-store";
+import { useT } from "@/lib/translations";
 
 export function FeaturedInstructor({ instructor }: { instructor: Instructor }) {
+  const lang = useLanguageStore((s) => s.lang);
+  const t = useT(lang);
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -17,7 +22,7 @@ export function FeaturedInstructor({ instructor }: { instructor: Instructor }) {
           {/* Badge */}
           <div className="absolute top-0 left-0 bg-[var(--accent-amber)] text-[var(--bg-primary)] px-3 py-1 rounded-br-xl flex items-center gap-1.5">
             <Trophy className="w-3.5 h-3.5" />
-            <span className="text-[11px] font-bold">מדריך השבוע</span>
+            <span className="text-[11px] font-bold">{t("featuredBadge")}</span>
           </div>
 
           <div className="flex gap-3 p-4 pt-5">
@@ -52,9 +57,9 @@ export function FeaturedInstructor({ instructor }: { instructor: Instructor }) {
               </div>
               <p className="text-[11px] text-[var(--text-muted)] mt-1.5 line-clamp-2">{instructor.bio}</p>
               <div className="flex items-center justify-between mt-2">
-                <span className="text-xs text-[var(--text-muted)]">{instructor.city} · {instructor.trainees.toLocaleString()} חניכים</span>
+                <span className="text-xs text-[var(--text-muted)]">{instructor.city} · {instructor.trainees.toLocaleString()} {t("trainees")}</span>
                 <span className="flex items-center gap-1 text-xs font-semibold text-[var(--accent-amber)]">
-                  צפה בפרופיל <ChevronLeft className="w-3.5 h-3.5" />
+                  {t("viewProfile")} <ChevronLeft className="w-3.5 h-3.5" />
                 </span>
               </div>
             </div>

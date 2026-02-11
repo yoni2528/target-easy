@@ -2,6 +2,8 @@
 
 import { Play, ExternalLink } from "lucide-react";
 import type { Instructor } from "../types";
+import { useLanguageStore } from "@/lib/language-store";
+import { useT } from "@/lib/translations";
 
 const SOCIAL_ICONS: Record<string, { label: string; color: string }> = {
   instagram: { label: "Instagram", color: "#E4405F" },
@@ -10,6 +12,8 @@ const SOCIAL_ICONS: Record<string, { label: string; color: string }> = {
 };
 
 export function VideoSection({ instructor }: { instructor: Instructor }) {
+  const lang = useLanguageStore((s) => s.lang);
+  const t = useT(lang);
   const hasVideos = instructor.videos && instructor.videos.length > 0;
   const hasSocial = instructor.socialLinks && Object.values(instructor.socialLinks).some(Boolean);
 
@@ -22,7 +26,7 @@ export function VideoSection({ instructor }: { instructor: Instructor }) {
         <>
           <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
             <Play className="w-4 h-4 text-[var(--accent-red)]" />
-            סרטוני הדגמה
+            {t("demoVideos")}
           </h3>
           <div className="flex gap-2 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
             {instructor.videos!.map((video) => (

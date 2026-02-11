@@ -3,9 +3,13 @@
 import { useState } from "react";
 import { ArrowRight, Phone, Mail, MapPin, Send, CheckCircle, MessageCircle } from "lucide-react";
 import Link from "next/link";
+import { useLanguageStore } from "@/lib/language-store";
+import { useT } from "@/lib/translations";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
+  const lang = useLanguageStore((s) => s.lang);
+  const t = useT(lang);
 
   return (
     <div className="min-h-screen pb-8">
@@ -14,16 +18,15 @@ export default function ContactPage() {
           <Link href="/" className="w-9 h-9 rounded-lg border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
             <ArrowRight className="w-5 h-5" />
           </Link>
-          <h1 className="font-bold text-sm">יצירת קשר</h1>
+          <h1 className="font-bold text-sm">{t("contactTitle")}</h1>
         </div>
       </header>
 
       <div className="px-4 pt-6 max-w-2xl mx-auto space-y-4">
-        {/* Quick contact */}
         <div className="grid grid-cols-3 gap-2">
           <a href="tel:+972501234567" className="flex flex-col items-center gap-2 bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-4">
             <Phone className="w-6 h-6 text-[var(--accent-green)]" />
-            <span className="text-[10px] text-[var(--text-secondary)]">טלפון</span>
+            <span className="text-[10px] text-[var(--text-secondary)]">{t("contactPhone")}</span>
           </a>
           <a href="https://wa.me/972501234567" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-4">
             <MessageCircle className="w-6 h-6 text-[#25D366]" />
@@ -31,17 +34,16 @@ export default function ContactPage() {
           </a>
           <a href="mailto:info@easytarget.co.il" className="flex flex-col items-center gap-2 bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-4">
             <Mail className="w-6 h-6 text-[var(--accent-blue)]" />
-            <span className="text-[10px] text-[var(--text-secondary)]">אימייל</span>
+            <span className="text-[10px] text-[var(--text-secondary)]">{t("contactEmail")}</span>
           </a>
         </div>
 
-        {/* Info */}
         <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-3">
             <MapPin className="w-5 h-5 text-[var(--text-muted)] flex-shrink-0" />
             <div>
-              <p className="text-sm font-medium">אחים עם נשק</p>
-              <p className="text-[10px] text-[var(--text-muted)]">ישראל</p>
+              <p className="text-sm font-medium">{t("aboutOrg")}</p>
+              <p className="text-[10px] text-[var(--text-muted)]">{lang === "he" ? "ישראל" : "Israel"}</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -54,20 +56,19 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Contact form */}
         {sent ? (
           <div className="bg-[var(--bg-card)] border border-[var(--accent-green)]/30 rounded-xl p-6 text-center">
             <CheckCircle className="w-10 h-10 text-[var(--accent-green)] mx-auto mb-3" />
-            <h3 className="text-sm font-bold mb-1">ההודעה נשלחה!</h3>
-            <p className="text-xs text-[var(--text-muted)]">נחזור אליך בהקדם</p>
+            <h3 className="text-sm font-bold mb-1">{t("contactMessageSent")}</h3>
+            <p className="text-xs text-[var(--text-muted)]">{t("contactWeReply")}</p>
           </div>
         ) : (
           <div className="space-y-3">
-            <h3 className="text-sm font-bold">שלח לנו הודעה</h3>
+            <h3 className="text-sm font-bold">{t("contactSendMsg")}</h3>
             {[
-              { label: "שם", placeholder: "השם שלך", type: "text" },
-              { label: "טלפון", placeholder: "050-1234567", type: "tel" },
-              { label: "אימייל", placeholder: "email@example.com", type: "email" },
+              { label: t("contactNameLabel"), placeholder: t("contactNamePlaceholder"), type: "text" },
+              { label: t("contactPhoneLabel"), placeholder: "050-1234567", type: "tel" },
+              { label: t("contactEmailLabel"), placeholder: "email@example.com", type: "email" },
             ].map((f) => (
               <div key={f.label}>
                 <label className="text-xs text-[var(--text-muted)] mb-1 block">{f.label}</label>
@@ -76,13 +77,13 @@ export default function ContactPage() {
               </div>
             ))}
             <div>
-              <label className="text-xs text-[var(--text-muted)] mb-1 block">הודעה</label>
-              <textarea rows={4} placeholder="איך נוכל לעזור?"
+              <label className="text-xs text-[var(--text-muted)] mb-1 block">{t("contactMsgLabel")}</label>
+              <textarea rows={4} placeholder={t("contactMsgPlaceholder")}
                 className="w-full px-3 py-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-green)]/50 transition-colors resize-none" />
             </div>
             <button onClick={() => setSent(true)}
               className="w-full h-11 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] font-bold text-sm flex items-center justify-center gap-2">
-              <Send className="w-4 h-4" /> שלח הודעה
+              <Send className="w-4 h-4" /> {t("contactSendBtn")}
             </button>
           </div>
         )}

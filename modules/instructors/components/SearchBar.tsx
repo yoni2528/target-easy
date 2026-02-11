@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { Search, SlidersHorizontal, X, MapPin, Calendar, DollarSign, ShieldCheck, Clock, Star, Target, Sparkles, TreePine, Percent, RefreshCw, CalendarRange, User, GraduationCap, Trophy, Crown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FILTER_TREE, type FilterNode } from "../lib/filter-tree";
+import { useLanguageStore } from "@/lib/language-store";
+import { useT, getDays, getDayValues } from "@/lib/translations";
+import { getFilterTree, type FilterNode } from "../lib/filter-tree";
 import { MOCK_INSTRUCTORS } from "../lib/mock-data";
 
 export interface Filters {
@@ -29,50 +31,13 @@ export const DEFAULT_FILTERS: Filters = {
   dateFrom: null, dateTo: null,
 };
 
-const DAYS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
 const PRICE_TIERS = [
   { id: "₪" as const, label: "₪", max: 200 },
   { id: "₪₪" as const, label: "₪₪", max: 350 },
   { id: "₪₪₪" as const, label: "₪₪₪", max: 9999 },
 ];
-const TRAINING_LEVELS = [
-  { id: "beginner", label: "מתחילים 1200+", icon: User, color: "#4ade80" },
-  { id: "advanced", label: "מתקדמים 1400+", icon: GraduationCap, color: "#60a5fa" },
-  { id: "expert", label: "מומחים 1600+", icon: Trophy, color: "#fbbf24" },
-  { id: "champion", label: "אלופים 1800+", icon: Crown, color: "#f87171" },
-];
-const SPECIAL_TRAININGS = [
-  { id: "ערכות הסבה", label: "ערכות הסבה" },
-  { id: "כוונות השלכה", label: "כוונות" },
-  { id: "אימון נשים", label: "נשים בלבד" },
-  { id: "אימון לילה", label: "לילה" },
-  { id: "מטרות נעות", label: "מטרות נעות" },
-];
-const RANGE_TYPES = [
-  { id: "מטווח סגור", label: "מטווח סגור" },
-  { id: "מטווח פתוח", label: "מטווח פתוח" },
-];
-const DEALS = [
-  { id: "כוחות ביטחון", label: "הטבה לכוחות הביטחון" },
-  { id: "סטודנטים", label: "הטבה לסטודנטים" },
-  { id: "גמלאים", label: "הטבת גמלאי" },
-];
 
 type IconComp = typeof MapPin;
-const FILTER_BUTTONS: { id: string; label: string; icon: IconComp; color: string; isActive: (f: Filters) => boolean }[] = [
-  { id: "city", label: "עיר", icon: MapPin, color: "#4ade80", isActive: (f) => !!f.city },
-  { id: "day", label: "יום", icon: Calendar, color: "#60a5fa", isActive: (f) => !!f.day },
-  { id: "price", label: "מחיר", icon: DollarSign, color: "#fbbf24", isActive: (f) => !!f.maxPrice },
-  { id: "level", label: "רמה", icon: Target, color: "#f87171", isActive: (f) => !!f.trainingLevel },
-  { id: "special", label: "מיוחד", icon: Sparkles, color: "#a78bfa", isActive: (f) => !!f.specialTraining },
-  { id: "range", label: "אווירה", icon: TreePine, color: "#34d399", isActive: (f) => !!f.rangeType },
-  { id: "stars", label: "דירוג", icon: Star, color: "#fbbf24", isActive: (f) => !!f.minStars },
-  { id: "refresh", label: "רענון", icon: RefreshCw, color: "#38bdf8", isActive: (f) => f.countsAsRefresh !== null },
-  { id: "deal", label: "דיל", icon: Percent, color: "#fb923c", isActive: (f) => !!f.deal },
-  { id: "verified", label: "מאומתים", icon: ShieldCheck, color: "#4ade80", isActive: (f) => f.verifiedOnly },
-  { id: "available", label: "פנויים", icon: Clock, color: "#22d3ee", isActive: (f) => f.availableOnly },
-  { id: "date", label: "תאריך", icon: CalendarRange, color: "#f472b6", isActive: (f) => !!(f.dateFrom || f.dateTo) },
-];
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -87,10 +52,51 @@ interface SearchBarProps {
 }
 
 export function SearchBar({ onSearch, onCategorySelect, selectedCategory, selectedLevel, onLevelChange, sortMode, onSortChange, filters, onFiltersChange }: SearchBarProps) {
+  const lang = useLanguageStore((s) => s.lang);
+  const t = useT(lang);
+  const FILTER_TREE = getFilterTree(lang);
+
   const [query, setQuery] = useState("");
   const [expandedTop, setExpandedTop] = useState<string | null>(null);
   const [expandedSub, setExpandedSub] = useState<string | null>(null);
   const [filterOpen, setFilterOpen] = useState(false);
+
+  const TRAINING_LEVELS = [
+    { id: "beginner", label: t("levelBeginner"), shortLabel: t("levelBeginnerShort"), icon: User, color: "#4ade80" },
+    { id: "advanced", label: t("levelAdvanced"), shortLabel: t("levelAdvancedShort"), icon: GraduationCap, color: "#60a5fa" },
+    { id: "expert", label: t("levelExpert"), shortLabel: t("levelExpertShort"), icon: Trophy, color: "#fbbf24" },
+    { id: "champion", label: t("levelChampion"), shortLabel: t("levelChampionShort"), icon: Crown, color: "#f87171" },
+  ];
+  const SPECIAL_TRAININGS = [
+    { id: "ערכות הסבה", label: t("specialConversion") },
+    { id: "כוונות השלכה", label: t("specialSights") },
+    { id: "אימון נשים", label: t("specialWomen") },
+    { id: "אימון לילה", label: t("specialNight") },
+    { id: "מטרות נעות", label: t("specialMoving") },
+  ];
+  const RANGE_TYPES = [
+    { id: "מטווח סגור", label: t("rangeIndoor") },
+    { id: "מטווח פתוח", label: t("rangeOutdoor") },
+  ];
+  const DEALS = [
+    { id: "כוחות ביטחון", label: t("dealMilitary") },
+    { id: "סטודנטים", label: t("dealStudent") },
+    { id: "גמלאים", label: t("dealSenior") },
+  ];
+  const FILTER_BUTTONS: { id: string; label: string; icon: IconComp; color: string; isActive: (f: Filters) => boolean }[] = [
+    { id: "city", label: t("filterCity"), icon: MapPin, color: "#4ade80", isActive: (f) => !!f.city },
+    { id: "day", label: t("filterDay"), icon: Calendar, color: "#60a5fa", isActive: (f) => !!f.day },
+    { id: "price", label: t("filterPrice"), icon: DollarSign, color: "#fbbf24", isActive: (f) => !!f.maxPrice },
+    { id: "level", label: t("filterLevel"), icon: Target, color: "#f87171", isActive: (f) => !!f.trainingLevel },
+    { id: "special", label: t("filterSpecial"), icon: Sparkles, color: "#a78bfa", isActive: (f) => !!f.specialTraining },
+    { id: "range", label: t("filterRange"), icon: TreePine, color: "#34d399", isActive: (f) => !!f.rangeType },
+    { id: "stars", label: t("filterStars"), icon: Star, color: "#fbbf24", isActive: (f) => !!f.minStars },
+    { id: "refresh", label: t("filterRefresh"), icon: RefreshCw, color: "#38bdf8", isActive: (f) => f.countsAsRefresh !== null },
+    { id: "deal", label: t("filterDeal"), icon: Percent, color: "#fb923c", isActive: (f) => !!f.deal },
+    { id: "verified", label: t("filterVerified"), icon: ShieldCheck, color: "#4ade80", isActive: (f) => f.verifiedOnly },
+    { id: "available", label: t("filterAvailable"), icon: Clock, color: "#22d3ee", isActive: (f) => f.availableOnly },
+    { id: "date", label: t("filterDate"), icon: CalendarRange, color: "#f472b6", isActive: (f) => !!(f.dateFrom || f.dateTo) },
+  ];
 
   const allCities = [...new Set(MOCK_INSTRUCTORS.map((i) => i.city))].sort((a, b) => a.localeCompare(b, "he"));
 
@@ -174,6 +180,9 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
     ? [{ id: expandedTop!, label: expandedNode?.label || "", color: expandedNode?.color || "" }, { id: expandedSub, label: expandedSubNode?.label || "", color: expandedSubNode?.color || "" }]
     : [{ id: expandedTop!, label: expandedNode?.label || "", color: expandedNode?.color || "" }];
 
+  const dayDisplayLabels = getDays(lang);
+  const dayValues = getDayValues();
+
   return (
     <div className="space-y-4">
       {/* 1. Search bar + Filter button */}
@@ -182,7 +191,7 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
           <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--accent-green)]" />
           <input
             type="text"
-            placeholder="מה אתה מחפש?"
+            placeholder={t("searchPlaceholder")}
             value={query}
             onChange={(e) => { setQuery(e.target.value); onSearch(e.target.value); }}
             className="w-full h-14 pr-12 pl-4 rounded-2xl bg-[var(--bg-card)] border-2 border-[var(--border-default)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-base font-medium focus:outline-none focus:border-[var(--accent-green)] focus:shadow-[0_0_20px_rgba(74,222,128,0.15)] transition-all"
@@ -214,10 +223,10 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
             <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-3 space-y-2">
               {/* Header */}
               <div className="flex items-center justify-between mb-1">
-                <h3 className="text-sm font-bold text-[var(--text-primary)]">סינון תוצאות</h3>
+                <h3 className="text-sm font-bold text-[var(--text-primary)]">{t("filterResults")}</h3>
                 <div className="flex items-center gap-2">
                   {activeFilterCount > 0 && (
-                    <button onClick={clearAllFilters} className="text-[11px] text-[var(--accent-red)] hover:underline">נקה הכל</button>
+                    <button onClick={clearAllFilters} className="text-[11px] text-[var(--accent-red)] hover:underline">{t("clearAll")}</button>
                   )}
                   <button onClick={() => setFilterOpen(false)} className="p-1 text-[var(--text-muted)] hover:text-[var(--text-primary)]">
                     <X className="w-4 h-4" />
@@ -288,10 +297,14 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
                       {/* Day of week */}
                       {expandedFilter === "day" && (
                         <div className="flex flex-wrap gap-1.5">
-                          {DAYS.map((day) => (
-                            <Chip key={day} label={`יום ${day}`} selected={filters.day === day} color="#60a5fa"
-                              onClick={() => onFiltersChange({ ...filters, day: filters.day === day ? null : day })} />
-                          ))}
+                          {dayValues.map((dayValue, idx) => {
+                            const displayDay = dayDisplayLabels[idx];
+                            const dayLabel = lang === "he" ? `${t("dayPrefix")}${displayDay}` : `${displayDay}`;
+                            return (
+                              <Chip key={dayValue} label={dayLabel} selected={filters.day === dayValue} color="#60a5fa"
+                                onClick={() => onFiltersChange({ ...filters, day: filters.day === dayValue ? null : dayValue })} />
+                            );
+                          })}
                         </div>
                       )}
                       {/* Special training */}
@@ -327,9 +340,9 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
                       {/* Refresh */}
                       {expandedFilter === "refresh" && (
                         <div className="flex gap-2">
-                          <Chip label="כן" selected={filters.countsAsRefresh === true} color="#38bdf8"
+                          <Chip label={t("yes")} selected={filters.countsAsRefresh === true} color="#38bdf8"
                             onClick={() => onFiltersChange({ ...filters, countsAsRefresh: filters.countsAsRefresh === true ? null : true })} />
-                          <Chip label="לא" selected={filters.countsAsRefresh === false} color="#38bdf8"
+                          <Chip label={t("no")} selected={filters.countsAsRefresh === false} color="#38bdf8"
                             onClick={() => onFiltersChange({ ...filters, countsAsRefresh: filters.countsAsRefresh === false ? null : false })} />
                         </div>
                       )}
@@ -347,13 +360,13 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
                         <>
                           <div className="flex gap-2">
                             <div className="flex-1">
-                              <label className="text-[10px] text-[var(--text-muted)] mb-1 block">מתאריך</label>
+                              <label className="text-[10px] text-[var(--text-muted)] mb-1 block">{t("dateFrom")}</label>
                               <input type="date" value={filters.dateFrom || ""}
                                 onChange={(e) => onFiltersChange({ ...filters, dateFrom: e.target.value || null })}
                                 className="w-full h-9 px-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)] text-[11px] text-[var(--text-primary)]" />
                             </div>
                             <div className="flex-1">
-                              <label className="text-[10px] text-[var(--text-muted)] mb-1 block">עד תאריך</label>
+                              <label className="text-[10px] text-[var(--text-muted)] mb-1 block">{t("dateTo")}</label>
                               <input type="date" value={filters.dateTo || ""}
                                 onChange={(e) => onFiltersChange({ ...filters, dateTo: e.target.value || null })}
                                 className="w-full h-9 px-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)] text-[11px] text-[var(--text-primary)]" />
@@ -361,21 +374,21 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
                           </div>
                           {(filters.dateFrom || filters.dateTo) && (
                             <button onClick={() => onFiltersChange({ ...filters, dateFrom: null, dateTo: null })}
-                              className="mt-2 text-[10px] text-[var(--accent-red)] hover:underline">נקה תאריכים</button>
+                              className="mt-2 text-[10px] text-[var(--accent-red)] hover:underline">{t("clearDates")}</button>
                           )}
                         </>
                       )}
                       {/* Verified */}
                       {expandedFilter === "verified" && (
                         <div className="flex gap-2">
-                          <Chip label="מאומתים בלבד" selected={filters.verifiedOnly} color="#4ade80"
+                          <Chip label={t("verifiedOnly")} selected={filters.verifiedOnly} color="#4ade80"
                             onClick={() => onFiltersChange({ ...filters, verifiedOnly: !filters.verifiedOnly })} />
                         </div>
                       )}
                       {/* Available */}
                       {expandedFilter === "available" && (
                         <div className="flex gap-2">
-                          <Chip label="פנויים בלבד" selected={filters.availableOnly} color="#22d3ee"
+                          <Chip label={t("availableOnly")} selected={filters.availableOnly} color="#22d3ee"
                             onClick={() => onFiltersChange({ ...filters, availableOnly: !filters.availableOnly })} />
                         </div>
                       )}
@@ -479,9 +492,9 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
               {(expandedTop === "train" || expandedTop === "special") && (
                 <div className="mt-2 pt-2 border-t border-[var(--accent-amber)]/15">
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[10px] font-semibold text-[var(--accent-amber)]">רמת אימון</span>
+                    <span className="text-[10px] font-semibold text-[var(--accent-amber)]">{t("trainingLevel")}</span>
                     {selectedLevel && (
-                      <button onClick={() => onLevelChange(null)} className="text-[9px] text-[var(--accent-red)] hover:underline">נקה</button>
+                      <button onClick={() => onLevelChange(null)} className="text-[9px] text-[var(--accent-red)] hover:underline">{t("clear")}</button>
                     )}
                   </div>
                   <div className="flex gap-1.5">
@@ -492,7 +505,7 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
                           className={`flex-1 px-1.5 py-1.5 rounded-lg border text-[9px] font-semibold transition-all text-center ${isLevelSelected ? "shadow-sm" : "border-[var(--border-subtle)]"}`}
                           style={isLevelSelected ? { background: `${level.color}20`, borderColor: level.color, color: level.color } : { color: "var(--text-muted)" }}
                         >
-                          {level.label.split(" ")[0]}
+                          {level.shortLabel}
                         </button>
                       );
                     })}
@@ -509,13 +522,13 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
         <div className="flex items-center justify-between text-xs mb-3">
           <div className="flex items-center gap-1.5">
             <div className={`w-2.5 h-2.5 rounded-full ${sortMode < 40 ? "bg-[var(--accent-amber)]" : "bg-[var(--accent-amber)]/30"}`} />
-            <span className={`font-semibold ${sortMode < 40 ? "text-[var(--accent-amber)]" : "text-[var(--text-muted)]"}`}>לפי דירוג</span>
+            <span className={`font-semibold ${sortMode < 40 ? "text-[var(--accent-amber)]" : "text-[var(--text-muted)]"}`}>{t("byRating")}</span>
           </div>
           <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[var(--bg-elevated)] text-[var(--text-secondary)]" style={{ fontFamily: "var(--font-rubik)" }}>
-            {sortMode < 40 ? "דירוג" : sortMode > 60 ? "מרחק" : "מאוזן"}
+            {sortMode < 40 ? t("sortRating") : sortMode > 60 ? t("sortDistance") : t("sortBalanced")}
           </span>
           <div className="flex items-center gap-1.5">
-            <span className={`font-semibold ${sortMode > 60 ? "text-[var(--accent-blue)]" : "text-[var(--text-muted)]"}`}>לפי מרחק</span>
+            <span className={`font-semibold ${sortMode > 60 ? "text-[var(--accent-blue)]" : "text-[var(--text-muted)]"}`}>{t("byDistance")}</span>
             <div className={`w-2.5 h-2.5 rounded-full ${sortMode > 60 ? "bg-[var(--accent-blue)]" : "bg-[var(--accent-blue)]/30"}`} />
           </div>
         </div>

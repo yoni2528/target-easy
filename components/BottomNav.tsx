@@ -3,16 +3,20 @@
 import { Search, Sparkles, Heart, Clock } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const tabs = [
-  { href: "/", label: "חיפוש", icon: Search },
-  { href: "/quiz", label: "שאלון רמה", icon: Sparkles },
-  { href: "/favorites", label: "מועדפים", icon: Heart },
-  { href: "/history", label: "היסטוריה", icon: Clock },
-];
+import { useLanguageStore } from "@/lib/language-store";
+import { useT } from "@/lib/translations";
 
 export function BottomNav() {
   const pathname = usePathname();
+  const lang = useLanguageStore((s) => s.lang);
+  const t = useT(lang);
+
+  const tabs = [
+    { href: "/", label: t("navSearch"), icon: Search },
+    { href: "/quiz", label: t("navQuiz"), icon: Sparkles },
+    { href: "/favorites", label: t("navFavorites"), icon: Heart },
+    { href: "/history", label: t("navHistory"), icon: Clock },
+  ];
 
   return (
     <nav className="fixed bottom-3 left-3 right-3 z-50 bg-[var(--bg-card)]/95 backdrop-blur-xl border border-[var(--border-subtle)] rounded-2xl shadow-lg shadow-black/20">

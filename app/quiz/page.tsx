@@ -1,9 +1,16 @@
+"use client";
+
 import { QuizWizard } from "@/modules/quiz";
 import { BottomNav } from "@/components/BottomNav";
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { useLanguageStore } from "@/lib/language-store";
+import { useT } from "@/lib/translations";
 
 export default function QuizPage() {
+  const lang = useLanguageStore((s) => s.lang);
+  const t = useT(lang);
+
   return (
     <div className="min-h-screen pb-20">
       <header className="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-xl border-b border-[var(--border-subtle)]">
@@ -13,7 +20,7 @@ export default function QuizPage() {
           </Link>
           <h1 className="font-bold text-sm flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[var(--accent-green)]" />
-            שאלון התאמת מדריך
+            {t("quizTitle")}
           </h1>
         </div>
       </header>

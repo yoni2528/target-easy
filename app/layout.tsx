@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Heebo, Rubik } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { LangAttributes } from "@/components/LangAttributes";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -26,7 +27,10 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl" className={heebo.className} suppressHydrationWarning>
       <body className={`${rubik.variable} antialiased noise-bg`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <LangAttributes />
+          {children}
+        </Providers>
       </body>
     </html>
   );

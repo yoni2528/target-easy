@@ -4,12 +4,15 @@ import { Clock, ArrowRight, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { BottomNav } from "@/components/BottomNav";
 import { useUserStore, MOCK_INSTRUCTORS, InstructorCard } from "@/modules/instructors";
+import { useLanguageStore } from "@/lib/language-store";
+import { useT } from "@/lib/translations";
 
 export default function HistoryPage() {
   const history = useUserStore((s) => s.history);
   const clearHistory = useUserStore((s) => s.clearHistory);
+  const lang = useLanguageStore((s) => s.lang);
+  const t = useT(lang);
 
-  // Map history entries to instructors, preserving history order (most recent first)
   const historyInstructors = history
     .map((h) => MOCK_INSTRUCTORS.find((i) => i.id === h.id))
     .filter(Boolean) as typeof MOCK_INSTRUCTORS;
@@ -21,14 +24,14 @@ export default function HistoryPage() {
           <Link href="/" className="w-9 h-9 rounded-lg border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
             <ArrowRight className="w-5 h-5" />
           </Link>
-          <h1 className="font-bold text-sm flex-1">היסטוריה</h1>
+          <h1 className="font-bold text-sm flex-1">{t("historyTitle")}</h1>
           {historyInstructors.length > 0 && (
             <button
               onClick={clearHistory}
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-[var(--accent-red)]/20 text-[var(--accent-red)] hover:bg-[var(--accent-red)]/10 transition-colors"
             >
               <Trash2 className="w-3.5 h-3.5" />
-              נקה היסטוריה
+              {t("clearHistory")}
             </button>
           )}
         </div>
@@ -37,9 +40,9 @@ export default function HistoryPage() {
       {historyInstructors.length === 0 ? (
         <div className="px-4 pt-12 max-w-2xl mx-auto text-center">
           <Clock className="w-12 h-12 text-[var(--text-muted)] mx-auto mb-4" strokeWidth={1} />
-          <h2 className="text-base font-bold mb-2">אין היסטוריה עדיין</h2>
+          <h2 className="text-base font-bold mb-2">{t("noHistory")}</h2>
           <p className="text-xs text-[var(--text-muted)] max-w-[250px] mx-auto">
-            מדריכים שתצפו בהם יופיעו כאן
+            {t("noHistoryDesc")}
           </p>
         </div>
       ) : (

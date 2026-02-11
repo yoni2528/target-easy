@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, ShieldCheck, BarChart3 } from "lucide-react";
 import { useAuthStore } from "@/modules/auth";
+import { useLanguageStore } from "@/lib/language-store";
+import { useT, translateTrainingType } from "@/lib/translations";
 import { MOCK_INSTRUCTORS, SearchBar, InstructorCard, FeaturedInstructor } from "@/modules/instructors";
 import { BottomNav } from "@/components/BottomNav";
 import { type Filters, DEFAULT_FILTERS } from "@/modules/instructors/components/SearchBar";
@@ -15,7 +17,9 @@ export default function HomePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
   const [filters, setFilters] = useState<Filters>({ ...DEFAULT_FILTERS });
-  const [lang, setLang] = useState<"he" | "en">("he");
+  const lang = useLanguageStore((s) => s.lang);
+  const toggleLang = useLanguageStore((s) => s.toggleLang);
+  const t = useT(lang);
   const user = useAuthStore((s) => s.user);
 
   // Featured instructor: highest combined ELO + most trainees
@@ -162,39 +166,23 @@ export default function HomePage() {
   };
 
   const handleShare = async () => {
-    const data = { title: "EasyTarget", text: "מצא את מדריך הירי המושלם עבורך", url: window.location.origin };
+    const data = { title: "EasyTarget", text: t("shareText"), url: window.location.origin };
     if (navigator.share) { await navigator.share(data); }
-    else { await navigator.clipboard.writeText(window.location.origin); alert("הקישור הועתק!"); }
-  };
-
-  const t = lang === "en" ? {
-    search: "Search", quiz: "Level Quiz", favorites: "Favorites", history: "History",
-    results: "results", bookTraining: "Book Training", verifiedLabel: "Verified Instructor",
-    ratingLabel: "How Ratings Work", lightMode: "Light Mode", darkModeLabel: "Dark Mode",
-    settings: "Settings", instructorLogin: "Instructor Login", promote: "Promote on EasyTarget",
-    join: "Join EasyTarget", about: "About EasyTarget", share: "Share EasyTarget", contact: "Contact",
-    filterResults: "Filter Results", clearAll: "Clear All",
-  } : {
-    search: "חיפוש", quiz: "שאלון רמה", favorites: "מועדפים", history: "היסטוריה",
-    results: "תוצאות", bookTraining: "קבע אימון", verifiedLabel: "מה זה מדריך מאומת?",
-    ratingLabel: "כיצד נקבע הדירוג?", lightMode: "תצוגה בהירה", darkModeLabel: "תצוגה כהה",
-    settings: "הגדרות", instructorLogin: "התחברות למדריכים", promote: "קידום ממומן ב-EasyTarget",
-    join: "הצטרפות ל-EasyTarget", about: "אודות EasyTarget", share: "שתפו את EasyTarget עם חברים",
-    contact: "יצירת קשר", filterResults: "סינון תוצאות", clearAll: "נקה הכל",
+    else { await navigator.clipboard.writeText(window.location.origin); alert(t("linkCopied")); }
   };
 
   const sidebarItems = [
-    { icon: darkMode ? Sun : Moon, label: darkMode ? t.lightMode : t.darkModeLabel, onClick: toggleTheme },
-    { icon: ShieldCheck, label: t.verifiedLabel, href: "/verified" },
-    { icon: BarChart3, label: t.ratingLabel, href: "/rating" },
-    { icon: Settings, label: t.settings, href: "/settings" },
-    { icon: LogIn, label: t.instructorLogin, href: "/login" },
-    { icon: Megaphone, label: t.promote, href: "/promote" },
-    { icon: UserPlus, label: t.join, href: "/join" },
-    { icon: Info, label: t.about, href: "/about" },
-    { icon: Share2, label: t.share, onClick: handleShare },
-    { icon: Phone, label: t.contact, href: "/contact" },
-    { icon: Globe, label: lang === "he" ? "English" : "עברית", onClick: () => setLang(lang === "he" ? "en" : "he") },
+    { icon: darkMode ? Sun : Moon, label: darkMode ? t("lightMode") : t("darkMode"), onClick: toggleTheme },
+    { icon: ShieldCheck, label: t("verifiedLabel"), href: "/verified" },
+    { icon: BarChart3, label: t("ratingLabel"), href: "/rating" },
+    { icon: Settings, label: t("settings"), href: "/settings" },
+    { icon: LogIn, label: t("instructorLogin"), href: "/login" },
+    { icon: Megaphone, label: t("promote"), href: "/promote" },
+    { icon: UserPlus, label: t("join"), href: "/join" },
+    { icon: Info, label: t("about"), href: "/about" },
+    { icon: Share2, label: t("share"), onClick: handleShare },
+    { icon: Phone, label: t("contact"), href: "/contact" },
+    { icon: Globe, label: lang === "he" ? "English" : "עברית", onClick: () => toggleLang() },
   ];
 
   return (
@@ -243,7 +231,7 @@ export default function HomePage() {
             {user && (
               <div className="px-4 py-3 border-b border-[var(--border-subtle)] bg-[var(--bg-elevated)]">
                 <p className="text-sm font-semibold">{user.name}</p>
-                <p className="text-[10px] text-[var(--text-muted)]">{user.role === "admin" ? "מנהל מערכת" : "מדריך"}</p>
+                <p className="text-[10px] text-[var(--text-muted)]">{user.role === "admin" ? t("adminRole") : t("instructorRole")}</p>
               </div>
             )}
             <nav className="flex-1 py-2 overflow-y-auto">
@@ -269,7 +257,7 @@ export default function HomePage() {
 
             </nav>
             <div className="px-4 py-3 border-t border-[var(--border-subtle)]">
-              <p className="text-[10px] text-[var(--text-muted)] text-center">EasyTarget v1.0 · אחים עם נשק</p>
+              <p className="text-[10px] text-[var(--text-muted)] text-center">{t("footer")}</p>
             </div>
           </div>
         </div>
@@ -299,7 +287,7 @@ export default function HomePage() {
 
       {/* Results count */}
       <div className="px-4 mt-4 max-w-2xl mx-auto">
-        <span className="text-xs text-[var(--text-muted)]">{filtered.length} תוצאות</span>
+        <span className="text-xs text-[var(--text-muted)]">{filtered.length} {t("results")}</span>
       </div>
 
       {/* Results */}
