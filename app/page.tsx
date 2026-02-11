@@ -28,12 +28,47 @@ export default function HomePage() {
       .sort((a, b) => (b.eloShooting + b.eloInstruction + b.trainees) - (a.eloShooting + a.eloInstruction + a.trainees))[0];
   }, []);
 
+  // Map filter IDs to training types for filtering
+  const CATEGORY_TRAINING_MAP: Record<string, string[]> = {
+    // Top level categories
+    "new": ["מתחמש חדש"],
+    "refresh": ["רענון"],
+    "renewal": ["חידוש"],
+    "train": ["ירי מקצועי"],
+    "special": ["ערכות הסבה", "כוונות השלכה", "אימון נשים", "אימון לילה"],
+    // Sub-categories
+    "new:training": ["מתחמש חדש"],
+    "new:stores": ["מתחמש חדש"],
+    "new:help": ["מתחמש חדש"],
+    "refresh:annual": ["רענון"],
+    "refresh:combo": ["רענון"],
+    "refresh:instructor": ["רענון"],
+    "renewal:schedule": ["חידוש"],
+    "renewal:forms": ["חידוש"],
+    "renewal:guide": ["חידוש"],
+    "renewal:missed": ["חידוש"],
+    "train:pistol": ["ירי מקצועי"],
+    "train:rifle": ["ירי מקצועי"],
+    "train:dynamic": ["ירי מקצועי"],
+    "train:instructor": ["ירי מקצועי"],
+    "special:conversion": ["ערכות הסבה"],
+    "special:sights": ["כוונות השלכה"],
+    "special:women": ["אימון נשים"],
+    "special:night": ["אימון לילה"],
+  };
+
   const filtered = useMemo(() => {
     let results = MOCK_INSTRUCTORS;
     if (query) {
       const q = query.toLowerCase();
       results = results.filter(
         (i) => i.name.includes(q) || i.city.includes(q) || i.ranges.some((r) => r.includes(q))
+      );
+    }
+    if (selectedCategory && CATEGORY_TRAINING_MAP[selectedCategory]) {
+      const requiredTypes = CATEGORY_TRAINING_MAP[selectedCategory];
+      results = results.filter((i) =>
+        requiredTypes.some((type) => i.trainingTypes.includes(type))
       );
     }
     if (selectedCity) {
