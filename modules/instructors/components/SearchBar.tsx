@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, ChevronLeft, X } from "lucide-react";
+import { Search, ChevronRight, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FILTER_TREE, type FilterNode } from "../lib/filter-tree";
 
@@ -28,18 +28,15 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
     return nodes;
   };
 
-  const getActiveLabel = (): string | null => {
+  const getActiveNode = (): FilterNode | null => {
     if (activePath.length === 0) return null;
     let nodes: FilterNode[] = FILTER_TREE;
-    let label = "";
+    let node: FilterNode | null = null;
     for (const pathId of activePath) {
       const found = nodes.find((n) => n.id === pathId);
-      if (found) {
-        label = found.label;
-        if (found.children) nodes = found.children;
-      }
+      if (found) { node = found; if (found.children) nodes = found.children; }
     }
-    return label;
+    return node;
   };
 
   const handleNodeClick = (node: FilterNode) => {
@@ -63,11 +60,85 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
   };
 
   const currentNodes = getCurrentNodes();
-  const activeLabel = getActiveLabel();
+  const activeNode = getActiveNode();
+  const isSubLevel = activePath.length > 0;
 
   return (
-    <div className="space-y-3">
-      {/* Easy.co.il style search bar */}
+    <div className="space-y-4">
+      {/* Circular category icons - full width, evenly spaced */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activePath.join("/")}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.2 }}
+        >
+          {/* Back button when in sub-level */}
+          {isSubLevel && (
+            <div className="flex items-center gap-2 mb-3">
+              <button
+                onClick={handleBack}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-xs"
+              >
+                <ChevronRight className="w-3 h-3" />
+                חזור
+              </button>
+              <span className="text-xs font-semibold" style={{ color: activeNode?.color }}>
+                {activeNode?.label}
+              </span>
+              <button onClick={handleClear} className="mr-auto p-1 text-[var(--text-muted)] hover:text-[var(--accent-red)] transition-colors">
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+
+          {/* Icons grid */}
+          <div className={`grid gap-2 ${currentNodes.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
+            {currentNodes.map((node) => {
+              const Icon = node.icon;
+              const isSelected = selectedCategory === node.id;
+              const hasChildren = node.children && node.children.length > 0;
+
+              return (
+                <button
+                  key={node.id}
+                  onClick={() => handleNodeClick(node)}
+                  className="flex flex-col items-center gap-2 py-2 transition-all duration-200"
+                >
+                  <div
+                    className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${
+                      isSelected
+                        ? "shadow-lg scale-110"
+                        : "border-[var(--border-subtle)] hover:scale-105"
+                    }`}
+                    style={{
+                      background: isSelected ? `${node.color}20` : `${node.color}08`,
+                      borderColor: isSelected ? node.color : `${node.color}30`,
+                      boxShadow: isSelected ? `0 0 16px ${node.color}30` : undefined,
+                    }}
+                  >
+                    <Icon className="w-6 h-6" style={{ color: node.color }} />
+                  </div>
+                  <span
+                    className={`text-[11px] leading-tight text-center font-medium ${
+                      isSelected ? "font-bold" : "text-[var(--text-secondary)]"
+                    }`}
+                    style={isSelected ? { color: node.color } : undefined}
+                  >
+                    {node.label}
+                  </span>
+                  {hasChildren && !isSubLevel && (
+                    <div className="w-1 h-1 rounded-full" style={{ background: node.color, opacity: 0.5 }} />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Search bar - placeholder changes per category */}
       <div className="relative">
         <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--accent-green)]" />
         <input
@@ -114,11 +185,9 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
             window.addEventListener("pointerup", onUp);
           }}
         >
-          {/* Track background */}
           <div className="absolute inset-x-0 h-2 rounded-full overflow-hidden" style={{ top: "calc(50% - 4px)" }}>
             <div className="w-full h-full" style={{ background: "linear-gradient(to right, #fbbf24, #4ade80 50%, #60a5fa)" }} />
           </div>
-          {/* Thumb */}
           <div
             className="absolute w-7 h-7 rounded-full bg-white shadow-lg border-[3px] transition-[left] duration-75"
             style={{
@@ -129,79 +198,6 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
           />
         </div>
       </div>
-
-      {/* Breadcrumb trail */}
-      <AnimatePresence>
-        {activePath.length > 0 && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden"
-          >
-            <div className="flex items-center gap-2 text-xs">
-              <button
-                onClick={handleBack}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
-              >
-                <ChevronLeft className="w-3 h-3 rotate-180" />
-                חזור
-              </button>
-              <span className="text-[var(--accent-green)] font-semibold">{activeLabel}</span>
-              <button onClick={handleClear} className="mr-auto p-1 text-[var(--text-muted)] hover:text-[var(--accent-red)] transition-colors">
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Category icons / sub-filter grid */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activePath.join("/")}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.2 }}
-        >
-          <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1" style={{ scrollbarWidth: "none" }}>
-            {currentNodes.map((node) => {
-              const Icon = node.icon;
-              const isSelected = selectedCategory === node.id;
-              const hasChildren = node.children && node.children.length > 0;
-
-              return (
-                <button
-                  key={node.id}
-                  onClick={() => handleNodeClick(node)}
-                  className={`flex flex-col items-center gap-1.5 min-w-[76px] py-3 px-2 rounded-xl border transition-all duration-200 relative ${
-                    isSelected
-                      ? "border-[var(--accent-green)]/40 shadow-[0_0_15px_rgba(74,222,128,0.1)]"
-                      : "bg-[var(--bg-card)] border-[var(--border-subtle)] hover:border-[var(--border-default)]"
-                  }`}
-                  style={isSelected ? { background: `${node.color}10`, borderColor: `${node.color}40` } : undefined}
-                >
-                  <div
-                    className="w-9 h-9 rounded-lg flex items-center justify-center"
-                    style={{ background: `${node.color}15` }}
-                  >
-                    <Icon className="w-5 h-5" style={{ color: node.color }} />
-                  </div>
-                  <span className={`text-[10px] font-medium leading-tight text-center ${
-                    isSelected ? "font-semibold" : "text-[var(--text-secondary)]"
-                  }`} style={isSelected ? { color: node.color } : undefined}>
-                    {node.label}
-                  </span>
-                  {hasChildren && (
-                    <ChevronLeft className="absolute top-1.5 left-1.5 w-3 h-3 text-[var(--text-muted)] rotate-180" />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </motion.div>
-      </AnimatePresence>
     </div>
   );
 }
