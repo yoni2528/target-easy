@@ -56,6 +56,10 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "r4", name: "רונית כץ", date: "לפני 3 ימים", text: "מיכל מעולה, במיוחד למי שמפחד מנשק. יצרה אווירה נעימה ובטוחה.", rating: 5, verified: true },
     ],
     gallery: ["https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=600&h=400&fit=crop"],
+    videos: [
+      { id: "v-2a", title: "אימון ירי לנשים", thumbnail: "https://images.unsplash.com/photo-1584281722234-404e4dc10ae2?w=400&h=225&fit=crop", platform: "instagram" },
+      { id: "v-2b", title: "הכנה לאימון ראשון", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "youtube" },
+    ],
     socialLinks: { instagram: "https://instagram.com", facebook: "https://facebook.com" },
   },
   {
@@ -91,6 +95,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "r7", name: "נועה לב", date: "לפני חודש", text: "יעל נהדרת! הפכה את האימון הראשון שלי לחוויה מהנה.", rating: 5, verified: true },
     ],
     gallery: [],
+    videos: [
+      { id: "v-4a", title: "טיפים לאימון ראשון", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "instagram" },
+    ],
   },
   {
     id: "5", name: "רון מלכה",
@@ -106,6 +113,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "r9", name: "עמית דר", date: "לפני שבוע", text: "מקצועי ויעיל. סיימנו בזמן ובלי בעיות.", rating: 4, verified: true },
     ],
     gallery: [],
+    videos: [
+      { id: "v-5a", title: "רענון ירי בבאר שבע", thumbnail: "https://images.unsplash.com/photo-1584281722234-404e4dc10ae2?w=400&h=225&fit=crop", platform: "youtube" },
+    ],
     socialLinks: { facebook: "https://facebook.com" },
   },
   {
@@ -142,6 +152,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "r11", name: "דנה קטן", date: "לפני שבוע", text: "סבלני מאוד, הרגשתי בנוח.", rating: 4, verified: true },
     ],
     gallery: [],
+    videos: [
+      { id: "v-7a", title: "למה חשוב להתחמש?", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "instagram" },
+    ],
   },
   {
     id: "8", name: "שמעון פרץ",
@@ -177,6 +190,10 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "r14", name: "אורי שגב", date: "לפני חודש", text: "באתי בלי ניסיון ויצאתי עם ביטחון. מדריכה ברמה אחרת.", rating: 5, verified: true },
     ],
     gallery: ["https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=600&h=400&fit=crop"],
+    videos: [
+      { id: "v-9a", title: "אימון קבוצתי ברחובות", thumbnail: "https://images.unsplash.com/photo-1584281722234-404e4dc10ae2?w=400&h=225&fit=crop", platform: "youtube" },
+      { id: "v-9b", title: "טיפים לנשים מתחמשות", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "instagram" },
+    ],
     socialLinks: { instagram: "https://instagram.com" },
   },
   {
@@ -193,6 +210,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "r15", name: "רותם לב", date: "לפני חודשיים", text: "אימון טוב ויעיל, מגיע לעניין.", rating: 4, verified: true },
     ],
     gallery: [],
+    videos: [
+      { id: "v-10a", title: "מה לצפות באימון ראשון", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "youtube" },
+    ],
   },
   {
     id: "11", name: "אבי טל",
@@ -208,6 +228,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "r16", name: "שלמה ימיני", date: "לפני שבוע", text: "מדריך מצוין, מקצועי ומסודר.", rating: 5, verified: true },
     ],
     gallery: [],
+    videos: [
+      { id: "v-11a", title: "ירי מדויק - טכניקות בסיסיות", thumbnail: "https://images.unsplash.com/photo-1584281722234-404e4dc10ae2?w=400&h=225&fit=crop", platform: "youtube" },
+    ],
     socialLinks: { youtube: "https://youtube.com" },
   },
   {
@@ -224,6 +247,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "r17", name: "ענבל גולן", date: "לפני שבועיים", text: "הרגשתי מאוד בנוח כאישה, ממליצה!", rating: 4, verified: true },
     ],
     gallery: [],
+    videos: [
+      { id: "v-12a", title: "ליווי נשים מתחמשות", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "instagram" },
+    ],
   },
   {
     id: "13", name: "יגאל נחום",
@@ -259,6 +285,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "r20", name: "נדב אורן", date: "לפני שבוע", text: "אימון קבוצתי מעולה, חוויה כיפית.", rating: 4, verified: true },
     ],
     gallery: [],
+    videos: [
+      { id: "v-14a", title: "אימון קבוצתי בכפר סבא", thumbnail: "https://images.unsplash.com/photo-1584281722234-404e4dc10ae2?w=400&h=225&fit=crop", platform: "facebook" },
+    ],
   },
   {
     id: "15", name: "רינת שרון",
@@ -274,6 +303,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "r21", name: "נועם שטרן", date: "לפני חודש", text: "רינת עזרה לי לשפר את הדיוק באופן משמעותי. מקצוענית.", rating: 5, verified: true },
     ],
     gallery: [],
+    videos: [
+      { id: "v-15a", title: "ירי למרחקים - טכניקת כיוון", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "youtube" },
+    ],
     socialLinks: { instagram: "https://instagram.com" },
   },
 ];
