@@ -48,7 +48,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-24">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-xl border-b border-[var(--border-subtle)]">
         <div className="flex items-center justify-between px-4 h-14 max-w-2xl mx-auto">

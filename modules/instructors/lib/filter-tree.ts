@@ -2,7 +2,8 @@ import type { LucideIcon } from "lucide-react";
 import {
   Crosshair, RefreshCw, FileCheck, Target, Flame,
   BookOpen, Store, HelpCircle, Timer, Dumbbell, UserSearch,
-  CalendarClock, FileText, AlertCircle, ClipboardList
+  CalendarClock, FileText, AlertCircle, ClipboardList,
+  Star, Wrench, ScanEye, PersonStanding, Moon
 } from "lucide-react";
 
 export interface FilterNode {
@@ -58,6 +59,18 @@ export const FILTER_TREE: FilterNode[] = [
       { id: "train:rifle", label: "ירי רובה", icon: Target, color: "#f87171" },
       { id: "train:dynamic", label: "ירי דינמי", icon: Flame, color: "#f87171" },
       { id: "train:instructor", label: "מדריך לאימון", icon: UserSearch, color: "#f87171" },
+    ],
+  },
+  {
+    id: "special",
+    label: "אימונים מיוחדים",
+    icon: Star,
+    color: "#a78bfa",
+    children: [
+      { id: "special:conversion", label: "אימון לערכות הסבה", icon: Wrench, color: "#a78bfa" },
+      { id: "special:sights", label: "אימון לכוונות השלכה", icon: ScanEye, color: "#a78bfa" },
+      { id: "special:women", label: "אימון נשים", icon: PersonStanding, color: "#a78bfa" },
+      { id: "special:night", label: "אימון לילה", icon: Moon, color: "#a78bfa" },
     ],
   },
 ];
