@@ -27,6 +27,7 @@ export interface Instructor {
   rangeType?: ("מטווח סגור" | "מטווח פתוח")[];
   countsAsRefresh?: boolean;
   deals?: ("כוחות ביטחון" | "סטודנטים" | "גמלאים")[];
+  availableDays?: string[];
 }
 
 export interface Review {

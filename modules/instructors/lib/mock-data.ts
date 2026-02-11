@@ -44,6 +44,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
     deals: ["כוחות ביטחון", "גמלאים"],
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי", "חמישי"],
   },
   {
     id: "2", name: "מיכל אברהם",
@@ -67,6 +68,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור"],
     countsAsRefresh: true,
     deals: ["סטודנטים"],
+    availableDays: ["ראשון", "שני", "רביעי", "חמישי", "שישי"],
   },
   {
     id: "3", name: "אלון ברק",
@@ -89,6 +91,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
     deals: ["כוחות ביטחון", "סטודנטים"],
+    availableDays: ["שני", "שלישי", "רביעי", "חמישי"],
   },
   {
     id: "4", name: "יעל שפירא",
@@ -110,6 +113,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור"],
     countsAsRefresh: true,
     deals: ["גמלאים"],
+    availableDays: ["ראשון", "שלישי", "רביעי", "חמישי"],
   },
   {
     id: "5", name: "רון מלכה",
@@ -132,6 +136,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
     deals: ["כוחות ביטחון"],
+    availableDays: ["ראשון", "שני", "שלישי", "חמישי", "שישי", "שבת"],
   },
   {
     id: "6", name: "נתן גולדשטיין",
@@ -154,6 +159,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
     deals: ["גמלאים"],
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי"],
   },
   // --- New instructors ---
   {
@@ -176,6 +182,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור"],
     countsAsRefresh: true,
     deals: ["סטודנטים"],
+    availableDays: ["שני", "שלישי", "רביעי", "חמישי", "שישי"],
   },
   {
     id: "8", name: "שמעון פרץ",
@@ -198,6 +205,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
     deals: ["כוחות ביטחון"],
+    availableDays: ["ראשון", "שלישי", "רביעי", "חמישי"],
   },
   {
     id: "9", name: "לימור דיין",
@@ -222,6 +230,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור"],
     countsAsRefresh: true,
     deals: ["סטודנטים"],
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי", "חמישי"],
   },
   {
     id: "10", name: "איתי מזרחי",
@@ -233,6 +242,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: false, nextSlot: "יום רביעי, 15:00", priceFrom: 180,
     bio: "מדריך ירי מוסמך עם 3 שנות ניסיון. מגיע מרקע צבאי בשריון. גישה ישירה ויעילה.",
     experience: 3,
+    availableDays: ["שני", "רביעי", "חמישי", "שישי"],
     reviews: [
       { id: "r15", name: "רותם לב", date: "לפני חודשיים", text: "אימון טוב ויעיל, מגיע לעניין.", rating: 4, verified: true },
     ],
@@ -264,6 +274,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
     deals: ["כוחות ביטחון"],
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי"],
   },
   {
     id: "12", name: "תמר רוזנפלד",
@@ -275,6 +286,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: true, nextSlot: "היום, 17:00", priceFrom: 160,
     bio: "מדריכת ירי חדשה בתחום. סיימתי הסמכה לפני שנה. מתמקדת בליווי נשים שמתחמשות לראשונה.",
     experience: 1,
+    availableDays: ["ראשון", "שני", "רביעי", "חמישי"],
     reviews: [
       { id: "r17", name: "ענבל גולן", date: "לפני שבועיים", text: "הרגשתי מאוד בנוח כאישה, ממליצה!", rating: 4, verified: true },
     ],
@@ -307,6 +319,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור"],
     countsAsRefresh: true,
     deals: ["גמלאים"],
+    availableDays: ["שני", "שלישי", "רביעי", "חמישי"],
   },
   {
     id: "14", name: "אור כספי",
@@ -318,6 +331,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: true, nextSlot: "מחר, 16:00", priceFrom: 190,
     bio: "מדריך ירי צעיר עם 4 שנות ניסיון. מגיע מיחידת חי\"ר. אוהב לעבוד עם קבוצות.",
     experience: 4,
+    availableDays: ["ראשון", "שלישי", "חמישי", "שישי", "שבת"],
     reviews: [
       { id: "r20", name: "נדב אורן", date: "לפני שבוע", text: "אימון קבוצתי מעולה, חוויה כיפית.", rating: 4, verified: true },
     ],
@@ -338,6 +352,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: false, nextSlot: "יום חמישי, 09:00", priceFrom: 240,
     bio: "מדריכת ירי מקצועית מהצפון הרחוק. 9 שנות ניסיון. מתמחה בירי מדויק ובהכנה לתחרויות.",
     experience: 9,
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי", "חמישי"],
     reviews: [
       { id: "r21", name: "נועם שטרן", date: "לפני חודש", text: "רינת עזרה לי לשפר את הדיוק באופן משמעותי. מקצוענית.", rating: 5, verified: true },
     ],
@@ -377,6 +392,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
     deals: ["כוחות ביטחון"],
+    availableDays: ["שני", "שלישי", "רביעי", "חמישי", "שישי"],
   },
   {
     id: "17", name: "נעמה ברגר",
@@ -408,6 +424,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור"],
     countsAsRefresh: true,
     deals: ["סטודנטים"],
+    availableDays: ["ראשון", "שני", "רביעי", "חמישי"],
   },
   {
     id: "18", name: "עידן צור",
@@ -436,6 +453,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
     deals: ["כוחות ביטחון"],
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי", "חמישי"],
   },
   {
     id: "19", name: "שי אדרי",
@@ -447,6 +465,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: true, nextSlot: "היום, 15:00", priceFrom: 200,
     bio: "מדריך ירי עם 6 שנות ניסיון. לוחם גולני לשעבר. מתמקד במתחמשים חדשים ובחידוש רישיון.",
     experience: 6,
+    availableDays: ["שלישי", "רביעי", "חמישי", "שישי"],
     reviews: [
       { id: "r29", name: "רון מור", date: "לפני שבועיים", text: "אימון מצוין לחידוש רישיון. מהיר ויעיל.", rating: 4, verified: true },
     ],
@@ -492,6 +511,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור"],
     countsAsRefresh: true,
     deals: ["גמלאים"],
+    availableDays: ["ראשון", "שני", "שלישי", "חמישי"],
   },
   {
     id: "21", name: "אמיר סעדה",
@@ -521,6 +541,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
     deals: ["כוחות ביטחון", "סטודנטים"],
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי"],
   },
   {
     id: "22", name: "דניאל אזולאי",
@@ -545,6 +566,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור"],
     countsAsRefresh: true,
     deals: ["סטודנטים"],
+    availableDays: ["שני", "שלישי", "רביעי", "חמישי"],
   },
   {
     id: "23", name: "הילה מרום",
@@ -556,6 +578,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: true, nextSlot: "היום, 09:30", priceFrom: 275,
     bio: "מדריכת ירי מובילה במרכז. 12 שנות ניסיון. מתמחה באימוני נשים וקבוצות. גישה חמה ומקצועית.",
     experience: 12,
+    availableDays: ["ראשון", "שני", "רביעי", "חמישי", "שישי", "שבת"],
     reviews: [
       { id: "r36", name: "ליאת חן", date: "לפני 3 ימים", text: "הילה מדהימה! אימון הנשים שלה שינה לי את התפיסה.", rating: 5, verified: true },
       { id: "r37", name: "רחלי סגל", date: "לפני שבוע", text: "אווירה נעימה, מקצועיות ברמה הכי גבוהה.", rating: 5, verified: true },
@@ -601,6 +624,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: false,
     deals: ["כוחות ביטחון"],
+    availableDays: ["ראשון", "שלישי", "רביעי", "חמישי"],
   },
   {
     id: "25", name: "סבטלנה קוזלוב",
@@ -612,6 +636,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: true, nextSlot: "היום, 10:30", priceFrom: 270,
     bio: "מדריכת ירי ותיקה מהצפון. 19 שנות ניסיון. מדברת עברית ורוסית. מנהלת תכנית הכשרה לעולים חדשים.",
     experience: 19,
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי"],
     reviews: [
       { id: "r40", name: "אנה קרסנוב", date: "לפני 4 ימים", text: "סבטלנה מדהימה! יכולה להדריך גם ברוסית - חשוב מאוד בשבילי.", rating: 5, verified: true },
       { id: "r41", name: "מיכאל דוד", date: "לפני שבועיים", text: "מקצועית ברמה הכי גבוהה. ממליץ לכולם.", rating: 5, verified: true },
@@ -652,6 +677,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור"],
     countsAsRefresh: true,
     deals: ["סטודנטים"],
+    availableDays: ["שני", "שלישי", "חמישי", "שישי"],
   },
   {
     id: "27", name: "מור בן דוד",
@@ -663,6 +689,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: true, nextSlot: "היום, 14:30", priceFrom: 245,
     bio: "מדריכת ירי עם 8 שנות ניסיון. מתמחה בקורסי רענון וחידוש. מנהלת קבוצות אימון קבועות לנשים.",
     experience: 8,
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי", "חמישי"],
     reviews: [
       { id: "r43", name: "שרון דקל", date: "לפני 5 ימים", text: "מור מעולה! הרענון עבר חלק ומקצועי.", rating: 5, verified: true },
       { id: "r44", name: "טל אבני", date: "לפני חודש", text: "הקבוצה של מור היא משפחה. ממליצה בחום.", rating: 5, verified: true },
@@ -710,6 +737,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
     deals: ["כוחות ביטחון"],
+    availableDays: ["ראשון", "שני", "רביעי", "חמישי", "שישי", "שבת"],
   },
   {
     id: "29", name: "ליאור פרידמן",
@@ -721,6 +749,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: true, nextSlot: "מחר, 15:00", priceFrom: 180,
     bio: "מדריך ירי עם 4 שנות ניסיון. מגיע מרקע של קרבי הנדסה. מתמקד בליווי מתחמשים חדשים ובחידוש רישיון.",
     experience: 4,
+    availableDays: ["שלישי", "רביעי", "חמישי"],
     reviews: [
       { id: "r48", name: "יהב דקל", date: "לפני חודש", text: "ליאור עזר לי לחדש רישיון בקלות. מומלץ.", rating: 4, verified: true },
     ],
@@ -744,6 +773,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: true, nextSlot: "היום, 11:30", priceFrom: 255,
     bio: "מדריכת ירי מובילה בצפון. 11 שנות ניסיון. שירתה כקצינת הדרכה. מתמחה באימון נשים וירי מקצועי.",
     experience: 11,
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי", "חמישי"],
     reviews: [
       { id: "r49", name: "מעיין גור", date: "לפני שבוע", text: "ענת מדריכה מעולה. מקצועית ומעוררת השראה.", rating: 5, verified: true },
       { id: "r50", name: "גלית חלבי", date: "לפני חודש", text: "האימון עם ענת שינה לי את החיים. ממליצה בחום!", rating: 5, verified: true },
@@ -786,6 +816,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור"],
     countsAsRefresh: true,
     deals: ["גמלאים"],
+    availableDays: ["שני", "רביעי", "חמישי", "שישי"],
   },
   {
     id: "32", name: "אורית פלד",
@@ -797,6 +828,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: true, nextSlot: "מחר, 10:00", priceFrom: 155,
     bio: "מדריכת ירי חדשה עם 2 שנות ניסיון. מתמחה באימון נשים מתחמשות ראשונות. אווירה ביתית ותומכת.",
     experience: 2,
+    availableDays: ["ראשון", "שני", "שלישי", "חמישי"],
     reviews: [
       { id: "r52", name: "סיגלית חן", date: "לפני חודש", text: "אורית יצרה אווירה נעימה ומרגיעה. מושלם לאישה שמפחדת.", rating: 4, verified: true },
     ],
@@ -839,6 +871,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
     deals: ["כוחות ביטחון", "גמלאים"],
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי"],
   },
   {
     id: "34", name: "כרמל עוז",
@@ -864,6 +897,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור"],
     countsAsRefresh: true,
     deals: ["סטודנטים"],
+    availableDays: ["ראשון", "שלישי", "רביעי", "חמישי"],
   },
   {
     id: "35", name: "משה אליהו",
@@ -875,6 +909,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     available: true, nextSlot: "מחר, 14:00", priceFrom: 265,
     bio: "מדריך ירי ותיק. 13 שנות ניסיון. מתמחה בכוונות השלכה ובירי מדויק למרחקים ארוכים.",
     experience: 13,
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"],
     reviews: [
       { id: "r57", name: "דני אברהם", date: "לפני 4 ימים", text: "משה המומחה מספר 1 לכוונות בצפון. ממליץ!", rating: 5, verified: true },
       { id: "r58", name: "יניב שמואל", date: "לפני חודש", text: "חידוש רישיון מהיר ומקצועי.", rating: 4, verified: true },

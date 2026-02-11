@@ -141,6 +141,9 @@ export default function HomePage() {
     if (filters.deal) {
       results = results.filter((i) => i.deals?.includes(filters.deal as "כוחות ביטחון" | "סטודנטים" | "גמלאים"));
     }
+    if (filters.day) {
+      results = results.filter((i) => i.availableDays?.includes(filters.day!) ?? false);
+    }
     if (filters.dateFrom || filters.dateTo) {
       // Date range filter: only show available instructors in the date range
       results = results.filter((i) => i.available);
