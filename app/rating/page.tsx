@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BarChart3, Crosshair, GraduationCap, Star, TrendingUp, TrendingDown } from "lucide-react";
+import { ArrowRight, BarChart3, Crosshair, GraduationCap, Star, TrendingUp, TrendingDown, Calculator, Scale, Zap } from "lucide-react";
 import Link from "next/link";
 import { BottomNav } from "@/components/BottomNav";
 import { useLanguageStore } from "@/lib/language-store";
@@ -93,6 +93,108 @@ export default function RatingPage() {
             </div>
           </div>
           <p className="text-xs text-[var(--accent-amber)] font-semibold text-center">{t("ratingEarned")}</p>
+        </div>
+
+        {/* Mathematical Formula */}
+        <div className="bg-[var(--bg-card)] border border-[var(--accent-amber)]/20 rounded-2xl p-4 space-y-4">
+          <div className="flex items-center gap-2">
+            <Calculator className="w-5 h-5 text-[var(--accent-amber)]" />
+            <h3 className="text-sm font-bold">{t("eloFormulaTitle")}</h3>
+          </div>
+          <p className="text-xs text-[var(--text-secondary)]">{t("eloFormulaIntro")}</p>
+
+          {/* Formula display */}
+          <div className="bg-[var(--bg-elevated)] rounded-xl p-4 text-center space-y-2">
+            <p className="text-base font-mono font-bold text-[var(--accent-amber)]" style={{ fontFamily: "var(--font-rubik)" }}>
+              {t("eloFormulaExplain")}
+            </p>
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-[10px] text-[var(--text-muted)]">
+              <span><strong className="text-[var(--text-primary)]">R&apos;</strong> = {t("eloNewRating")}</span>
+              <span><strong className="text-[var(--text-primary)]">R</strong> = {t("eloOldRating")}</span>
+              <span><strong className="text-[var(--text-primary)]">K</strong> = {t("eloKFactor")}</span>
+              <span><strong className="text-[var(--text-primary)]">S</strong> = {t("eloActualScore")}</span>
+              <span><strong className="text-[var(--text-primary)]">E</strong> = {t("eloExpectedScore")}</span>
+            </div>
+            <div className="pt-2 border-t border-[var(--border-subtle)]">
+              <p className="text-[10px] text-[var(--text-muted)] mb-1">{t("eloExpectedScore")}:</p>
+              <p className="text-sm font-mono font-bold text-[var(--accent-blue)]" style={{ fontFamily: "var(--font-rubik)" }}>
+                {t("eloExpectedFormula")}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Step by step example */}
+        <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <Scale className="w-5 h-5 text-[var(--accent-blue)]" />
+            <h3 className="text-sm font-bold">{t("eloStepByStep")}</h3>
+          </div>
+
+          {/* Step 1 */}
+          <div className="space-y-1">
+            <p className="text-xs font-bold text-[var(--text-primary)]">1. {t("eloStep1Title")}</p>
+            <div className="flex gap-2">
+              <div className="flex-1 bg-[var(--accent-green)]/5 border border-[var(--accent-green)]/20 rounded-lg p-2 text-center">
+                <p className="text-[10px] font-bold text-[var(--accent-green)]">{t("eloStep1A")}</p>
+              </div>
+              <div className="flex-1 bg-[var(--accent-red)]/5 border border-[var(--accent-red)]/20 rounded-lg p-2 text-center">
+                <p className="text-[10px] font-bold text-[var(--accent-red)]">{t("eloStep1B")}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Step 2 */}
+          <div className="space-y-1">
+            <p className="text-xs font-bold text-[var(--text-primary)]">2. {t("eloStep2Title")}</p>
+            <div className="bg-[var(--bg-elevated)] rounded-lg p-2">
+              <p className="text-[10px] font-mono text-[var(--accent-amber)]" style={{ fontFamily: "var(--font-rubik)" }}>{t("eloStep2Calc")}</p>
+            </div>
+            <p className="text-[10px] text-[var(--text-muted)]">{t("eloStep2Meaning")}</p>
+          </div>
+
+          {/* Step 3 */}
+          <div className="space-y-1">
+            <p className="text-xs font-bold text-[var(--accent-green)]">3. {t("eloStep3Title")}</p>
+            <div className="bg-[var(--bg-elevated)] rounded-lg p-2">
+              <p className="text-[10px] font-mono text-[var(--accent-green)]" style={{ fontFamily: "var(--font-rubik)" }}>{t("eloStep3Calc")}</p>
+            </div>
+            <p className="text-[10px] font-semibold text-[var(--accent-green)]">{t("eloStep3Result")}</p>
+          </div>
+
+          {/* Step 4 */}
+          <div className="space-y-1">
+            <p className="text-xs font-bold text-[var(--accent-red)]">4. {t("eloStep4Title")}</p>
+            <div className="bg-[var(--bg-elevated)] rounded-lg p-2">
+              <p className="text-[10px] font-mono text-[var(--accent-red)]" style={{ fontFamily: "var(--font-rubik)" }}>{t("eloStep4Calc")}</p>
+            </div>
+            <p className="text-[10px] font-semibold text-[var(--accent-red)]">{t("eloStep4Result")}</p>
+          </div>
+        </div>
+
+        {/* K-Factor explanation */}
+        <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-4 space-y-2">
+          <div className="flex items-center gap-2">
+            <Zap className="w-5 h-5 text-[var(--accent-green)]" />
+            <h3 className="text-sm font-bold">{t("eloKExplain")}</h3>
+          </div>
+          <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{t("eloKDesc")}</p>
+          <div className="flex gap-2 mt-2">
+            <div className="flex-1 bg-[var(--accent-amber)]/5 border border-[var(--accent-amber)]/20 rounded-lg p-2 text-center">
+              <p className="text-lg font-bold text-[var(--accent-amber)]" style={{ fontFamily: "var(--font-rubik)" }}>K=32</p>
+              <p className="text-[9px] text-[var(--text-muted)]">{lang === "he" ? "מדריכים חדשים" : "New instructors"}</p>
+            </div>
+            <div className="flex-1 bg-[var(--accent-blue)]/5 border border-[var(--accent-blue)]/20 rounded-lg p-2 text-center">
+              <p className="text-lg font-bold text-[var(--accent-blue)]" style={{ fontFamily: "var(--font-rubik)" }}>K=16</p>
+              <p className="text-[9px] text-[var(--text-muted)]">{lang === "he" ? "מדריכים ותיקים" : "Veteran instructors"}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Why is it fair */}
+        <div className="bg-[var(--bg-card)] border border-[var(--accent-green)]/20 rounded-2xl p-4 space-y-2">
+          <h3 className="text-sm font-bold text-[var(--accent-green)]">{t("eloWhyFair")}</h3>
+          <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{t("eloWhyFairDesc")}</p>
         </div>
 
         {/* Stars */}

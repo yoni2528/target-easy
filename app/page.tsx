@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, ShieldCheck, BarChart3 } from "lucide-react";
+import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, ShieldCheck, BarChart3, Wrench, ChevronDown, Users, Shield } from "lucide-react";
 import { useAuthStore } from "@/modules/auth";
 import { useLanguageStore } from "@/lib/language-store";
 import { useT, translateTrainingType } from "@/lib/translations";
@@ -15,6 +15,7 @@ export default function HomePage() {
   const [sortMode, setSortMode] = useState(50);
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [adminToolsOpen, setAdminToolsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
   const [filters, setFilters] = useState<Filters>({ ...DEFAULT_FILTERS });
   const lang = useLanguageStore((s) => s.lang);
@@ -255,6 +256,45 @@ export default function HomePage() {
                 );
               })}
 
+              {/* Admin Tools - only visible for admin users */}
+              {user?.role === "admin" && (
+                <div className="border-t border-[var(--border-subtle)] mt-1">
+                  <button
+                    onClick={() => setAdminToolsOpen(!adminToolsOpen)}
+                    className="w-full flex items-center justify-between px-4 py-3 text-sm text-[var(--accent-amber)] hover:bg-[var(--bg-elevated)] transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Wrench className="w-5 h-5" />
+                      <span className="font-semibold">{t("adminTools")}</span>
+                    </div>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${adminToolsOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  {adminToolsOpen && (
+                    <div className="bg-[var(--bg-elevated)]/50 pb-1">
+                      <a href="/admin" onClick={() => setSidebarOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                        <Shield className="w-4 h-4 text-[var(--accent-red)]" />
+                        {t("adminPanel")}
+                      </a>
+                      <a href="/admin/instructors" onClick={() => setSidebarOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                        <Users className="w-4 h-4 text-[var(--accent-blue)]" />
+                        {t("manageInstructors")}
+                      </a>
+                      <a href="/admin#stats" onClick={() => setSidebarOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                        <BarChart3 className="w-4 h-4 text-[var(--accent-green)]" />
+                        {t("instructorStats")}
+                      </a>
+                      <a href="/admin#settings" onClick={() => setSidebarOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                        <Settings className="w-4 h-4 text-[var(--accent-amber)]" />
+                        {t("systemSettings")}
+                      </a>
+                    </div>
+                  )}
+                </div>
+              )}
             </nav>
             <div className="px-4 py-3 border-t border-[var(--border-subtle)]">
               <p className="text-[10px] text-[var(--text-muted)] text-center">{t("footer")}</p>

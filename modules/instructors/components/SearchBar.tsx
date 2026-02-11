@@ -488,24 +488,36 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
                 })}
               </div>
 
-              {/* Level picker integrated inside sub-nav for train/special */}
-              {(expandedTop === "train" || expandedTop === "special") && (
+              {/* Level picker with icons — shows only after selecting a sub-category (workshop type) */}
+              {(expandedTop === "train" || expandedTop === "special") && expandedSub && (
                 <div className="mt-2 pt-2 border-t border-[var(--accent-amber)]/15">
-                  <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex items-center justify-between mb-2">
                     <span className="text-[10px] font-semibold text-[var(--accent-amber)]">{t("trainingLevel")}</span>
                     {selectedLevel && (
                       <button onClick={() => onLevelChange(null)} className="text-[9px] text-[var(--accent-red)] hover:underline">{t("clear")}</button>
                     )}
                   </div>
-                  <div className="flex gap-1.5">
+                  <div className="grid grid-cols-4 gap-1.5">
                     {TRAINING_LEVELS.map((level) => {
                       const isLevelSelected = selectedLevel === level.id;
+                      const LevelIcon = level.icon;
                       return (
                         <button key={level.id} onClick={() => onLevelChange(isLevelSelected ? null : level.id)}
-                          className={`flex-1 px-1.5 py-1.5 rounded-lg border text-[9px] font-semibold transition-all text-center ${isLevelSelected ? "shadow-sm" : "border-[var(--border-subtle)]"}`}
-                          style={isLevelSelected ? { background: `${level.color}20`, borderColor: level.color, color: level.color } : { color: "var(--text-muted)" }}
+                          className="flex flex-col items-center gap-1 py-1.5 transition-all duration-200"
                         >
-                          {level.shortLabel}
+                          <div
+                            className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isLevelSelected ? "shadow-md scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
+                            style={{
+                              background: isLevelSelected ? `${level.color}20` : `${level.color}08`,
+                              borderColor: isLevelSelected ? level.color : `${level.color}30`,
+                              boxShadow: isLevelSelected ? `0 0 10px ${level.color}30` : undefined,
+                            }}
+                          >
+                            <LevelIcon className="w-4 h-4" style={{ color: level.color }} />
+                          </div>
+                          <span className={`text-[9px] leading-tight text-center font-medium ${isLevelSelected ? "font-bold" : "text-[var(--text-muted)]"}`} style={isLevelSelected ? { color: level.color } : undefined}>
+                            {level.shortLabel}
+                          </span>
                         </button>
                       );
                     })}

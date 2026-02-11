@@ -19,7 +19,7 @@ export const SKILL_LEVELS = [
 export const MOCK_INSTRUCTORS: Instructor[] = [
   {
     id: "1", name: "דוד כהן",
-    photo: "https://images.pexels.com/photos/8348457/pexels-photo-8348457.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/8348457/pexels-photo-8348457.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1847, eloInstruction: 1780, stars: 4.9,
     metrics: { service: 4.9, professionalism: 5.0, quality: 4.8 },
     trainees: 1243, trainingTypes: ["מתחמש חדש", "רענון", "חידוש", "ירי מקצועי", "סדנת ירי", "ערכות הסבה"],
@@ -48,7 +48,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "2", name: "מיכל אברהם",
-    photo: "https://images.pexels.com/photos/8348461/pexels-photo-8348461.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/8348461/pexels-photo-8348461.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1523, eloInstruction: 1720, stars: 4.8,
     metrics: { service: 5.0, professionalism: 4.8, quality: 4.7 },
     trainees: 856, trainingTypes: ["מתחמש חדש", "רענון", "אימוני קבוצות", "אימון נשים"],
@@ -72,7 +72,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "3", name: "אלון ברק",
-    photo: "https://images.pexels.com/photos/8348463/pexels-photo-8348463.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/8348463/pexels-photo-8348463.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1956, eloInstruction: 1850, stars: 5.0,
     metrics: { service: 4.8, professionalism: 5.0, quality: 5.0 },
     trainees: 2100, trainingTypes: ["ירי מקצועי", "סדנת ירי", "חידוש", "רענון", "אימון לילה", "כוונות השלכה", "מטרות נעות"],
@@ -95,7 +95,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "4", name: "יעל שפירא",
-    photo: "https://images.pexels.com/photos/3839523/pexels-photo-3839523.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5896842/pexels-photo-5896842.jpeg?w=300&h=300&fit=crop",
     verified: false, eloShooting: 1134, eloInstruction: 1340, stars: 4.6,
     metrics: { service: 4.7, professionalism: 4.5, quality: 4.6 },
     trainees: 412, trainingTypes: ["מתחמש חדש", "רענון"],
@@ -117,7 +117,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "5", name: "רון מלכה",
-    photo: "https://images.pexels.com/photos/5896842/pexels-photo-5896842.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/6153354/pexels-photo-6153354.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1689, eloInstruction: 1550, stars: 4.7,
     metrics: { service: 4.6, professionalism: 4.8, quality: 4.7 },
     trainees: 678, trainingTypes: ["רענון", "חידוש", "אימוני קבוצות", "ירי מקצועי", "סדנת ירי", "ערכות הסבה"],
@@ -140,7 +140,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "6", name: "נתן גולדשטיין",
-    photo: "https://images.pexels.com/photos/6153354/pexels-photo-6153354.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/7988083/pexels-photo-7988083.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1802, eloInstruction: 1690, stars: 4.8,
     metrics: { service: 4.9, professionalism: 4.9, quality: 4.7 },
     trainees: 1567, trainingTypes: ["מתחמש חדש", "רענון", "חידוש", "אימוני קבוצות", "סדנת ירי", "אימון לילה"],
@@ -164,7 +164,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   // --- New instructors ---
   {
     id: "7", name: "עומר חדד",
-    photo: "https://images.pexels.com/photos/7988083/pexels-photo-7988083.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/3839523/pexels-photo-3839523.jpeg?w=300&h=300&fit=crop",
     verified: false, eloShooting: 720, eloInstruction: 810, stars: 4.0,
     metrics: { service: 4.2, professionalism: 3.9, quality: 4.0 },
     trainees: 87, trainingTypes: ["מתחמש חדש", "רענון"],
@@ -186,7 +186,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "8", name: "שמעון פרץ",
-    photo: "https://images.pexels.com/photos/8348457/pexels-photo-8348457.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/3839524/pexels-photo-3839524.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1920, eloInstruction: 1420, stars: 4.5,
     metrics: { service: 4.2, professionalism: 4.9, quality: 4.5 },
     trainees: 340, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "מטרות נעות"],
@@ -209,7 +209,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "9", name: "לימור דיין",
-    photo: "https://images.pexels.com/photos/8348461/pexels-photo-8348461.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/1576937/pexels-photo-1576937.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1280, eloInstruction: 1650, stars: 4.9,
     metrics: { service: 5.0, professionalism: 4.8, quality: 4.9 },
     trainees: 1890, trainingTypes: ["מתחמש חדש", "רענון", "אימוני קבוצות", "חידוש", "אימון נשים"],
@@ -234,7 +234,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "10", name: "איתי מזרחי",
-    photo: "https://images.pexels.com/photos/8348463/pexels-photo-8348463.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/1656684/pexels-photo-1656684.jpeg?w=300&h=300&fit=crop",
     verified: false, eloShooting: 890, eloInstruction: 950, stars: 4.2,
     metrics: { service: 4.3, professionalism: 4.1, quality: 4.2 },
     trainees: 156, trainingTypes: ["מתחמש חדש", "רענון"],
@@ -255,7 +255,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "11", name: "אבי טל",
-    photo: "https://images.pexels.com/photos/3839523/pexels-photo-3839523.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/1582493/pexels-photo-1582493.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1750, eloInstruction: 1580, stars: 4.7,
     metrics: { service: 4.7, professionalism: 4.8, quality: 4.6 },
     trainees: 920, trainingTypes: ["רענון", "חידוש", "ירי מקצועי", "סדנת ירי"],
@@ -278,7 +278,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "12", name: "תמר רוזנפלד",
-    photo: "https://images.pexels.com/photos/5896842/pexels-photo-5896842.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/6937816/pexels-photo-6937816.jpeg?w=300&h=300&fit=crop",
     verified: false, eloShooting: 610, eloInstruction: 720, stars: 3.8,
     metrics: { service: 4.0, professionalism: 3.7, quality: 3.8 },
     trainees: 45, trainingTypes: ["מתחמש חדש"],
@@ -299,7 +299,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "13", name: "יגאל נחום",
-    photo: "https://images.pexels.com/photos/6153354/pexels-photo-6153354.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/8363028/pexels-photo-8363028.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1480, eloInstruction: 1730, stars: 4.9,
     metrics: { service: 5.0, professionalism: 4.9, quality: 4.8 },
     trainees: 2350, trainingTypes: ["מתחמש חדש", "רענון", "חידוש", "אימוני קבוצות", "ירי מקצועי", "סדנת ירי", "כוונות השלכה"],
@@ -323,7 +323,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "14", name: "אור כספי",
-    photo: "https://images.pexels.com/photos/7988083/pexels-photo-7988083.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/8364668/pexels-photo-8364668.jpeg?w=300&h=300&fit=crop",
     verified: false, eloShooting: 1050, eloInstruction: 1100, stars: 4.3,
     metrics: { service: 4.4, professionalism: 4.2, quality: 4.3 },
     trainees: 210, trainingTypes: ["מתחמש חדש", "רענון", "אימוני קבוצות"],
@@ -344,7 +344,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "15", name: "רינת שרון",
-    photo: "https://images.pexels.com/photos/8348457/pexels-photo-8348457.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/8364670/pexels-photo-8364670.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1600, eloInstruction: 1480, stars: 4.6,
     metrics: { service: 4.5, professionalism: 4.7, quality: 4.6 },
     trainees: 530, trainingTypes: ["רענון", "חידוש", "ירי מקצועי", "סדנת ירי", "אימון לילה"],
@@ -367,7 +367,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   // --- 20 New instructors ---
   {
     id: "16", name: "גיא ממן",
-    photo: "https://images.pexels.com/photos/8348461/pexels-photo-8348461.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/8364678/pexels-photo-8364678.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1710, eloInstruction: 1620, stars: 4.8,
     metrics: { service: 4.9, professionalism: 4.7, quality: 4.8 },
     trainees: 980, trainingTypes: ["מתחמש חדש", "רענון", "ירי מקצועי", "סדנת ירי", "ערכות הסבה"],
@@ -396,7 +396,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "17", name: "נעמה ברגר",
-    photo: "https://images.pexels.com/photos/8348463/pexels-photo-8348463.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/8364680/pexels-photo-8364680.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1340, eloInstruction: 1780, stars: 4.9,
     metrics: { service: 5.0, professionalism: 5.0, quality: 4.8 },
     trainees: 1650, trainingTypes: ["מתחמש חדש", "רענון", "אימוני קבוצות", "אימון נשים"],
@@ -428,7 +428,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "18", name: "עידן צור",
-    photo: "https://images.pexels.com/photos/3839523/pexels-photo-3839523.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5473950/pexels-photo-5473950.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1890, eloInstruction: 1550, stars: 4.7,
     metrics: { service: 4.5, professionalism: 4.8, quality: 4.7 },
     trainees: 720, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "אימון לילה", "כוונות השלכה", "מטרות נעות"],
@@ -457,7 +457,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "19", name: "שי אדרי",
-    photo: "https://images.pexels.com/photos/5896842/pexels-photo-5896842.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5473955/pexels-photo-5473955.jpeg?w=300&h=300&fit=crop",
     verified: false, eloShooting: 980, eloInstruction: 1150, stars: 4.4,
     metrics: { service: 4.5, professionalism: 4.3, quality: 4.4 },
     trainees: 290, trainingTypes: ["מתחמש חדש", "רענון", "חידוש"],
@@ -482,7 +482,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "20", name: "מאיה לוי",
-    photo: "https://images.pexels.com/photos/6153354/pexels-photo-6153354.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5473957/pexels-photo-5473957.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1560, eloInstruction: 1810, stars: 5.0,
     metrics: { service: 5.0, professionalism: 5.0, quality: 5.0 },
     trainees: 2800, trainingTypes: ["מתחמש חדש", "רענון", "אימוני קבוצות", "סדנת ירי", "אימון נשים", "חידוש"],
@@ -515,7 +515,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "21", name: "אמיר סעדה",
-    photo: "https://images.pexels.com/photos/7988083/pexels-photo-7988083.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5473960/pexels-photo-5473960.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1830, eloInstruction: 1700, stars: 4.8,
     metrics: { service: 4.7, professionalism: 4.9, quality: 4.8 },
     trainees: 1150, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "ערכות הסבה", "כוונות השלכה", "מטרות נעות"],
@@ -545,7 +545,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "22", name: "דניאל אזולאי",
-    photo: "https://images.pexels.com/photos/8348457/pexels-photo-8348457.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5473962/pexels-photo-5473962.jpeg?w=300&h=300&fit=crop",
     verified: false, eloShooting: 850, eloInstruction: 1020, stars: 4.3,
     metrics: { service: 4.5, professionalism: 4.1, quality: 4.3 },
     trainees: 180, trainingTypes: ["מתחמש חדש", "רענון"],
@@ -570,7 +570,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "23", name: "הילה מרום",
-    photo: "https://images.pexels.com/photos/8348461/pexels-photo-8348461.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5473965/pexels-photo-5473965.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1420, eloInstruction: 1690, stars: 4.9,
     metrics: { service: 5.0, professionalism: 4.9, quality: 4.8 },
     trainees: 1420, trainingTypes: ["מתחמש חדש", "אימוני קבוצות", "אימון נשים", "רענון"],
@@ -598,7 +598,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "24", name: "תום ביטון",
-    photo: "https://images.pexels.com/photos/8348463/pexels-photo-8348463.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474021/pexels-photo-5474021.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1960, eloInstruction: 1430, stars: 4.6,
     metrics: { service: 4.3, professionalism: 4.9, quality: 4.6 },
     trainees: 450, trainingTypes: ["ירי מקצועי", "סדנת ירי", "אימון לילה", "ערכות הסבה", "מטרות נעות"],
@@ -628,7 +628,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "25", name: "סבטלנה קוזלוב",
-    photo: "https://images.pexels.com/photos/3839523/pexels-photo-3839523.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474024/pexels-photo-5474024.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1580, eloInstruction: 1860, stars: 4.9,
     metrics: { service: 5.0, professionalism: 4.9, quality: 4.9 },
     trainees: 2100, trainingTypes: ["מתחמש חדש", "רענון", "חידוש", "אימון נשים", "אימוני קבוצות"],
@@ -656,7 +656,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "26", name: "אסף דהן",
-    photo: "https://images.pexels.com/photos/5896842/pexels-photo-5896842.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474028/pexels-photo-5474028.jpeg?w=300&h=300&fit=crop",
     verified: false, eloShooting: 1100, eloInstruction: 1250, stars: 4.5,
     metrics: { service: 4.6, professionalism: 4.4, quality: 4.5 },
     trainees: 340, trainingTypes: ["מתחמש חדש", "רענון", "חידוש"],
@@ -681,7 +681,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "27", name: "מור בן דוד",
-    photo: "https://images.pexels.com/photos/6153354/pexels-photo-6153354.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474030/pexels-photo-5474030.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1450, eloInstruction: 1520, stars: 4.7,
     metrics: { service: 4.8, professionalism: 4.7, quality: 4.6 },
     trainees: 680, trainingTypes: ["רענון", "חידוש", "אימוני קבוצות", "אימון נשים"],
@@ -708,7 +708,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "28", name: "יוסף חמו",
-    photo: "https://images.pexels.com/photos/7988083/pexels-photo-7988083.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474032/pexels-photo-5474032.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1770, eloInstruction: 1650, stars: 4.8,
     metrics: { service: 4.8, professionalism: 4.9, quality: 4.7 },
     trainees: 1300, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "אימון לילה", "ערכות הסבה", "כוונות השלכה"],
@@ -741,7 +741,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "29", name: "ליאור פרידמן",
-    photo: "https://images.pexels.com/photos/8348457/pexels-photo-8348457.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474035/pexels-photo-5474035.jpeg?w=300&h=300&fit=crop",
     verified: false, eloShooting: 920, eloInstruction: 1080, stars: 4.2,
     metrics: { service: 4.3, professionalism: 4.1, quality: 4.2 },
     trainees: 165, trainingTypes: ["מתחמש חדש", "חידוש"],
@@ -765,7 +765,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "30", name: "ענת יוסף",
-    photo: "https://images.pexels.com/photos/8348461/pexels-photo-8348461.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474037/pexels-photo-5474037.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1650, eloInstruction: 1570, stars: 4.7,
     metrics: { service: 4.7, professionalism: 4.8, quality: 4.6 },
     trainees: 890, trainingTypes: ["רענון", "ירי מקצועי", "סדנת ירי", "אימון נשים", "אימוני קבוצות"],
@@ -793,7 +793,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "31", name: "ניסים אוחנה",
-    photo: "https://images.pexels.com/photos/8348463/pexels-photo-8348463.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474040/pexels-photo-5474040.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1500, eloInstruction: 1460, stars: 4.6,
     metrics: { service: 4.6, professionalism: 4.6, quality: 4.5 },
     trainees: 580, trainingTypes: ["מתחמש חדש", "רענון", "חידוש", "ערכות הסבה"],
@@ -820,7 +820,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "32", name: "אורית פלד",
-    photo: "https://images.pexels.com/photos/3839523/pexels-photo-3839523.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474042/pexels-photo-5474042.jpeg?w=300&h=300&fit=crop",
     verified: false, eloShooting: 780, eloInstruction: 950, stars: 4.1,
     metrics: { service: 4.4, professionalism: 3.9, quality: 4.1 },
     trainees: 95, trainingTypes: ["מתחמש חדש", "אימון נשים"],
@@ -843,7 +843,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "33", name: "בועז שגיא",
-    photo: "https://images.pexels.com/photos/5896842/pexels-photo-5896842.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474044/pexels-photo-5474044.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1850, eloInstruction: 1750, stars: 4.8,
     metrics: { service: 4.7, professionalism: 5.0, quality: 4.8 },
     trainees: 1780, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "אימון לילה", "כוונות השלכה", "ערכות הסבה", "מטרות נעות"],
@@ -875,7 +875,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "34", name: "כרמל עוז",
-    photo: "https://images.pexels.com/photos/6153354/pexels-photo-6153354.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474047/pexels-photo-5474047.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1380, eloInstruction: 1530, stars: 4.7,
     metrics: { service: 4.9, professionalism: 4.6, quality: 4.7 },
     trainees: 750, trainingTypes: ["מתחמש חדש", "רענון", "אימון נשים", "חידוש"],
@@ -901,7 +901,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "35", name: "משה אליהו",
-    photo: "https://images.pexels.com/photos/7988083/pexels-photo-7988083.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/5474050/pexels-photo-5474050.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1680, eloInstruction: 1590, stars: 4.6,
     metrics: { service: 4.5, professionalism: 4.7, quality: 4.6 },
     trainees: 830, trainingTypes: ["רענון", "חידוש", "ירי מקצועי", "סדנת ירי", "כוונות השלכה"],
