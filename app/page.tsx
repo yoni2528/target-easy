@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Crosshair, Menu, X, LogIn, Shield, LayoutDashboard, LogOut } from "lucide-react";
 import { useAuthStore } from "@/modules/auth";
 import { MOCK_INSTRUCTORS, SearchBar, InstructorCard } from "@/modules/instructors";
-import { QuizCTA } from "@/modules/quiz";
+
 import { BottomNav } from "@/components/BottomNav";
 
 export default function HomePage() {
@@ -100,11 +100,6 @@ export default function HomePage() {
             </p>
           </motion.div>
         </div>
-      </div>
-
-      {/* Quiz CTA */}
-      <div className="px-4 max-w-2xl mx-auto mb-4">
-        <QuizCTA />
       </div>
 
       {/* Search */}
