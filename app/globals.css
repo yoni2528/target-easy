@@ -65,6 +65,30 @@ body {
 .glow-green { box-shadow: 0 0 20px rgba(74,222,128,0.15), 0 0 60px rgba(74,222,128,0.05); }
 .glow-amber { box-shadow: 0 0 20px rgba(251,191,36,0.15), 0 0 60px rgba(251,191,36,0.05); }
 
+@keyframes slide-in-right {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+.animate-slide-in-right { animation: slide-in-right 0.25s ease-out; }
+
+[data-theme="light"] {
+  --bg-primary: #f5f7f6;
+  --bg-secondary: #edf0ee;
+  --bg-card: #ffffff;
+  --bg-elevated: #f0f3f1;
+  --bg-input: #f0f3f1;
+  --border-subtle: #d4ddd7;
+  --border-default: #bcc8bf;
+  --text-primary: #1a2e1f;
+  --text-secondary: #4a6650;
+  --text-muted: #7a9a82;
+  --accent-green: #16a34a;
+  --accent-green-dim: #15803d;
+  --accent-amber: #d97706;
+  --accent-red: #dc2626;
+  --accent-blue: #2563eb;
+}
+
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }

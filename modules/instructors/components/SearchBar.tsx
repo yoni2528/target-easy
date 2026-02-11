@@ -65,7 +65,19 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
 
   return (
     <div className="space-y-4">
-      {/* Circular category icons - full width, evenly spaced */}
+      {/* 1. Search bar - top */}
+      <div className="relative">
+        <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--accent-green)]" />
+        <input
+          type="text"
+          placeholder="מה אתה מחפש?"
+          value={query}
+          onChange={(e) => { setQuery(e.target.value); onSearch(e.target.value); }}
+          className="w-full h-14 pr-12 pl-4 rounded-2xl bg-[var(--bg-card)] border-2 border-[var(--border-default)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-base font-medium focus:outline-none focus:border-[var(--accent-green)] focus:shadow-[0_0_20px_rgba(74,222,128,0.15)] transition-all"
+        />
+      </div>
+
+      {/* 2. Category icons - middle */}
       <AnimatePresence mode="wait">
         <motion.div
           key={activePath.join("/")}
@@ -74,13 +86,9 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
         >
-          {/* Back button when in sub-level */}
           {isSubLevel && (
             <div className="flex items-center gap-2 mb-3">
-              <button
-                onClick={handleBack}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-xs"
-              >
+              <button onClick={handleBack} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-xs">
                 <ChevronRight className="w-3 h-3" />
                 חזור
               </button>
@@ -93,7 +101,6 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
             </div>
           )}
 
-          {/* Icons grid */}
           <div className={`grid gap-2 ${currentNodes.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
             {currentNodes.map((node) => {
               const Icon = node.icon;
@@ -101,17 +108,9 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
               const hasChildren = node.children && node.children.length > 0;
 
               return (
-                <button
-                  key={node.id}
-                  onClick={() => handleNodeClick(node)}
-                  className="flex flex-col items-center gap-2 py-2 transition-all duration-200"
-                >
+                <button key={node.id} onClick={() => handleNodeClick(node)} className="flex flex-col items-center gap-2 py-2 transition-all duration-200">
                   <div
-                    className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${
-                      isSelected
-                        ? "shadow-lg scale-110"
-                        : "border-[var(--border-subtle)] hover:scale-105"
-                    }`}
+                    className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isSelected ? "shadow-lg scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
                     style={{
                       background: isSelected ? `${node.color}20` : `${node.color}08`,
                       borderColor: isSelected ? node.color : `${node.color}30`,
@@ -120,12 +119,7 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
                   >
                     <Icon className="w-6 h-6" style={{ color: node.color }} />
                   </div>
-                  <span
-                    className={`text-[11px] leading-tight text-center font-medium ${
-                      isSelected ? "font-bold" : "text-[var(--text-secondary)]"
-                    }`}
-                    style={isSelected ? { color: node.color } : undefined}
-                  >
+                  <span className={`text-[11px] leading-tight text-center font-medium ${isSelected ? "font-bold" : "text-[var(--text-secondary)]"}`} style={isSelected ? { color: node.color } : undefined}>
                     {node.label}
                   </span>
                   {hasChildren && !isSubLevel && (
@@ -138,38 +132,21 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
         </motion.div>
       </AnimatePresence>
 
-      {/* Search bar - placeholder changes per category */}
-      <div className="relative">
-        <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--accent-green)]" />
-        <input
-          type="text"
-          placeholder="מה אתה מחפש?"
-          value={query}
-          onChange={(e) => { setQuery(e.target.value); onSearch(e.target.value); }}
-          className="w-full h-14 pr-12 pl-4 rounded-2xl bg-[var(--bg-card)] border-2 border-[var(--border-default)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-base font-medium focus:outline-none focus:border-[var(--accent-green)] focus:shadow-[0_0_20px_rgba(74,222,128,0.15)] transition-all"
-        />
-      </div>
-
-      {/* Rating vs Distance slider */}
+      {/* 3. Slider - bottom */}
       <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-3">
         <div className="flex items-center justify-between text-xs mb-3">
           <div className="flex items-center gap-1.5">
             <div className={`w-2.5 h-2.5 rounded-full ${sortMode < 40 ? "bg-[var(--accent-amber)]" : "bg-[var(--accent-amber)]/30"}`} />
-            <span className={`font-semibold ${sortMode < 40 ? "text-[var(--accent-amber)]" : "text-[var(--text-muted)]"}`}>
-              לפי דירוג
-            </span>
+            <span className={`font-semibold ${sortMode < 40 ? "text-[var(--accent-amber)]" : "text-[var(--text-muted)]"}`}>לפי דירוג</span>
           </div>
           <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[var(--bg-elevated)] text-[var(--text-secondary)]" style={{ fontFamily: "var(--font-rubik)" }}>
             {sortMode < 40 ? "דירוג" : sortMode > 60 ? "מרחק" : "מאוזן"}
           </span>
           <div className="flex items-center gap-1.5">
-            <span className={`font-semibold ${sortMode > 60 ? "text-[var(--accent-blue)]" : "text-[var(--text-muted)]"}`}>
-              לפי מרחק
-            </span>
+            <span className={`font-semibold ${sortMode > 60 ? "text-[var(--accent-blue)]" : "text-[var(--text-muted)]"}`}>לפי מרחק</span>
             <div className={`w-2.5 h-2.5 rounded-full ${sortMode > 60 ? "bg-[var(--accent-blue)]" : "bg-[var(--accent-blue)]/30"}`} />
           </div>
         </div>
-        {/* Custom slider track */}
         <div
           className="relative h-8 flex items-center cursor-pointer select-none"
           onPointerDown={(e) => {

@@ -1,20 +1,18 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
-import { Crosshair, Menu, X, LogIn, Shield, LayoutDashboard, LogOut } from "lucide-react";
+import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe } from "lucide-react";
 import { useAuthStore } from "@/modules/auth";
 import { MOCK_INSTRUCTORS, SearchBar, InstructorCard } from "@/modules/instructors";
-
 import { BottomNav } from "@/components/BottomNav";
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortMode, setSortMode] = useState(50);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const user = useAuthStore((s) => s.user);
-  const logout = useAuthStore((s) => s.logout);
 
   const filtered = useMemo(() => {
     let results = MOCK_INSTRUCTORS;
@@ -32,6 +30,23 @@ export default function HomePage() {
     return results;
   }, [query, selectedCategory, sortMode]);
 
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.setAttribute("data-theme", darkMode ? "light" : "dark");
+  };
+
+  const sidebarItems = [
+    { icon: darkMode ? Sun : Moon, label: darkMode ? "תצוגה בהירה" : "תצוגה כהה", onClick: toggleTheme },
+    { icon: Settings, label: "הגדרות", href: "#" },
+    { icon: LogIn, label: "התחברות למדריכים", href: "/login" },
+    { icon: Megaphone, label: "קידום ממומן ב-EasyTarget", href: "#" },
+    { icon: UserPlus, label: "הצטרפות ל-EasyTarget", href: "#" },
+    { icon: Info, label: "אודות EasyTarget", href: "#" },
+    { icon: Share2, label: "שתפו את EasyTarget עם חברים", onClick: () => { if (navigator.share) navigator.share({ title: "EasyTarget", url: window.location.href }); } },
+    { icon: Phone, label: "יצירת קשר", href: "#" },
+    { icon: Globe, label: "English", href: "#" },
+  ];
+
   return (
     <div className="min-h-screen pb-20">
       {/* Header */}
@@ -42,68 +57,82 @@ export default function HomePage() {
               <Crosshair className="w-6 h-6 text-[var(--accent-green)]" strokeWidth={1.5} />
             </div>
             <h1 className="text-base font-bold tracking-tight" style={{ fontFamily: "var(--font-rubik)" }}>
-              <span className="text-[var(--accent-green)]">Target</span>
-              <span className="text-[var(--text-primary)]">-Easy</span>
+              <span className="text-[var(--accent-green)]">Easy</span>
+              <span className="text-[var(--text-primary)]">Target</span>
             </h1>
           </div>
           <button
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() => setSidebarOpen(true)}
             className="w-9 h-9 rounded-lg border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
           >
-            {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            <Menu className="w-5 h-5" />
           </button>
         </div>
-        {menuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-[var(--bg-card)] border-b border-[var(--border-subtle)] shadow-lg z-50">
-            <div className="max-w-2xl mx-auto px-4 py-3 space-y-1">
-              {user ? (
-                <>
-                  <p className="text-[10px] text-[var(--text-muted)] px-3 py-1">{user.name} ({user.role === "admin" ? "מנהל" : "מדריך"})</p>
-                  {user.role === "admin" && (
-                    <a href="/admin" className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors text-sm text-[var(--text-secondary)]">
-                      <Shield className="w-4 h-4 text-[var(--accent-red)]" /> פאנל מנהל
-                    </a>
-                  )}
-                  {user.role === "instructor" && (
-                    <a href="/dashboard" className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors text-sm text-[var(--text-secondary)]">
-                      <LayoutDashboard className="w-4 h-4 text-[var(--accent-blue)]" /> לוח בקרה
-                    </a>
-                  )}
-                  <button onClick={() => { logout(); setMenuOpen(false); }} className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors text-sm text-[var(--accent-red)]">
-                    <LogOut className="w-4 h-4" /> התנתק
-                  </button>
-                </>
-              ) : (
-                <a href="/login" className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors text-sm text-[var(--text-secondary)]">
-                  <LogIn className="w-4 h-4 text-[var(--accent-green)]" /> כניסה למדריכים ומנהלים
-                </a>
-              )}
-            </div>
-          </div>
-        )}
       </header>
 
-      {/* Hero */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: "radial-gradient(circle at center, var(--accent-green) 1px, transparent 1px)",
-          backgroundSize: "30px 30px"
-        }} />
-        <div className="relative px-4 pt-6 pb-4 max-w-2xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className="text-2xl font-extrabold leading-tight">
-              מצא את <span className="text-[var(--accent-green)]">מדריך הירי</span><br />
-              המושלם עבורך
-            </h2>
-            <p className="text-sm text-[var(--text-muted)] mt-2">
-              {MOCK_INSTRUCTORS.length} מדריכים מוסמכים · כל רחבי הארץ
-            </p>
-          </motion.div>
-        </div>
-      </div>
+      {/* Sidebar overlay */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-50" onClick={() => setSidebarOpen(false)}>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div
+            className="absolute top-0 left-0 bottom-0 w-72 bg-[var(--bg-card)] border-l border-[var(--border-subtle)] shadow-2xl flex flex-col animate-slide-in-right"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Sidebar header */}
+            <div className="flex items-center justify-between px-4 h-14 border-b border-[var(--border-subtle)]">
+              <div className="flex items-center gap-2">
+                <Crosshair className="w-5 h-5 text-[var(--accent-green)]" strokeWidth={1.5} />
+                <span className="text-sm font-bold" style={{ fontFamily: "var(--font-rubik)" }}>
+                  <span className="text-[var(--accent-green)]">Easy</span>
+                  <span className="text-[var(--text-primary)]">Target</span>
+                </span>
+              </div>
+              <button onClick={() => setSidebarOpen(false)} className="w-8 h-8 rounded-lg border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
 
-      {/* Search */}
-      <div className="px-4 max-w-2xl mx-auto">
+            {/* User info if logged in */}
+            {user && (
+              <div className="px-4 py-3 border-b border-[var(--border-subtle)] bg-[var(--bg-elevated)]">
+                <p className="text-sm font-semibold">{user.name}</p>
+                <p className="text-[10px] text-[var(--text-muted)]">{user.role === "admin" ? "מנהל מערכת" : "מדריך"}</p>
+              </div>
+            )}
+
+            {/* Menu items */}
+            <nav className="flex-1 py-2 overflow-y-auto">
+              {sidebarItems.map((item, i) => {
+                const Icon = item.icon;
+                if (item.onClick) {
+                  return (
+                    <button key={i} onClick={() => { item.onClick(); setSidebarOpen(false); }}
+                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                      <Icon className="w-5 h-5 text-[var(--text-muted)]" />
+                      {item.label}
+                    </button>
+                  );
+                }
+                return (
+                  <a key={i} href={item.href} onClick={() => setSidebarOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                    <Icon className="w-5 h-5 text-[var(--text-muted)]" />
+                    {item.label}
+                  </a>
+                );
+              })}
+            </nav>
+
+            {/* Footer */}
+            <div className="px-4 py-3 border-t border-[var(--border-subtle)]">
+              <p className="text-[10px] text-[var(--text-muted)] text-center">EasyTarget v1.0 · אחים עם נשק</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Search + Icons + Slider */}
+      <div className="px-4 pt-4 max-w-2xl mx-auto">
         <SearchBar
           onSearch={setQuery}
           onCategorySelect={setSelectedCategory}
