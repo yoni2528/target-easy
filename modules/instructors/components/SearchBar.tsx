@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { TRAINING_CATEGORIES, SKILL_LEVELS } from "../lib/mock-data";
+import { CATEGORY_ICON_MAP } from "../lib/category-icons";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -73,7 +74,9 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
                 : "bg-[var(--bg-card)] border-[var(--border-subtle)] hover:border-[var(--border-default)]"
             }`}
           >
-            <span className="text-xl">{cat.icon}</span>
+            <span className="text-xl flex items-center justify-center">
+              {(() => { const Icon = CATEGORY_ICON_MAP[cat.icon]; return Icon ? <Icon className="w-5 h-5" /> : null; })()}
+            </span>
             <span className={`text-[10px] font-medium leading-tight text-center ${
               selectedCategory === cat.id ? "text-[var(--accent-green)]" : "text-[var(--text-secondary)]"
             }`}>

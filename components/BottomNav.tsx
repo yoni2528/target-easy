@@ -1,13 +1,12 @@
 "use client";
 
-import { Search, CalendarDays, User } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const tabs = [
   { href: "/", label: "חיפוש", icon: Search },
-  { href: "/my-trainings", label: "האימונים שלי", icon: CalendarDays },
-  { href: "/profile", label: "פרופיל", icon: User },
+  { href: "/quiz", label: "שאלון התאמה", icon: Sparkles },
 ];
 
 export function BottomNav() {

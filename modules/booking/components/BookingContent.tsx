@@ -236,11 +236,29 @@ export function BookingContent() {
                 </div>
               </div>
 
-              {/* Payment placeholder */}
-              <button className="w-full mt-4 h-12 rounded-xl border border-[var(--accent-amber)]/30 bg-[var(--accent-amber)]/5 text-[var(--accent-amber)] font-medium text-sm flex items-center justify-center gap-2">
-                <CreditCard className="w-4 h-4" />
-                תשלום דמי רצינות - ₪50
-              </button>
+              {/* Payment section */}
+              <div className="mt-4 bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-4">
+                <h3 className="text-sm font-semibold flex items-center gap-2 mb-3">
+                  <CreditCard className="w-4 h-4 text-[var(--accent-amber)]" />
+                  תשלום מאובטח
+                </h3>
+                <div className="space-y-3 opacity-50 pointer-events-none">
+                  <input
+                    type="text"
+                    placeholder="מספר כרטיס אשראי"
+                    disabled
+                    className="w-full h-10 px-3 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-sm text-[var(--text-muted)] placeholder-[var(--text-muted)]"
+                    dir="ltr"
+                  />
+                  <div className="flex gap-2">
+                    <input type="text" placeholder="MM/YY" disabled className="flex-1 h-10 px-3 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-sm text-[var(--text-muted)]" dir="ltr" />
+                    <input type="text" placeholder="CVV" disabled className="w-20 h-10 px-3 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-sm text-[var(--text-muted)]" dir="ltr" />
+                  </div>
+                </div>
+                <div className="mt-3 p-2 rounded-lg bg-[var(--accent-amber)]/5 border border-[var(--accent-amber)]/20 text-center">
+                  <span className="text-[10px] font-medium text-[var(--accent-amber)]">בקרוב - תשלום מאובטח באשראי</span>
+                </div>
+              </div>
 
               <div className="flex gap-3 mt-4">
                 <button onClick={() => setStep(2)} className="w-12 h-12 rounded-xl border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">

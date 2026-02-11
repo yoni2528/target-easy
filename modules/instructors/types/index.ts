@@ -3,7 +3,8 @@ export interface Instructor {
   name: string;
   photo: string;
   verified: boolean;
-  elo: number;
+  eloShooting: number;
+  eloInstruction: number;
   stars: number;
   metrics: { service: number; professionalism: number; quality: number };
   trainees: number;
@@ -17,6 +18,12 @@ export interface Instructor {
   experience: number;
   reviews: Review[];
   gallery: string[];
+  videos?: VideoDemo[];
+  socialLinks?: {
+    instagram?: string;
+    facebook?: string;
+    youtube?: string;
+  };
 }
 
 export interface Review {
@@ -26,4 +33,12 @@ export interface Review {
   text: string;
   rating: number;
   verified: boolean;
+}
+
+export interface VideoDemo {
+  id: string;
+  title: string;
+  thumbnail: string;
+  platform: "youtube" | "instagram" | "facebook" | "local";
+  url?: string;
 }

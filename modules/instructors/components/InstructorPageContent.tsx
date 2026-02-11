@@ -1,9 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Star, CheckCircle, MapPin, Users, Clock, Award, Shield, Calendar, Navigation, Phone } from "lucide-react";
+import { ArrowRight, Star, CheckCircle, MapPin, Users, Clock, Award, Shield, Calendar, Navigation, Phone, Crosshair, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { MOCK_INSTRUCTORS } from "../lib/mock-data";
+import { getShootingLevel, getInstructionLevel } from "../lib/elo-utils";
+import { VideoSection } from "./VideoSection";
 import { BottomNav } from "@/components/BottomNav";
 
 export default function InstructorPageContent({ id }: { id: string }) {
@@ -65,20 +67,28 @@ export default function InstructorPageContent({ id }: { id: string }) {
                 )}
               </div>
 
-              {/* ELO */}
-              <div className="flex items-center gap-2 mt-2">
-                <div className="px-2.5 py-1 rounded-lg bg-[var(--accent-amber)]/10 border border-[var(--accent-amber)]/20">
-                  <span className="text-lg font-bold text-[var(--accent-amber)]" style={{ fontFamily: "var(--font-rubik)" }}>
-                    {instructor.elo}
+              {/* Dual ELO */}
+              <div className="flex flex-wrap items-center gap-2 mt-2">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[var(--accent-amber)]/10 border border-[var(--accent-amber)]/20">
+                  <Crosshair className="w-3.5 h-3.5 text-[var(--accent-amber)]" />
+                  <span className="text-base font-bold text-[var(--accent-amber)]" style={{ fontFamily: "var(--font-rubik)" }}>
+                    {instructor.eloShooting}
                   </span>
-                  <span className="text-[10px] text-[var(--accent-amber)]/70 mr-1">ELO</span>
+                  <span className="text-[10px] text-[var(--accent-amber)]/70">{getShootingLevel(instructor.eloShooting).label}</span>
                 </div>
-                <div className="flex items-center gap-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className={`w-4 h-4 ${i < Math.floor(instructor.stars) ? "text-[var(--accent-amber)] fill-[var(--accent-amber)]" : "text-[var(--border-default)]"}`} />
-                  ))}
-                  <span className="text-sm text-[var(--text-secondary)] mr-1">{instructor.stars}</span>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[var(--accent-blue)]/10 border border-[var(--accent-blue)]/20">
+                  <GraduationCap className="w-3.5 h-3.5 text-[var(--accent-blue)]" />
+                  <span className="text-base font-bold text-[var(--accent-blue)]" style={{ fontFamily: "var(--font-rubik)" }}>
+                    {instructor.eloInstruction}
+                  </span>
+                  <span className="text-[10px] text-[var(--accent-blue)]/70">{getInstructionLevel(instructor.eloInstruction).label}</span>
                 </div>
+              </div>
+              <div className="flex items-center gap-0.5 mt-1.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className={`w-4 h-4 ${i < Math.floor(instructor.stars) ? "text-[var(--accent-amber)] fill-[var(--accent-amber)]" : "text-[var(--border-default)]"}`} />
+                ))}
+                <span className="text-sm text-[var(--text-secondary)] mr-1">{instructor.stars}</span>
               </div>
 
               {/* Quick stats */}
@@ -152,6 +162,9 @@ export default function InstructorPageContent({ id }: { id: string }) {
             </div>
           </div>
         )}
+
+        {/* Videos + Social */}
+        <VideoSection instructor={instructor} />
 
         {/* Reviews */}
         <div className="px-4 mt-5">

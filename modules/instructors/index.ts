@@ -9,7 +9,12 @@ export {
   AVAILABLE_DATES,
 } from "./lib/mock-data";
 
+// Utils
+export { getShootingLevel, getInstructionLevel, SHOOTING_LEVELS, INSTRUCTION_LEVELS } from "./lib/elo-utils";
+export { CATEGORY_ICON_MAP } from "./lib/category-icons";
+
 // Components
 export { SearchBar } from "./components/SearchBar";
 export { InstructorCard } from "./components/InstructorCard";
 export { default as InstructorPageContent } from "./components/InstructorPageContent";
+export { VideoSection } from "./components/VideoSection";

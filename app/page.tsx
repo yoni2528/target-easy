@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Crosshair, Menu, X } from "lucide-react";
 import { MOCK_INSTRUCTORS, SearchBar, InstructorCard } from "@/modules/instructors";
+import { QuizCTA } from "@/modules/quiz";
 import { BottomNav } from "@/components/BottomNav";
 
 export default function HomePage() {
@@ -21,7 +22,7 @@ export default function HomePage() {
       );
     }
     if (sortMode < 40) {
-      results = [...results].sort((a, b) => b.elo - a.elo);
+      results = [...results].sort((a, b) => b.eloInstruction - a.eloInstruction);
     } else if (sortMode > 60) {
       results = [...results].sort((a, b) => a.city.localeCompare(b.city));
     }
@@ -68,6 +69,11 @@ export default function HomePage() {
             </p>
           </motion.div>
         </div>
+      </div>
+
+      {/* Quiz CTA */}
+      <div className="px-4 max-w-2xl mx-auto mb-4">
+        <QuizCTA />
       </div>
 
       {/* Search */}

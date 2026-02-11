@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, CheckCircle, MapPin, Users } from "lucide-react";
+import { Star, CheckCircle, MapPin, Users, Crosshair, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import type { Instructor } from "../types";
+import { getShootingLevel, getInstructionLevel } from "../lib/elo-utils";
 
 export function InstructorCard({ instructor, index }: { instructor: Instructor; index: number }) {
   return (
@@ -40,10 +41,15 @@ export function InstructorCard({ instructor, index }: { instructor: Instructor; 
                 <h3 className="font-bold text-[var(--text-primary)] truncate">{instructor.name}</h3>
               </div>
 
-              {/* ELO + Stars */}
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-sm font-bold text-[var(--accent-amber)]" style={{ fontFamily: "var(--font-rubik)" }}>
-                  {instructor.elo}
+              {/* Dual ELO Badges + Stars */}
+              <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-[var(--accent-amber)]/10 border border-[var(--accent-amber)]/20 text-[var(--accent-amber)]" style={{ fontFamily: "var(--font-rubik)" }}>
+                  <Crosshair className="w-3 h-3" />
+                  {instructor.eloShooting}
+                </span>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-[var(--accent-blue)]/10 border border-[var(--accent-blue)]/20 text-[var(--accent-blue)]" style={{ fontFamily: "var(--font-rubik)" }}>
+                  <GraduationCap className="w-3 h-3" />
+                  {instructor.eloInstruction}
                 </span>
                 <div className="flex items-center gap-0.5">
                   {[...Array(5)].map((_, i) => (
