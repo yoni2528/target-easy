@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Star, CheckCircle, MapPin, Users, Clock, Award, Shield, Calendar, Navigation, Phone, Crosshair, GraduationCap } from "lucide-react";
+import { ArrowRight, Star, CheckCircle, MapPin, Users, Clock, Award, Shield, Calendar, Navigation, Phone, Crosshair, GraduationCap, Send, MessageSquarePlus } from "lucide-react";
 import Link from "next/link";
 import { MOCK_INSTRUCTORS } from "../lib/mock-data";
 import { getShootingLevel, getInstructionLevel } from "../lib/elo-utils";
@@ -13,6 +13,11 @@ import { BottomNav } from "@/components/BottomNav";
 export default function InstructorPageContent({ id }: { id: string }) {
   const instructor = MOCK_INSTRUCTORS.find((i) => i.id === id);
   const addToHistory = useUserStore((s) => s.addToHistory);
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviewRating, setReviewRating] = useState(0);
+  const [reviewName, setReviewName] = useState("");
+  const [reviewText, setReviewText] = useState("");
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
   useEffect(() => {
     if (instructor) {
@@ -202,6 +207,87 @@ export default function InstructorPageContent({ id }: { id: string }) {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Add Review */}
+        <div className="px-4 mt-5">
+          {reviewSubmitted ? (
+            <div className="bg-[var(--accent-green)]/5 border border-[var(--accent-green)]/20 rounded-2xl p-4 text-center">
+              <CheckCircle className="w-8 h-8 text-[var(--accent-green)] mx-auto mb-2" />
+              <p className="text-sm font-bold text-[var(--accent-green)]">התגובה נשלחה בהצלחה!</p>
+              <p className="text-xs text-[var(--text-muted)] mt-1">התגובה תופיע לאחר אישור המערכת</p>
+            </div>
+          ) : !showReviewForm ? (
+            <button
+              onClick={() => setShowReviewForm(true)}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-[var(--border-default)] text-sm font-semibold text-[var(--text-secondary)] hover:border-[var(--accent-green)]/40 hover:text-[var(--accent-green)] transition-all"
+            >
+              <MessageSquarePlus className="w-5 h-5" />
+              הוסף תגובה ודירוג
+            </button>
+          ) : (
+            <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-4 space-y-3">
+              <h3 className="text-sm font-bold flex items-center gap-2">
+                <MessageSquarePlus className="w-4 h-4 text-[var(--accent-green)]" />
+                הוסף תגובה
+              </h3>
+              {/* Star rating */}
+              <div>
+                <label className="text-xs text-[var(--text-muted)] mb-1.5 block">דירוג</label>
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <button key={n} onClick={() => setReviewRating(n)} className="p-0.5 transition-transform hover:scale-110">
+                      <Star className={`w-7 h-7 ${n <= reviewRating ? "text-[var(--accent-amber)] fill-[var(--accent-amber)]" : "text-[var(--border-default)]"}`} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Name */}
+              <div>
+                <label className="text-xs text-[var(--text-muted)] mb-1.5 block">שם</label>
+                <input
+                  type="text"
+                  value={reviewName}
+                  onChange={(e) => setReviewName(e.target.value)}
+                  placeholder="השם שלך"
+                  className="w-full h-10 px-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-green)]"
+                />
+              </div>
+              {/* Text */}
+              <div>
+                <label className="text-xs text-[var(--text-muted)] mb-1.5 block">תגובה</label>
+                <textarea
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
+                  placeholder="ספר על החוויה שלך..."
+                  rows={3}
+                  className="w-full px-3 py-2.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-green)] resize-none"
+                />
+              </div>
+              {/* Actions */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowReviewForm(false)}
+                  className="flex-1 h-10 rounded-xl border border-[var(--border-subtle)] text-xs font-medium text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                >
+                  ביטול
+                </button>
+                <button
+                  onClick={() => {
+                    if (reviewRating > 0 && reviewName.trim() && reviewText.trim()) {
+                      setReviewSubmitted(true);
+                      setShowReviewForm(false);
+                    }
+                  }}
+                  disabled={reviewRating === 0 || !reviewName.trim() || !reviewText.trim()}
+                  className="flex-1 h-10 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] text-xs font-bold flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110 transition-all"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  שלח תגובה
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Pricing */}

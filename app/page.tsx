@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, ShieldCheck, BarChart3, ChevronDown } from "lucide-react";
+import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, ShieldCheck, BarChart3 } from "lucide-react";
 import { useAuthStore } from "@/modules/auth";
 import { MOCK_INSTRUCTORS, SearchBar, InstructorCard, FeaturedInstructor } from "@/modules/instructors";
 import { BottomNav } from "@/components/BottomNav";
@@ -15,7 +15,6 @@ export default function HomePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
   const [filters, setFilters] = useState<Filters>({ ...DEFAULT_FILTERS });
-  const [sidebarPanel, setSidebarPanel] = useState<string | null>(null);
   const [lang, setLang] = useState<"he" | "en">("he");
   const user = useAuthStore((s) => s.user);
 
@@ -186,8 +185,8 @@ export default function HomePage() {
 
   const sidebarItems = [
     { icon: darkMode ? Sun : Moon, label: darkMode ? t.lightMode : t.darkModeLabel, onClick: toggleTheme },
-    { icon: ShieldCheck, label: t.verifiedLabel, onClick: () => setSidebarPanel(sidebarPanel === "verified" ? null : "verified") },
-    { icon: BarChart3, label: t.ratingLabel, onClick: () => setSidebarPanel(sidebarPanel === "rating" ? null : "rating") },
+    { icon: ShieldCheck, label: t.verifiedLabel, href: "/verified" },
+    { icon: BarChart3, label: t.ratingLabel, href: "/rating" },
     { icon: Settings, label: t.settings, href: "/settings" },
     { icon: LogIn, label: t.instructorLogin, href: "/login" },
     { icon: Megaphone, label: t.promote, href: "/promote" },
@@ -256,9 +255,6 @@ export default function HomePage() {
                       className="w-full flex items-center gap-3 px-4 py-3 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
                       <Icon className="w-5 h-5 text-[var(--text-muted)]" />
                       {item.label}
-                      {(item.label === t.verifiedLabel || item.label === t.ratingLabel) && (
-                        <ChevronDown className={`w-4 h-4 mr-auto text-[var(--text-muted)] transition-transform ${sidebarPanel === (item.label === t.verifiedLabel ? "verified" : "rating") ? "rotate-180" : ""}`} />
-                      )}
                     </button>
                   );
                 }
@@ -271,102 +267,6 @@ export default function HomePage() {
                 );
               })}
 
-              {/* Verified Instructor Explanation */}
-              {sidebarPanel === "verified" && (
-                <div className="mx-4 mb-3 p-4 bg-[var(--bg-elevated)] border border-[var(--accent-green)]/20 rounded-xl text-xs space-y-3">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-5 h-5 text-[var(--accent-green)]" />
-                    <h4 className="font-bold text-[var(--text-primary)]">{lang === "en" ? "What is a Verified Instructor?" : "מה זה מדריך מאומת?"}</h4>
-                  </div>
-                  {lang === "en" ? (
-                    <div className="space-y-2 text-[var(--text-secondary)] leading-relaxed">
-                      <p><strong>A verified instructor</strong> has passed our strict 4-step verification process:</p>
-                      <div className="space-y-1.5">
-                        <p>1. <strong>License check</strong> - Valid instructor license from the Firearms Division</p>
-                        <p>2. <strong>Background check</strong> - Clean criminal record and valid security clearance</p>
-                        <p>3. <strong>Field test</strong> - Observed during a live training by our team</p>
-                        <p>4. <strong>Student reviews</strong> - Minimum 10 verified reviews with 4.0+ average</p>
-                      </div>
-                      <p className="text-[var(--accent-green)] font-semibold">The green badge means you can train with confidence.</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-2 text-[var(--text-secondary)] leading-relaxed">
-                      <p><strong>מדריך מאומת</strong> עבר תהליך אימות מחמיר בן 4 שלבים:</p>
-                      <div className="space-y-1.5">
-                        <p>1. <strong>בדיקת רישיון</strong> – רישיון מדריך ירי בתוקף מאגף כלי ירייה</p>
-                        <p>2. <strong>בדיקת רקע</strong> – תעודת יושר, אישור ביטחוני ובדיקה פלילית נקייה</p>
-                        <p>3. <strong>מבחן שדה</strong> – צוות EasyTarget צופה באימון חי של המדריך</p>
-                        <p>4. <strong>ביקורות מתאמנים</strong> – מינימום 10 ביקורות מאומתות עם ממוצע 4.0+</p>
-                      </div>
-                      <p className="text-[var(--accent-green)] font-semibold">סימן הוי הירוק = אתה יכול להתאמן בראש שקט.</p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Rating Explanation */}
-              {sidebarPanel === "rating" && (
-                <div className="mx-4 mb-3 p-4 bg-[var(--bg-elevated)] border border-[var(--accent-amber)]/20 rounded-xl text-xs space-y-4">
-                  <div className="flex items-center gap-2">
-                    <BarChart3 className="w-5 h-5 text-[var(--accent-amber)]" />
-                    <h4 className="font-bold text-[var(--text-primary)]">{lang === "en" ? "How Ratings Work" : "כיצד נקבע הדירוג?"}</h4>
-                  </div>
-                  {lang === "en" ? (
-                    <div className="space-y-3 text-[var(--text-secondary)] leading-relaxed">
-                      <p>We use an <strong>ELO rating system</strong> — the same system used in chess to rank the best players in the world. It&apos;s mathematical, fair, and impossible to fake.</p>
-                      <div className="bg-[var(--bg-card)] rounded-lg p-3 space-y-2">
-                        <p className="font-bold text-[var(--accent-amber)]">Shooting Rating (amber badge)</p>
-                        <p>Measures the instructor&apos;s <strong>personal shooting skill</strong>. Updated after every scored session at a certified range.</p>
-                        <div className="grid grid-cols-2 gap-1 text-[10px]">
-                          <span className="bg-[#4ade80]/10 text-[#4ade80] px-2 py-1 rounded">1200+ Beginner</span>
-                          <span className="bg-[#60a5fa]/10 text-[#60a5fa] px-2 py-1 rounded">1400+ Advanced</span>
-                          <span className="bg-[#fbbf24]/10 text-[#fbbf24] px-2 py-1 rounded">1600+ Expert</span>
-                          <span className="bg-[#f87171]/10 text-[#f87171] px-2 py-1 rounded">1800+ Champion</span>
-                        </div>
-                      </div>
-                      <div className="bg-[var(--bg-card)] rounded-lg p-3 space-y-2">
-                        <p className="font-bold text-[var(--accent-blue)]">Instruction Rating (blue badge)</p>
-                        <p>Measures <strong>teaching quality</strong>. Based on student feedback, course completion rates, and improvement metrics.</p>
-                      </div>
-                      <div className="bg-[var(--bg-card)] rounded-lg p-3 space-y-2">
-                        <p className="font-bold text-[var(--text-primary)]">How ELO works — a simple example:</p>
-                        <p>Imagine two instructors competing in a scored drill. If a 1600-rated instructor beats a 1800-rated one, they gain MORE points because they beat someone stronger. If the 1800 beats the 1600, they gain fewer — it was expected.</p>
-                        <p>This means every point was <strong>earned</strong>, not given.</p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-3 text-[var(--text-secondary)] leading-relaxed">
-                      <p>אנחנו משתמשים ב<strong>שיטת דירוג ELO</strong> — אותה שיטה שמדרגת שחמטאים ברחבי העולם. היא מתמטית, הוגנת, ובלתי אפשרי לזייף אותה.</p>
-                      <div className="bg-[var(--bg-card)] rounded-lg p-3 space-y-2">
-                        <p className="font-bold text-[var(--accent-amber)]">דירוג ירי (תג כתום) 🎯</p>
-                        <p>מודד את <strong>רמת הירי האישית</strong> של המדריך. מתעדכן אחרי כל אימון מדוד במטווח מוסמך.</p>
-                        <div className="grid grid-cols-2 gap-1 text-[10px]">
-                          <span className="bg-[#4ade80]/10 text-[#4ade80] px-2 py-1 rounded">1200+ מתחילים</span>
-                          <span className="bg-[#60a5fa]/10 text-[#60a5fa] px-2 py-1 rounded">1400+ מתקדמים</span>
-                          <span className="bg-[#fbbf24]/10 text-[#fbbf24] px-2 py-1 rounded">1600+ מומחים</span>
-                          <span className="bg-[#f87171]/10 text-[#f87171] px-2 py-1 rounded">1800+ אלופים</span>
-                        </div>
-                        <p className="text-[10px] text-[var(--text-muted)]">דוגמה: מדריך ברמה 1650 פוגע ב-48 מתוך 50 מטרות → הדירוג עולה. פוגע ב-30 מתוך 50 → הדירוג יורד.</p>
-                      </div>
-                      <div className="bg-[var(--bg-card)] rounded-lg p-3 space-y-2">
-                        <p className="font-bold text-[var(--accent-blue)]">דירוג הדרכה (תג כחול) 📘</p>
-                        <p>מודד את <strong>איכות ההוראה</strong>. מבוסס על חוות דעת תלמידים, אחוזי סיום קורסים ומדדי שיפור.</p>
-                        <p className="text-[10px] text-[var(--text-muted)]">דוגמה: מדריך שה-תלמידים שלו משתפרים ב-30% בממוצע אחרי 3 אימונים → דירוג הדרכה גבוה.</p>
-                      </div>
-                      <div className="bg-[var(--bg-card)] rounded-lg p-3 space-y-2">
-                        <p className="font-bold text-[var(--text-primary)]">איך ELO עובד — בפשטות:</p>
-                        <p>דמיינו שני מדריכים מתחרים בתרגיל ירי מדוד. אם מדריך עם דירוג 1600 מנצח מדריך עם 1800 — הוא מקבל <strong>הרבה</strong> נקודות, כי הוא ניצח מישהו חזק ממנו.</p>
-                        <p>אבל אם ה-1800 מנצח את ה-1600 — הוא מקבל מעט נקודות, כי זה היה צפוי.</p>
-                        <p className="font-semibold text-[var(--accent-amber)]">כל נקודה בדירוג <strong>הורווחה</strong>, לא ניתנה.</p>
-                      </div>
-                      <div className="bg-[var(--bg-card)] rounded-lg p-3 space-y-2">
-                        <p className="font-bold text-[var(--text-primary)]">⭐ דירוג כוכבים</p>
-                        <p>בנוסף ל-ELO, כל מדריך מקבל <strong>כוכבים מ-1 עד 5</strong> על סמך ממוצע הביקורות של המתאמנים. 5 כוכבים = שירות מושלם.</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
             </nav>
             <div className="px-4 py-3 border-t border-[var(--border-subtle)]">
               <p className="text-[10px] text-[var(--text-muted)] text-center">EasyTarget v1.0 · אחים עם נשק</p>

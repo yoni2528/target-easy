@@ -474,52 +474,31 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
                   );
                 })}
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-      {/* 3c. Level picker — shown when any training-related category is selected */}
-      <AnimatePresence>
-        {selectedCategory && (expandedTop === "train" || expandedTop === "special") && (
-          <motion.div
-            key="level-picker"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="overflow-hidden"
-          >
-            <div className="bg-[var(--bg-card)] border border-[var(--accent-amber)]/20 rounded-xl p-3">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] font-semibold text-[var(--accent-amber)]">בחר רמת אימון</span>
-                {selectedLevel && (
-                  <button onClick={() => onLevelChange(null)} className="text-[10px] text-[var(--accent-red)] hover:underline">נקה</button>
-                )}
-              </div>
-              <div className="grid grid-cols-4 gap-1.5">
-                {TRAINING_LEVELS.map((level) => {
-                  const LevelIcon = level.icon;
-                  const isLevelSelected = selectedLevel === level.id;
-                  return (
-                    <button key={level.id} onClick={() => onLevelChange(isLevelSelected ? null : level.id)} className="flex flex-col items-center gap-1 py-1.5 transition-all duration-200">
-                      <div
-                        className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isLevelSelected ? "shadow-md scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
-                        style={{
-                          background: isLevelSelected ? `${level.color}20` : `${level.color}08`,
-                          borderColor: isLevelSelected ? level.color : `${level.color}30`,
-                          boxShadow: isLevelSelected ? `0 0 10px ${level.color}30` : undefined,
-                        }}
-                      >
-                        <LevelIcon className="w-4 h-4" style={{ color: level.color }} />
-                      </div>
-                      <span className={`text-[9px] leading-tight text-center font-medium ${isLevelSelected ? "font-bold" : "text-[var(--text-secondary)]"}`} style={isLevelSelected ? { color: level.color } : undefined}>
-                        {level.label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+              {/* Level picker integrated inside sub-nav for train/special */}
+              {(expandedTop === "train" || expandedTop === "special") && (
+                <div className="mt-2 pt-2 border-t border-[var(--accent-amber)]/15">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[10px] font-semibold text-[var(--accent-amber)]">רמת אימון</span>
+                    {selectedLevel && (
+                      <button onClick={() => onLevelChange(null)} className="text-[9px] text-[var(--accent-red)] hover:underline">נקה</button>
+                    )}
+                  </div>
+                  <div className="flex gap-1.5">
+                    {TRAINING_LEVELS.map((level) => {
+                      const isLevelSelected = selectedLevel === level.id;
+                      return (
+                        <button key={level.id} onClick={() => onLevelChange(isLevelSelected ? null : level.id)}
+                          className={`flex-1 px-1.5 py-1.5 rounded-lg border text-[9px] font-semibold transition-all text-center ${isLevelSelected ? "shadow-sm" : "border-[var(--border-subtle)]"}`}
+                          style={isLevelSelected ? { background: `${level.color}20`, borderColor: level.color, color: level.color } : { color: "var(--text-muted)" }}
+                        >
+                          {level.label.split(" ")[0]}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           </motion.div>
         )}

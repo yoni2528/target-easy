@@ -91,15 +91,15 @@ body::after {
 
 [data-theme="light"] body::before {
   background:
-    radial-gradient(circle at 50% 35%, rgba(16,185,129,0.02) 0%, transparent 200px),
-    linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px),
-    linear-gradient(rgba(16,185,129,0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16,185,129,0.015) 1px, transparent 1px);
+    radial-gradient(circle at 50% 35%, rgba(74,124,63,0.04) 0%, transparent 200px),
+    linear-gradient(rgba(74,124,63,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,124,63,0.04) 1px, transparent 1px),
+    linear-gradient(rgba(74,124,63,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,124,63,0.02) 1px, transparent 1px);
   background-size: 100% 100%, 80px 80px, 80px 80px, 20px 20px, 20px 20px;
 }
 
-[data-theme="light"] body::after { opacity: 0.035; }
+[data-theme="light"] body::after { opacity: 0.06; }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
@@ -125,21 +125,21 @@ body::after {
 .animate-slide-in-right { animation: slide-in-right 0.25s ease-out; }
 
 [data-theme="light"] {
-  --bg-primary: #f1f5f9;
-  --bg-secondary: #f8fafc;
-  --bg-card: #ffffff;
-  --bg-elevated: #f1f5f9;
-  --bg-input: #f1f5f9;
-  --border-subtle: #e2e8f0;
-  --border-default: #cbd5e1;
-  --text-primary: #1a1a2e;
-  --text-secondary: #64748b;
-  --text-muted: #94a3b8;
-  --accent-green: #10b981;
-  --accent-green-dim: #059669;
-  --accent-amber: #f59e0b;
-  --accent-red: #ef4444;
-  --accent-blue: #0071df;
+  --bg-primary: #e8e4dc;
+  --bg-secondary: #ded9cf;
+  --bg-card: #f0ece4;
+  --bg-elevated: #d8d3c8;
+  --bg-input: #d8d3c8;
+  --border-subtle: #c4bfb4;
+  --border-default: #a39e93;
+  --text-primary: #2c2a24;
+  --text-secondary: #5c5848;
+  --text-muted: #8a8475;
+  --accent-green: #4a7c3f;
+  --accent-green-dim: #3d6934;
+  --accent-amber: #b8860b;
+  --accent-red: #b22222;
+  --accent-blue: #2a5a8c;
 }
 
 @keyframes pulse-dot {
