@@ -35,16 +35,22 @@ export default function HomePage() {
     document.documentElement.setAttribute("data-theme", darkMode ? "light" : "dark");
   };
 
+  const handleShare = async () => {
+    const data = { title: "EasyTarget", text: "מצא את מדריך הירי המושלם עבורך", url: window.location.origin };
+    if (navigator.share) { await navigator.share(data); }
+    else { await navigator.clipboard.writeText(window.location.origin); alert("הקישור הועתק!"); }
+  };
+
   const sidebarItems = [
     { icon: darkMode ? Sun : Moon, label: darkMode ? "תצוגה בהירה" : "תצוגה כהה", onClick: toggleTheme },
-    { icon: Settings, label: "הגדרות", href: "#" },
+    { icon: Settings, label: "הגדרות", href: "/settings" },
     { icon: LogIn, label: "התחברות למדריכים", href: "/login" },
-    { icon: Megaphone, label: "קידום ממומן ב-EasyTarget", href: "#" },
-    { icon: UserPlus, label: "הצטרפות ל-EasyTarget", href: "#" },
-    { icon: Info, label: "אודות EasyTarget", href: "#" },
-    { icon: Share2, label: "שתפו את EasyTarget עם חברים", onClick: () => { if (navigator.share) navigator.share({ title: "EasyTarget", url: window.location.href }); } },
-    { icon: Phone, label: "יצירת קשר", href: "#" },
-    { icon: Globe, label: "English", href: "#" },
+    { icon: Megaphone, label: "קידום ממומן ב-EasyTarget", href: "/promote" },
+    { icon: UserPlus, label: "הצטרפות ל-EasyTarget", href: "/join" },
+    { icon: Info, label: "אודות EasyTarget", href: "/about" },
+    { icon: Share2, label: "שתפו את EasyTarget עם חברים", onClick: handleShare },
+    { icon: Phone, label: "יצירת קשר", href: "/contact" },
+    { icon: Globe, label: "English", href: "/settings" },
   ];
 
   return (
