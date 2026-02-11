@@ -1,5 +1,17 @@
 import type { Metadata } from "next";
+import { Heebo, Rubik } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
+
+const heebo = Heebo({
+  variable: "--font-heebo",
+  subsets: ["latin", "hebrew"],
+});
+
+const rubik = Rubik({
+  variable: "--font-rubik",
+  subsets: ["latin", "hebrew"],
+});
 
 export const metadata: Metadata = {
   title: "Target-Easy | מצא מדריך ירי",
@@ -12,24 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="he" dir="rtl">
-      <head>
-        <link
-          rel="preconnect"
-          href="https://fonts.googleapis.com"
-        />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Rubik:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="noise-bg">
-        {children}
+    <html lang="he" dir="rtl" className={heebo.className} suppressHydrationWarning>
+      <body className={`${rubik.variable} antialiased noise-bg`}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

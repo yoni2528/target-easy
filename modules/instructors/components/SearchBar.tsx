@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { TRAINING_CATEGORIES, SKILL_LEVELS } from "@/lib/mock-data";
+import { TRAINING_CATEGORIES, SKILL_LEVELS } from "../lib/mock-data";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;

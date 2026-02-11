@@ -3,9 +3,7 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Crosshair, Menu, X } from "lucide-react";
-import { MOCK_INSTRUCTORS } from "@/lib/mock-data";
-import { SearchBar } from "@/components/SearchBar";
-import { InstructorCard } from "@/components/InstructorCard";
+import { MOCK_INSTRUCTORS, SearchBar, InstructorCard } from "@/modules/instructors";
 import { BottomNav } from "@/components/BottomNav";
 
 export default function HomePage() {

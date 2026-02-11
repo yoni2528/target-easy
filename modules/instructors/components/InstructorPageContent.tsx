@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Star, CheckCircle, MapPin, Users, Clock, Award, Shield, Calendar, Navigation, Phone } from "lucide-react";
 import Link from "next/link";
-import { MOCK_INSTRUCTORS } from "@/lib/mock-data";
+import { MOCK_INSTRUCTORS } from "../lib/mock-data";
 import { BottomNav } from "@/components/BottomNav";
 
 export default function InstructorPageContent({ id }: { id: string }) {

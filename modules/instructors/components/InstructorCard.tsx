@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Star, CheckCircle, MapPin, Users } from "lucide-react";
 import Link from "next/link";
-import type { Instructor } from "@/lib/mock-data";
+import type { Instructor } from "../types";
 
 export function InstructorCard({ instructor, index }: { instructor: Instructor; index: number }) {
   return (

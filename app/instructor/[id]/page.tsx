@@ -1,5 +1,4 @@
-import { MOCK_INSTRUCTORS } from "@/lib/mock-data";
-import InstructorPageContent from "./InstructorPageContent";
+import { MOCK_INSTRUCTORS, InstructorPageContent } from "@/modules/instructors";
 
 export function generateStaticParams() {
   return MOCK_INSTRUCTORS.map((i) => ({ id: i.id }));
