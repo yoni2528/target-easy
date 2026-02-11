@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Edit } from "lucide-react";
 import Link from "next/link";
 import { DashboardStats } from "./DashboardStats";
 import { EloTrendChart } from "./EloTrendChart";
@@ -14,11 +14,17 @@ export function InstructorDashboard() {
   return (
     <div className="min-h-screen pb-8">
       <header className="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-xl border-b border-[var(--border-subtle)]">
-        <div className="flex items-center gap-3 px-4 h-14 max-w-3xl mx-auto">
-          <Link href="/" className="w-9 h-9 rounded-lg border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
-            <ArrowRight className="w-5 h-5" />
+        <div className="flex items-center justify-between px-4 h-14 max-w-3xl mx-auto">
+          <div className="flex items-center gap-3">
+            <Link href="/" className="w-9 h-9 rounded-lg border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <h1 className="font-bold text-sm">לוח בקרה למדריך</h1>
+          </div>
+          <Link href="/dashboard/edit" className="h-8 px-3 rounded-lg bg-[var(--accent-green)] text-[var(--bg-primary)] text-xs font-semibold flex items-center gap-1.5">
+            <Edit className="w-3.5 h-3.5" />
+            ערוך פרופיל
           </Link>
-          <h1 className="font-bold text-sm">לוח בקרה למדריך</h1>
         </div>
       </header>
 

@@ -2,7 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Crosshair, Menu, X } from "lucide-react";
+import { Crosshair, Menu, X, LogIn, Shield, LayoutDashboard, LogOut } from "lucide-react";
+import { useAuthStore } from "@/modules/auth";
 import { MOCK_INSTRUCTORS, SearchBar, InstructorCard } from "@/modules/instructors";
 import { QuizCTA } from "@/modules/quiz";
 import { BottomNav } from "@/components/BottomNav";
@@ -12,6 +13,8 @@ export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortMode, setSortMode] = useState(50);
   const [menuOpen, setMenuOpen] = useState(false);
+  const user = useAuthStore((s) => s.user);
+  const logout = useAuthStore((s) => s.logout);
 
   const filtered = useMemo(() => {
     let results = MOCK_INSTRUCTORS;
@@ -50,6 +53,34 @@ export default function HomePage() {
             {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
+        {menuOpen && (
+          <div className="absolute top-full left-0 right-0 bg-[var(--bg-card)] border-b border-[var(--border-subtle)] shadow-lg z-50">
+            <div className="max-w-2xl mx-auto px-4 py-3 space-y-1">
+              {user ? (
+                <>
+                  <p className="text-[10px] text-[var(--text-muted)] px-3 py-1">{user.name} ({user.role === "admin" ? "מנהל" : "מדריך"})</p>
+                  {user.role === "admin" && (
+                    <a href="/admin" className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors text-sm text-[var(--text-secondary)]">
+                      <Shield className="w-4 h-4 text-[var(--accent-red)]" /> פאנל מנהל
+                    </a>
+                  )}
+                  {user.role === "instructor" && (
+                    <a href="/dashboard" className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors text-sm text-[var(--text-secondary)]">
+                      <LayoutDashboard className="w-4 h-4 text-[var(--accent-blue)]" /> לוח בקרה
+                    </a>
+                  )}
+                  <button onClick={() => { logout(); setMenuOpen(false); }} className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors text-sm text-[var(--accent-red)]">
+                    <LogOut className="w-4 h-4" /> התנתק
+                  </button>
+                </>
+              ) : (
+                <a href="/login" className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors text-sm text-[var(--text-secondary)]">
+                  <LogIn className="w-4 h-4 text-[var(--accent-green)]" /> כניסה למדריכים ומנהלים
+                </a>
+              )}
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero */}
