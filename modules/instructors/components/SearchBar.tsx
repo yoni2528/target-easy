@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, ChevronRight, X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FILTER_TREE, type FilterNode } from "../lib/filter-tree";
 
@@ -15,53 +15,36 @@ interface SearchBarProps {
 
 export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMode, onSortChange }: SearchBarProps) {
   const [query, setQuery] = useState("");
-  const [activePath, setActivePath] = useState<string[]>([]);
+  const [expandedTop, setExpandedTop] = useState<string | null>(null);
 
-  const getCurrentNodes = (): FilterNode[] => {
-    if (activePath.length === 0) return FILTER_TREE;
-    let nodes: FilterNode[] = FILTER_TREE;
-    for (const pathId of activePath) {
-      const found = nodes.find((n) => n.id === pathId);
-      if (found?.children) nodes = found.children;
-      else return [];
-    }
-    return nodes;
-  };
-
-  const getActiveNode = (): FilterNode | null => {
-    if (activePath.length === 0) return null;
-    let nodes: FilterNode[] = FILTER_TREE;
-    let node: FilterNode | null = null;
-    for (const pathId of activePath) {
-      const found = nodes.find((n) => n.id === pathId);
-      if (found) { node = found; if (found.children) nodes = found.children; }
-    }
-    return node;
-  };
-
-  const handleNodeClick = (node: FilterNode) => {
-    if (node.children && node.children.length > 0) {
-      setActivePath([...activePath, node.id]);
-      onCategorySelect(node.id);
+  const handleTopClick = (node: FilterNode) => {
+    if (expandedTop === node.id) {
+      // Clicking same top icon again -> collapse & clear
+      setExpandedTop(null);
+      onCategorySelect(null);
     } else {
+      // Open this category
+      setExpandedTop(node.id);
       onCategorySelect(node.id);
     }
   };
 
-  const handleBack = () => {
-    const newPath = activePath.slice(0, -1);
-    setActivePath(newPath);
-    onCategorySelect(newPath.length > 0 ? newPath[newPath.length - 1] : null);
+  const handleSubClick = (subNode: FilterNode) => {
+    if (selectedCategory === subNode.id) {
+      // Clicking same sub again -> go back to parent
+      onCategorySelect(expandedTop);
+    } else {
+      onCategorySelect(subNode.id);
+    }
   };
 
   const handleClear = () => {
-    setActivePath([]);
+    setExpandedTop(null);
     onCategorySelect(null);
   };
 
-  const currentNodes = getCurrentNodes();
-  const activeNode = getActiveNode();
-  const isSubLevel = activePath.length > 0;
+  const expandedNode = expandedTop ? FILTER_TREE.find((n) => n.id === expandedTop) : null;
+  const subNodes = expandedNode?.children || [];
 
   return (
     <div className="space-y-4">
@@ -77,62 +60,85 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
         />
       </div>
 
-      {/* 2. Category icons - middle */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activePath.join("/")}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.2 }}
-        >
-          {isSubLevel && (
-            <div className="flex items-center gap-2 mb-3">
-              <button onClick={handleBack} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-xs">
-                <ChevronRight className="w-3 h-3" />
-                חזור
-              </button>
-              <span className="text-xs font-semibold" style={{ color: activeNode?.color }}>
-                {activeNode?.label}
+      {/* 2. Top-level category icons - always visible */}
+      <div className={`grid gap-1 ${FILTER_TREE.length === 5 ? "grid-cols-5" : FILTER_TREE.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
+        {FILTER_TREE.map((node) => {
+          const Icon = node.icon;
+          const isExpanded = expandedTop === node.id;
+          const isActive = isExpanded || selectedCategory === node.id;
+
+          return (
+            <button key={node.id} onClick={() => handleTopClick(node)} className="flex flex-col items-center gap-2 py-2 transition-all duration-200">
+              <div
+                className={`${FILTER_TREE.length >= 5 ? "w-12 h-12" : "w-14 h-14"} rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isActive ? "shadow-lg scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
+                style={{
+                  background: isActive ? `${node.color}20` : `${node.color}08`,
+                  borderColor: isActive ? node.color : `${node.color}30`,
+                  boxShadow: isActive ? `0 0 16px ${node.color}30` : undefined,
+                }}
+              >
+                <Icon className="w-6 h-6" style={{ color: node.color }} />
+              </div>
+              <span className={`text-[11px] leading-tight text-center font-medium ${isActive ? "font-bold" : "text-[var(--text-secondary)]"}`} style={isActive ? { color: node.color } : undefined}>
+                {node.label}
               </span>
-              <button onClick={handleClear} className="mr-auto p-1 text-[var(--text-muted)] hover:text-[var(--accent-red)] transition-colors">
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          )}
+              {node.children && node.children.length > 0 && (
+                <div className={`w-1 h-1 rounded-full transition-all ${isExpanded ? "scale-150" : ""}`} style={{ background: node.color, opacity: isExpanded ? 1 : 0.5 }} />
+              )}
+            </button>
+          );
+        })}
+      </div>
 
-          <div className={`grid gap-1 ${currentNodes.length === 5 ? "grid-cols-5" : currentNodes.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
-            {currentNodes.map((node) => {
-              const Icon = node.icon;
-              const isSelected = selectedCategory === node.id;
-              const hasChildren = node.children && node.children.length > 0;
-
-              return (
-                <button key={node.id} onClick={() => handleNodeClick(node)} className="flex flex-col items-center gap-2 py-2 transition-all duration-200">
-                  <div
-                    className={`${currentNodes.length >= 5 ? "w-12 h-12" : "w-14 h-14"} rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isSelected ? "shadow-lg scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
-                    style={{
-                      background: isSelected ? `${node.color}20` : `${node.color}08`,
-                      borderColor: isSelected ? node.color : `${node.color}30`,
-                      boxShadow: isSelected ? `0 0 16px ${node.color}30` : undefined,
-                    }}
-                  >
-                    <Icon className="w-6 h-6" style={{ color: node.color }} />
-                  </div>
-                  <span className={`text-[11px] leading-tight text-center font-medium ${isSelected ? "font-bold" : "text-[var(--text-secondary)]"}`} style={isSelected ? { color: node.color } : undefined}>
-                    {node.label}
-                  </span>
-                  {hasChildren && !isSubLevel && (
-                    <div className="w-1 h-1 rounded-full" style={{ background: node.color, opacity: 0.5 }} />
-                  )}
+      {/* 3. Sub-category row - appears below when a top icon is expanded */}
+      <AnimatePresence>
+        {expandedTop && subNodes.length > 0 && (
+          <motion.div
+            key={expandedTop}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25 }}
+            className="overflow-hidden"
+          >
+            <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-3">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-semibold" style={{ color: expandedNode?.color }}>
+                  {expandedNode?.label}
+                </span>
+                <button onClick={handleClear} className="p-1 text-[var(--text-muted)] hover:text-[var(--accent-red)] transition-colors">
+                  <X className="w-3.5 h-3.5" />
                 </button>
-              );
-            })}
-          </div>
-        </motion.div>
+              </div>
+              <div className={`grid gap-1 ${subNodes.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
+                {subNodes.map((sub) => {
+                  const SubIcon = sub.icon;
+                  const isSubSelected = selectedCategory === sub.id;
+                  return (
+                    <button key={sub.id} onClick={() => handleSubClick(sub)} className="flex flex-col items-center gap-1.5 py-2 transition-all duration-200">
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isSubSelected ? "shadow-md scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
+                        style={{
+                          background: isSubSelected ? `${sub.color}20` : `${sub.color}08`,
+                          borderColor: isSubSelected ? sub.color : `${sub.color}30`,
+                          boxShadow: isSubSelected ? `0 0 12px ${sub.color}30` : undefined,
+                        }}
+                      >
+                        <SubIcon className="w-4.5 h-4.5" style={{ color: sub.color }} />
+                      </div>
+                      <span className={`text-[10px] leading-tight text-center font-medium ${isSubSelected ? "font-bold" : "text-[var(--text-secondary)]"}`} style={isSubSelected ? { color: sub.color } : undefined}>
+                        {sub.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+        )}
       </AnimatePresence>
 
-      {/* 3. Slider - bottom */}
+      {/* 4. Slider - bottom */}
       <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-3">
         <div className="flex items-center justify-between text-xs mb-3">
           <div className="flex items-center gap-1.5">
