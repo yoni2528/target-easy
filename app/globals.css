@@ -72,21 +72,21 @@ body {
 .animate-slide-in-right { animation: slide-in-right 0.25s ease-out; }
 
 [data-theme="light"] {
-  --bg-primary: #f5f7f6;
-  --bg-secondary: #edf0ee;
+  --bg-primary: #f1f5f9;
+  --bg-secondary: #f8fafc;
   --bg-card: #ffffff;
-  --bg-elevated: #f0f3f1;
-  --bg-input: #f0f3f1;
-  --border-subtle: #d4ddd7;
-  --border-default: #bcc8bf;
-  --text-primary: #1a2e1f;
-  --text-secondary: #4a6650;
-  --text-muted: #7a9a82;
-  --accent-green: #16a34a;
-  --accent-green-dim: #15803d;
-  --accent-amber: #d97706;
-  --accent-red: #dc2626;
-  --accent-blue: #2563eb;
+  --bg-elevated: #f1f5f9;
+  --bg-input: #f1f5f9;
+  --border-subtle: #e2e8f0;
+  --border-default: #cbd5e1;
+  --text-primary: #1a1a2e;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --accent-green: #10b981;
+  --accent-green-dim: #059669;
+  --accent-amber: #f59e0b;
+  --accent-red: #ef4444;
+  --accent-blue: #0071df;
 }
 
 @keyframes pulse-dot {
