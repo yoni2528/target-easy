@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe } from "lucide-react";
+import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, MapPin, ChevronDown } from "lucide-react";
 import { useAuthStore } from "@/modules/auth";
-import { MOCK_INSTRUCTORS, SearchBar, InstructorCard } from "@/modules/instructors";
+import { MOCK_INSTRUCTORS, SearchBar, InstructorCard, FeaturedInstructor } from "@/modules/instructors";
 import { BottomNav } from "@/components/BottomNav";
 
 export default function HomePage() {
@@ -12,7 +12,21 @@ export default function HomePage() {
   const [sortMode, setSortMode] = useState(50);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
   const user = useAuthStore((s) => s.user);
+
+  const allCities = useMemo(() => {
+    const cities = [...new Set(MOCK_INSTRUCTORS.map((i) => i.city))];
+    return cities.sort((a, b) => a.localeCompare(b, "he"));
+  }, []);
+
+  // Featured instructor: highest combined ELO + most trainees
+  const featuredInstructor = useMemo(() => {
+    return [...MOCK_INSTRUCTORS]
+      .filter((i) => i.verified && i.available)
+      .sort((a, b) => (b.eloShooting + b.eloInstruction + b.trainees) - (a.eloShooting + a.eloInstruction + a.trainees))[0];
+  }, []);
 
   const filtered = useMemo(() => {
     let results = MOCK_INSTRUCTORS;
@@ -22,13 +36,16 @@ export default function HomePage() {
         (i) => i.name.includes(q) || i.city.includes(q) || i.ranges.some((r) => r.includes(q))
       );
     }
+    if (selectedCity) {
+      results = results.filter((i) => i.city === selectedCity);
+    }
     if (sortMode < 40) {
       results = [...results].sort((a, b) => b.eloInstruction - a.eloInstruction);
     } else if (sortMode > 60) {
       results = [...results].sort((a, b) => a.city.localeCompare(b.city));
     }
     return results;
-  }, [query, selectedCategory, sortMode]);
+  }, [query, selectedCategory, sortMode, selectedCity]);
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);
@@ -148,9 +165,54 @@ export default function HomePage() {
         />
       </div>
 
+      {/* Featured Instructor */}
+      {featuredInstructor && !query && !selectedCity && (
+        <div className="px-4 mt-4 max-w-2xl mx-auto">
+          <FeaturedInstructor instructor={featuredInstructor} />
+        </div>
+      )}
+
+      {/* City filter + Results count */}
+      <div className="px-4 mt-4 max-w-2xl mx-auto">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-xs text-[var(--text-muted)]">{filtered.length} תוצאות</span>
+          <div className="relative">
+            <button
+              onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-all ${selectedCity ? "border-[var(--accent-green)]/40 bg-[var(--accent-green)]/10 text-[var(--accent-green)]" : "border-[var(--border-subtle)] bg-[var(--bg-card)] text-[var(--text-secondary)]"}`}
+            >
+              <MapPin className="w-3.5 h-3.5" />
+              {selectedCity || "כל הערים"}
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${cityDropdownOpen ? "rotate-180" : ""}`} />
+            </button>
+            {cityDropdownOpen && (
+              <>
+                <div className="fixed inset-0 z-30" onClick={() => setCityDropdownOpen(false)} />
+                <div className="absolute left-0 top-full mt-1 z-40 w-44 bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl shadow-xl overflow-hidden">
+                  <button
+                    onClick={() => { setSelectedCity(null); setCityDropdownOpen(false); }}
+                    className={`w-full text-right px-3 py-2.5 text-xs transition-colors ${!selectedCity ? "bg-[var(--accent-green)]/10 text-[var(--accent-green)] font-bold" : "text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)]"}`}
+                  >
+                    כל הערים
+                  </button>
+                  {allCities.map((city) => (
+                    <button
+                      key={city}
+                      onClick={() => { setSelectedCity(city); setCityDropdownOpen(false); }}
+                      className={`w-full text-right px-3 py-2.5 text-xs transition-colors ${selectedCity === city ? "bg-[var(--accent-green)]/10 text-[var(--accent-green)] font-bold" : "text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)]"}`}
+                    >
+                      {city}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* Results */}
-      <div className="px-4 mt-6 max-w-2xl mx-auto space-y-3">
-        <span className="text-xs text-[var(--text-muted)]">{filtered.length} תוצאות</span>
+      <div className="px-4 max-w-2xl mx-auto space-y-3">
         {filtered.map((instructor, i) => (
           <InstructorCard key={instructor.id} instructor={instructor} index={i} />
         ))}

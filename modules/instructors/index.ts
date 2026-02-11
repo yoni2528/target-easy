@@ -16,5 +16,6 @@ export { CATEGORY_ICON_MAP } from "./lib/category-icons";
 // Components
 export { SearchBar } from "./components/SearchBar";
 export { InstructorCard } from "./components/InstructorCard";
+export { FeaturedInstructor } from "./components/FeaturedInstructor";
 export { default as InstructorPageContent } from "./components/InstructorPageContent";
 export { VideoSection } from "./components/VideoSection";
