@@ -1,15 +1,24 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Star, CheckCircle, MapPin, Users, Clock, Award, Shield, Calendar, Navigation, Phone, Crosshair, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { MOCK_INSTRUCTORS } from "../lib/mock-data";
 import { getShootingLevel, getInstructionLevel } from "../lib/elo-utils";
+import { useUserStore } from "../lib/user-store";
 import { VideoSection } from "./VideoSection";
 import { BottomNav } from "@/components/BottomNav";
 
 export default function InstructorPageContent({ id }: { id: string }) {
   const instructor = MOCK_INSTRUCTORS.find((i) => i.id === id);
+  const addToHistory = useUserStore((s) => s.addToHistory);
+
+  useEffect(() => {
+    if (instructor) {
+      addToHistory(instructor.id);
+    }
+  }, [instructor, addToHistory]);
 
   if (!instructor) {
     return (

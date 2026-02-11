@@ -1,11 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, CheckCircle, MapPin, Users, Crosshair, GraduationCap, Eye, PhoneCall } from "lucide-react";
+import { Star, CheckCircle, MapPin, Users, Crosshair, GraduationCap, Eye, PhoneCall, Heart } from "lucide-react";
 import Link from "next/link";
+import { useUserStore } from "../lib/user-store";
 import type { Instructor } from "../types";
 
 export function InstructorCard({ instructor, index }: { instructor: Instructor; index: number }) {
+  const { toggleFavorite, isFavorite } = useUserStore();
+  const favorited = isFavorite(instructor.id);
   const mockViews = 120 + parseInt(instructor.id) * 37 + instructor.trainees;
 
   return (
@@ -90,6 +93,10 @@ export function InstructorCard({ instructor, index }: { instructor: Instructor; 
               </span>
             </div>
             <div className="flex items-center gap-2">
+              <span onClick={(e) => { e.preventDefault(); toggleFavorite(instructor.id); }}
+                className={`w-8 h-8 rounded-lg border flex items-center justify-center transition-colors ${favorited ? "border-red-500/30 text-red-500" : "border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-red-500 hover:border-red-500/30"}`}>
+                <Heart className={`w-3.5 h-3.5 ${favorited ? "fill-red-500" : ""}`} />
+              </span>
               <span onClick={(e) => { e.preventDefault(); window.open(`tel:+972501234567`); }}
                 className="w-8 h-8 rounded-lg border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--accent-green)] hover:border-[var(--accent-green)]/30 transition-colors">
                 <PhoneCall className="w-3.5 h-3.5" />

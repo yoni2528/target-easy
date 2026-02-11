@@ -3,8 +3,12 @@
 import { Heart, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { BottomNav } from "@/components/BottomNav";
+import { useUserStore, MOCK_INSTRUCTORS, InstructorCard } from "@/modules/instructors";
 
 export default function FavoritesPage() {
+  const favorites = useUserStore((s) => s.favorites);
+  const favoriteInstructors = MOCK_INSTRUCTORS.filter((i) => favorites.includes(i.id));
+
   return (
     <div className="min-h-screen pb-24">
       <header className="sticky top-0 z-40 bg-[var(--bg-primary)]/90 backdrop-blur-xl border-b border-[var(--border-subtle)]">
@@ -16,13 +20,21 @@ export default function FavoritesPage() {
         </div>
       </header>
 
-      <div className="px-4 pt-12 max-w-2xl mx-auto text-center">
-        <Heart className="w-12 h-12 text-[var(--text-muted)] mx-auto mb-4" strokeWidth={1} />
-        <h2 className="text-base font-bold mb-2">אין מועדפים עדיין</h2>
-        <p className="text-xs text-[var(--text-muted)] max-w-[250px] mx-auto">
-          לחצו על הלב בכרטיס מדריך כדי להוסיף אותו למועדפים
-        </p>
-      </div>
+      {favoriteInstructors.length === 0 ? (
+        <div className="px-4 pt-12 max-w-2xl mx-auto text-center">
+          <Heart className="w-12 h-12 text-[var(--text-muted)] mx-auto mb-4" strokeWidth={1} />
+          <h2 className="text-base font-bold mb-2">אין מועדפים עדיין</h2>
+          <p className="text-xs text-[var(--text-muted)] max-w-[250px] mx-auto">
+            לחצו על הלב בכרטיס מדריך כדי להוסיף אותו למועדפים
+          </p>
+        </div>
+      ) : (
+        <div className="px-4 pt-4 max-w-2xl mx-auto space-y-3">
+          {favoriteInstructors.map((instructor, index) => (
+            <InstructorCard key={instructor.id} instructor={instructor} index={index} />
+          ))}
+        </div>
+      )}
 
       <BottomNav />
     </div>

@@ -13,6 +13,9 @@ export {
 export { getShootingLevel, getInstructionLevel, SHOOTING_LEVELS, INSTRUCTION_LEVELS } from "./lib/elo-utils";
 export { CATEGORY_ICON_MAP } from "./lib/category-icons";
 
+// Stores
+export { useUserStore } from "./lib/user-store";
+
 // Components
 export { SearchBar } from "./components/SearchBar";
 export { InstructorCard } from "./components/InstructorCard";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, SlidersHorizontal, X, Check, MapPin, Calendar, DollarSign, ShieldCheck, Clock, Star, Target, Sparkles, TreePine, Percent, ChevronDown, RefreshCw, Crosshair, User, GraduationCap, Trophy, Crown, Moon as MoonIcon, Move, Swords, Scale } from "lucide-react";
+import { Search, SlidersHorizontal, X, Check, MapPin, Calendar, DollarSign, ShieldCheck, Clock, Star, Target, Sparkles, TreePine, Percent, ChevronDown, RefreshCw, CalendarRange, User, GraduationCap, Trophy, Crown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FILTER_TREE, type FilterNode } from "../lib/filter-tree";
 import { MOCK_INSTRUCTORS } from "../lib/mock-data";
@@ -18,12 +18,15 @@ export interface Filters {
   specialTraining: string | null;
   rangeType: string | null;
   deal: string | null;
+  dateFrom: string | null;
+  dateTo: string | null;
 }
 
 export const DEFAULT_FILTERS: Filters = {
   city: null, day: null, verifiedOnly: false, availableOnly: false,
   maxPrice: null, countsAsRefresh: null, minStars: null, trainingLevel: null,
   specialTraining: null, rangeType: null, deal: null,
+  dateFrom: null, dateTo: null,
 };
 
 const DAYS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
@@ -59,13 +62,15 @@ interface SearchBarProps {
   onSearch: (query: string) => void;
   onCategorySelect: (id: string | null) => void;
   selectedCategory: string | null;
+  selectedLevel: string | null;
+  onLevelChange: (level: string | null) => void;
   sortMode: number;
   onSortChange: (value: number) => void;
   filters: Filters;
   onFiltersChange: (filters: Filters) => void;
 }
 
-export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMode, onSortChange, filters, onFiltersChange }: SearchBarProps) {
+export function SearchBar({ onSearch, onCategorySelect, selectedCategory, selectedLevel, onLevelChange, sortMode, onSortChange, filters, onFiltersChange }: SearchBarProps) {
   const [query, setQuery] = useState("");
   const [expandedTop, setExpandedTop] = useState<string | null>(null);
   const [expandedSub, setExpandedSub] = useState<string | null>(null);
@@ -85,6 +90,7 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
     filters.specialTraining,
     filters.rangeType,
     filters.deal,
+    filters.dateFrom || filters.dateTo,
   ].filter(Boolean).length;
 
   const handleTopClick = (node: FilterNode) => {
@@ -144,6 +150,13 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
   const subNodes = expandedNode?.children || [];
   const expandedSubNode = expandedSub ? subNodes.find((n) => n.id === expandedSub) : null;
   const leafNodes = expandedSubNode?.children || [];
+
+  // Single row: show leaf nodes if a sub is expanded, otherwise show sub nodes
+  const currentSubNodes = expandedSub && leafNodes.length > 0 ? leafNodes : subNodes;
+  const currentSubKey = expandedSub || expandedTop || "";
+  const breadcrumb = expandedSub
+    ? [{ id: expandedTop!, label: expandedNode?.label || "", color: expandedNode?.color || "" }, { id: expandedSub, label: expandedSubNode?.label || "", color: expandedSubNode?.color || "" }]
+    : [{ id: expandedTop!, label: expandedNode?.label || "", color: expandedNode?.color || "" }];
 
   return (
     <div className="space-y-4">
@@ -326,6 +339,33 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
                     ))}
                   </div>
                 </FilterCategory>
+
+                {/* 10. Date range */}
+                <FilterCategory
+                  icon={CalendarRange} label="טווח זמן" color="#f472b6"
+                  active={!!(filters.dateFrom || filters.dateTo)}
+                  activeLabel={filters.dateFrom && filters.dateTo ? `${filters.dateFrom} – ${filters.dateTo}` : filters.dateFrom || filters.dateTo}
+                  expanded={expandedFilter === "date"} onToggle={() => setExpandedFilter(expandedFilter === "date" ? null : "date")}
+                >
+                  <div className="flex gap-2">
+                    <div className="flex-1">
+                      <label className="text-[10px] text-[var(--text-muted)] mb-1 block">מתאריך</label>
+                      <input type="date" value={filters.dateFrom || ""}
+                        onChange={(e) => onFiltersChange({ ...filters, dateFrom: e.target.value || null })}
+                        className="w-full h-9 px-2 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[11px] text-[var(--text-primary)]" />
+                    </div>
+                    <div className="flex-1">
+                      <label className="text-[10px] text-[var(--text-muted)] mb-1 block">עד תאריך</label>
+                      <input type="date" value={filters.dateTo || ""}
+                        onChange={(e) => onFiltersChange({ ...filters, dateTo: e.target.value || null })}
+                        className="w-full h-9 px-2 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[11px] text-[var(--text-primary)]" />
+                    </div>
+                  </div>
+                  {(filters.dateFrom || filters.dateTo) && (
+                    <button onClick={() => onFiltersChange({ ...filters, dateFrom: null, dateTo: null })}
+                      className="mt-2 text-[10px] text-[var(--accent-red)] hover:underline">נקה תאריכים</button>
+                  )}
+                </FilterCategory>
               </div>
 
               {/* Toggle row */}
@@ -382,48 +422,57 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
         })}
       </div>
 
-      {/* 3. Sub-category row */}
-      <AnimatePresence>
-        {expandedTop && subNodes.length > 0 && (
+      {/* 3. Single sub-category row (replaces in place — no stacking) */}
+      <AnimatePresence mode="wait">
+        {expandedTop && currentSubNodes.length > 0 && (
           <motion.div
-            key={expandedTop}
+            key={currentSubKey}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
             <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-3">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] font-semibold" style={{ color: expandedNode?.color }}>
-                  {expandedNode?.label}
-                </span>
+                <div className="flex items-center gap-1.5">
+                  {breadcrumb.map((bc, i) => (
+                    <span key={bc.id} className="flex items-center gap-1">
+                      {i > 0 && <span className="text-[var(--text-muted)] text-[10px]">›</span>}
+                      <button onClick={() => {
+                        if (i === 0) { setExpandedSub(null); onCategorySelect(expandedTop); }
+                      }} className="text-[11px] font-semibold hover:underline" style={{ color: bc.color }}>
+                        {bc.label}
+                      </button>
+                    </span>
+                  ))}
+                </div>
                 <button onClick={handleClear} className="p-1 text-[var(--text-muted)] hover:text-[var(--accent-red)] transition-colors">
                   <X className="w-3.5 h-3.5" />
                 </button>
               </div>
-              <div className={`grid gap-1 ${subNodes.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
-                {subNodes.map((sub) => {
-                  const SubIcon = sub.icon;
-                  const isSubSelected = selectedCategory === sub.id || expandedSub === sub.id || (selectedCategory?.startsWith(sub.id + ":") ?? false);
-                  const hasChildren = sub.children && sub.children.length > 0;
+              <div className={`grid gap-1 ${currentSubNodes.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
+                {currentSubNodes.map((node) => {
+                  const NodeIcon = node.icon;
+                  const hasChildren = node.children && node.children.length > 0;
+                  const isSelected = selectedCategory === node.id || expandedSub === node.id || (selectedCategory?.startsWith(node.id + ":") ?? false);
                   return (
-                    <button key={sub.id} onClick={() => handleSubClick(sub)} className="flex flex-col items-center gap-1.5 py-2 transition-all duration-200">
+                    <button key={node.id} onClick={() => hasChildren ? handleSubClick(node) : (expandedSub ? handleLeafClick(node) : handleSubClick(node))} className="flex flex-col items-center gap-1.5 py-2 transition-all duration-200">
                       <div
-                        className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isSubSelected ? "shadow-md scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
+                        className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isSelected ? "shadow-md scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
                         style={{
-                          background: isSubSelected ? `${sub.color}20` : `${sub.color}08`,
-                          borderColor: isSubSelected ? sub.color : `${sub.color}30`,
-                          boxShadow: isSubSelected ? `0 0 12px ${sub.color}30` : undefined,
+                          background: isSelected ? `${node.color}20` : `${node.color}08`,
+                          borderColor: isSelected ? node.color : `${node.color}30`,
+                          boxShadow: isSelected ? `0 0 12px ${node.color}30` : undefined,
                         }}
                       >
-                        <SubIcon className="w-4.5 h-4.5" style={{ color: sub.color }} />
+                        <NodeIcon className="w-4.5 h-4.5" style={{ color: node.color }} />
                       </div>
-                      <span className={`text-[10px] leading-tight text-center font-medium ${isSubSelected ? "font-bold" : "text-[var(--text-secondary)]"}`} style={isSubSelected ? { color: sub.color } : undefined}>
-                        {sub.label}
+                      <span className={`text-[10px] leading-tight text-center font-medium ${isSelected ? "font-bold" : "text-[var(--text-secondary)]"}`} style={isSelected ? { color: node.color } : undefined}>
+                        {node.label}
                       </span>
                       {hasChildren && (
-                        <div className={`w-1 h-1 rounded-full transition-all ${expandedSub === sub.id ? "scale-150" : ""}`} style={{ background: sub.color, opacity: expandedSub === sub.id ? 1 : 0.5 }} />
+                        <div className={`w-1 h-1 rounded-full transition-all ${expandedSub === node.id ? "scale-150" : ""}`} style={{ background: node.color, opacity: expandedSub === node.id ? 1 : 0.5 }} />
                       )}
                     </button>
                   );
@@ -434,44 +483,42 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
         )}
       </AnimatePresence>
 
-      {/* 3b. Third-level leaf row (e.g. skill levels, workshop types) */}
+      {/* 3c. Level picker — shown when any training-related category is selected */}
       <AnimatePresence>
-        {expandedSub && leafNodes.length > 0 && (
+        {selectedCategory && (expandedTop === "train" || expandedTop === "special") && (
           <motion.div
-            key={expandedSub}
+            key="level-picker"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-3">
+            <div className="bg-[var(--bg-card)] border border-[var(--accent-amber)]/20 rounded-xl p-3">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] font-semibold" style={{ color: expandedSubNode?.color }}>
-                  {expandedSubNode?.label}
-                </span>
-                <button onClick={() => { setExpandedSub(null); onCategorySelect(expandedTop); }} className="p-1 text-[var(--text-muted)] hover:text-[var(--accent-red)] transition-colors">
-                  <X className="w-3.5 h-3.5" />
-                </button>
+                <span className="text-[11px] font-semibold text-[var(--accent-amber)]">בחר רמת אימון</span>
+                {selectedLevel && (
+                  <button onClick={() => onLevelChange(null)} className="text-[10px] text-[var(--accent-red)] hover:underline">נקה</button>
+                )}
               </div>
-              <div className={`grid gap-1 ${leafNodes.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
-                {leafNodes.map((leaf) => {
-                  const LeafIcon = leaf.icon;
-                  const isLeafSelected = selectedCategory === leaf.id;
+              <div className="grid grid-cols-4 gap-1.5">
+                {TRAINING_LEVELS.map((level) => {
+                  const LevelIcon = level.icon;
+                  const isLevelSelected = selectedLevel === level.id;
                   return (
-                    <button key={leaf.id} onClick={() => handleLeafClick(leaf)} className="flex flex-col items-center gap-1.5 py-2 transition-all duration-200">
+                    <button key={level.id} onClick={() => onLevelChange(isLevelSelected ? null : level.id)} className="flex flex-col items-center gap-1 py-1.5 transition-all duration-200">
                       <div
-                        className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isLeafSelected ? "shadow-md scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
+                        className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isLevelSelected ? "shadow-md scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
                         style={{
-                          background: isLeafSelected ? `${leaf.color}20` : `${leaf.color}08`,
-                          borderColor: isLeafSelected ? leaf.color : `${leaf.color}30`,
-                          boxShadow: isLeafSelected ? `0 0 12px ${leaf.color}30` : undefined,
+                          background: isLevelSelected ? `${level.color}20` : `${level.color}08`,
+                          borderColor: isLevelSelected ? level.color : `${level.color}30`,
+                          boxShadow: isLevelSelected ? `0 0 10px ${level.color}30` : undefined,
                         }}
                       >
-                        <LeafIcon className="w-4.5 h-4.5" style={{ color: leaf.color }} />
+                        <LevelIcon className="w-4 h-4" style={{ color: level.color }} />
                       </div>
-                      <span className={`text-[10px] leading-tight text-center font-medium ${isLeafSelected ? "font-bold" : "text-[var(--text-secondary)]"}`} style={isLeafSelected ? { color: leaf.color } : undefined}>
-                        {leaf.label}
+                      <span className={`text-[9px] leading-tight text-center font-medium ${isLevelSelected ? "font-bold" : "text-[var(--text-secondary)]"}`} style={isLevelSelected ? { color: level.color } : undefined}>
+                        {level.label}
                       </span>
                     </button>
                   );
@@ -498,15 +545,18 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
           </div>
         </div>
         <div
-          className="relative h-8 flex items-center cursor-pointer select-none"
+          className="relative h-10 flex items-center cursor-pointer select-none"
+          style={{ touchAction: "none" }}
           onPointerDown={(e) => {
+            e.preventDefault();
+            (e.target as HTMLElement).setPointerCapture(e.pointerId);
             const rect = e.currentTarget.getBoundingClientRect();
             const update = (clientX: number) => {
               const pct = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
               onSortChange(Math.round(pct));
             };
             update(e.clientX);
-            const onMove = (ev: PointerEvent) => update(ev.clientX);
+            const onMove = (ev: PointerEvent) => { ev.preventDefault(); update(ev.clientX); };
             const onUp = () => { window.removeEventListener("pointermove", onMove); window.removeEventListener("pointerup", onUp); };
             window.addEventListener("pointermove", onMove);
             window.addEventListener("pointerup", onUp);
@@ -516,7 +566,7 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
             <div className="w-full h-full" style={{ background: "linear-gradient(to right, #fbbf24, #4ade80 50%, #60a5fa)" }} />
           </div>
           <div
-            className="absolute w-7 h-7 rounded-full bg-white shadow-lg border-[3px] transition-[left] duration-75"
+            className="absolute w-7 h-7 rounded-full bg-white shadow-lg border-[3px] pointer-events-none"
             style={{
               left: `calc(${sortMode}% - 14px)`,
               borderColor: sortMode < 40 ? "#fbbf24" : sortMode > 60 ? "#60a5fa" : "#4ade80",
