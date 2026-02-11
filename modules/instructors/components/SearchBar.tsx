@@ -101,7 +101,7 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
             </div>
           )}
 
-          <div className={`grid gap-2 ${currentNodes.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
+          <div className={`grid gap-1 ${currentNodes.length === 5 ? "grid-cols-5" : currentNodes.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
             {currentNodes.map((node) => {
               const Icon = node.icon;
               const isSelected = selectedCategory === node.id;
@@ -110,7 +110,7 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
               return (
                 <button key={node.id} onClick={() => handleNodeClick(node)} className="flex flex-col items-center gap-2 py-2 transition-all duration-200">
                   <div
-                    className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isSelected ? "shadow-lg scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
+                    className={`${currentNodes.length >= 5 ? "w-12 h-12" : "w-14 h-14"} rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isSelected ? "shadow-lg scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
                     style={{
                       background: isSelected ? `${node.color}20` : `${node.color}08`,
                       borderColor: isSelected ? node.color : `${node.color}30`,
