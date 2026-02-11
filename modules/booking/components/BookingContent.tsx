@@ -13,8 +13,8 @@ import { LicenseScanner, type LicenseScanResult } from "./LicenseScanner";
 const STEPS = [
   { num: 1, label: "סוג אימון", icon: FileText },
   { num: 2, label: "תאריך ושעה", icon: Calendar },
-  { num: 3, label: "פרטים אישיים", icon: User },
-  { num: 4, label: "נשק ורישיון", icon: ScanLine },
+  { num: 3, label: "נשק ורישיון", icon: ScanLine },
+  { num: 4, label: "פרטים אישיים", icon: User },
   { num: 5, label: "אישור ותשלום", icon: CreditCard },
 ];
 
@@ -212,39 +212,16 @@ export function BookingContent() {
                 <button onClick={() => setStep(1)} className="w-12 h-12 rounded-xl border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <button onClick={() => setStep(3)} disabled={!selectedDate || !selectedSlot} className="flex-1 h-12 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] font-bold text-sm disabled:opacity-30 disabled:cursor-not-allowed">
+                <button onClick={() => setStep(trainingType === "new" ? 4 : 3)} disabled={!selectedDate || !selectedSlot} className="flex-1 h-12 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] font-bold text-sm disabled:opacity-30 disabled:cursor-not-allowed">
                   המשך
                 </button>
               </div>
             </motion.div>
           )}
 
-          {/* Step 3: Personal Info */}
+          {/* Step 3: Weapon & License (OCR) */}
           {step === 3 && (
             <motion.div key="s3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-              <h2 className="text-lg font-bold mb-3">פרטים אישיים</h2>
-              <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-3">
-                  <FormField label="שם פרטי" value={form.firstName} onChange={(v) => updateForm("firstName", v)} />
-                  <FormField label="שם משפחה" value={form.lastName} onChange={(v) => updateForm("lastName", v)} />
-                </div>
-                <FormField label="טלפון" value={form.phone} onChange={(v) => updateForm("phone", v)} type="tel" dir="ltr" />
-                <FormField label="תעודת זהות" value={form.idNumber} onChange={(v) => updateForm("idNumber", v)} dir="ltr" />
-              </div>
-              <div className="flex gap-3 mt-5">
-                <button onClick={() => setStep(2)} className="w-12 h-12 rounded-xl border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-                <button onClick={() => setStep(trainingType === "new" ? 5 : 4)} disabled={!form.firstName || !form.lastName || !form.phone} className="flex-1 h-12 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] font-bold text-sm disabled:opacity-30 disabled:cursor-not-allowed">
-                  המשך
-                </button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Step 4: Weapon & License */}
-          {step === 4 && (
-            <motion.div key="s4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-lg font-bold">נשק ורישיון</h2>
                 <button onClick={() => setShowScanner(true)} className="h-8 px-3 rounded-lg bg-[var(--accent-green)]/10 border border-[var(--accent-green)]/20 text-xs font-medium text-[var(--accent-green)] flex items-center gap-1.5">
@@ -297,10 +274,33 @@ export function BookingContent() {
                 <FormField label="מספר סידורי" value={form.serialNumber} onChange={(v) => updateForm("serialNumber", v)} dir="ltr" />
               </div>
               <div className="flex gap-3 mt-5">
-                <button onClick={() => setStep(3)} className="w-12 h-12 rounded-xl border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
+                <button onClick={() => setStep(2)} className="w-12 h-12 rounded-xl border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <button onClick={() => setStep(5)} className="flex-1 h-12 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] font-bold text-sm">
+                <button onClick={() => setStep(4)} className="flex-1 h-12 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] font-bold text-sm">
+                  המשך
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 4: Personal Info */}
+          {step === 4 && (
+            <motion.div key="s4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+              <h2 className="text-lg font-bold mb-3">פרטים אישיים</h2>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-3">
+                  <FormField label="שם פרטי" value={form.firstName} onChange={(v) => updateForm("firstName", v)} />
+                  <FormField label="שם משפחה" value={form.lastName} onChange={(v) => updateForm("lastName", v)} />
+                </div>
+                <FormField label="טלפון" value={form.phone} onChange={(v) => updateForm("phone", v)} type="tel" dir="ltr" />
+                <FormField label="תעודת זהות" value={form.idNumber} onChange={(v) => updateForm("idNumber", v)} dir="ltr" />
+              </div>
+              <div className="flex gap-3 mt-5">
+                <button onClick={() => setStep(trainingType === "new" ? 2 : 3)} className="w-12 h-12 rounded-xl border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+                <button onClick={() => setStep(5)} disabled={!form.firstName || !form.lastName || !form.phone} className="flex-1 h-12 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] font-bold text-sm disabled:opacity-30 disabled:cursor-not-allowed">
                   המשך
                 </button>
               </div>
@@ -344,7 +344,7 @@ export function BookingContent() {
               </div>
 
               <div className="flex gap-3 mt-4">
-                <button onClick={() => setStep(trainingType === "new" ? 3 : 4)} className="w-12 h-12 rounded-xl border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
+                <button onClick={() => setStep(4)} className="w-12 h-12 rounded-xl border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)]">
                   <ArrowRight className="w-5 h-5" />
                 </button>
                 <button onClick={() => setConfirmed(true)} className="flex-1 h-12 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] font-bold text-sm glow-green">
