@@ -41,6 +41,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v2", title: "טיפים למתחמש חדש", thumbnail: "https://images.unsplash.com/photo-1584281722234-404e4dc10ae2?w=400&h=225&fit=crop", platform: "instagram" },
     ],
     socialLinks: { youtube: "https://youtube.com", instagram: "https://instagram.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["כוחות ביטחון", "גמלאים"],
   },
   {
     id: "2", name: "מיכל אברהם",
@@ -61,13 +64,16 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-2b", title: "הכנה לאימון ראשון", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "youtube" },
     ],
     socialLinks: { instagram: "https://instagram.com", facebook: "https://facebook.com" },
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
+    deals: ["סטודנטים"],
   },
   {
     id: "3", name: "אלון ברק",
     photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
     verified: true, eloShooting: 1956, eloInstruction: 1850, stars: 5.0,
     metrics: { service: 4.8, professionalism: 5.0, quality: 5.0 },
-    trainees: 2100, trainingTypes: ["ירי מקצועי", "סדנת ירי", "חידוש", "רענון", "אימון לילה", "כוונות השלכה"],
+    trainees: 2100, trainingTypes: ["ירי מקצועי", "סדנת ירי", "חידוש", "רענון", "אימון לילה", "כוונות השלכה", "מטרות נעות"],
     ranges: ["מטווח ירושלים", "מטווח מעלה אדומים", "מטווח בית שמש"], city: "ירושלים",
     available: false, nextSlot: "יום ראשון, 10:00", priceFrom: 350,
     bio: "קצין נשק ותיק (20+ שנה), מדריך ירי ספורטיבי ומעשי. מנהל את אקדמיית הירי 'ברק'.",
@@ -80,6 +86,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v3", title: "ירי תחרותי IPSC - שלב מתקדם", thumbnail: "https://images.unsplash.com/photo-1584281722234-404e4dc10ae2?w=400&h=225&fit=crop", platform: "youtube" },
     ],
     socialLinks: { youtube: "https://youtube.com", facebook: "https://facebook.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["כוחות ביטחון", "סטודנטים"],
   },
   {
     id: "4", name: "יעל שפירא",
@@ -98,6 +107,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     videos: [
       { id: "v-4a", title: "טיפים לאימון ראשון", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "instagram" },
     ],
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
+    deals: ["גמלאים"],
   },
   {
     id: "5", name: "רון מלכה",
@@ -117,6 +129,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-5a", title: "רענון ירי בבאר שבע", thumbnail: "https://images.unsplash.com/photo-1584281722234-404e4dc10ae2?w=400&h=225&fit=crop", platform: "youtube" },
     ],
     socialLinks: { facebook: "https://facebook.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["כוחות ביטחון"],
   },
   {
     id: "6", name: "נתן גולדשטיין",
@@ -136,6 +151,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v4", title: "סיור במטווח פתח תקווה", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "facebook" },
     ],
     socialLinks: { facebook: "https://facebook.com", youtube: "https://youtube.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["גמלאים"],
   },
   // --- New instructors ---
   {
@@ -155,13 +173,16 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     videos: [
       { id: "v-7a", title: "למה חשוב להתחמש?", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "instagram" },
     ],
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
+    deals: ["סטודנטים"],
   },
   {
     id: "8", name: "שמעון פרץ",
     photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&h=300&fit=crop&crop=face",
     verified: true, eloShooting: 1920, eloInstruction: 1420, stars: 4.5,
     metrics: { service: 4.2, professionalism: 4.9, quality: 4.5 },
-    trainees: 340, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון"],
+    trainees: 340, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "מטרות נעות"],
     ranges: ["מטווח הרצליה", "מטווח תל אביב"], city: "הרצליה",
     available: true, nextSlot: "מחר, 08:00", priceFrom: 380,
     bio: "יורה תחרותי עם 10 מדליות ארציות. מתמחה באימוני IPSC ו-IDPA. הדגש על ביצועים.",
@@ -174,6 +195,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v5", title: "תחרות IPSC - גמר ארצי", thumbnail: "https://images.unsplash.com/photo-1584281722234-404e4dc10ae2?w=400&h=225&fit=crop", platform: "youtube" },
     ],
     socialLinks: { youtube: "https://youtube.com", instagram: "https://instagram.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["כוחות ביטחון"],
   },
   {
     id: "9", name: "לימור דיין",
@@ -195,6 +219,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-9b", title: "טיפים לנשים מתחמשות", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "instagram" },
     ],
     socialLinks: { instagram: "https://instagram.com" },
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
+    deals: ["סטודנטים"],
   },
   {
     id: "10", name: "איתי מזרחי",
@@ -213,6 +240,8 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     videos: [
       { id: "v-10a", title: "מה לצפות באימון ראשון", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "youtube" },
     ],
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
   },
   {
     id: "11", name: "אבי טל",
@@ -232,6 +261,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-11a", title: "ירי מדויק - טכניקות בסיסיות", thumbnail: "https://images.unsplash.com/photo-1584281722234-404e4dc10ae2?w=400&h=225&fit=crop", platform: "youtube" },
     ],
     socialLinks: { youtube: "https://youtube.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["כוחות ביטחון"],
   },
   {
     id: "12", name: "תמר רוזנפלד",
@@ -250,6 +282,8 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     videos: [
       { id: "v-12a", title: "ליווי נשים מתחמשות", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "instagram" },
     ],
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: false,
   },
   {
     id: "13", name: "יגאל נחום",
@@ -270,6 +304,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v6", title: "יום פתוח במטווח ראשון לציון", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "facebook" },
     ],
     socialLinks: { facebook: "https://facebook.com", instagram: "https://instagram.com", youtube: "https://youtube.com" },
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
+    deals: ["גמלאים"],
   },
   {
     id: "14", name: "אור כספי",
@@ -288,6 +325,8 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     videos: [
       { id: "v-14a", title: "אימון קבוצתי בכפר סבא", thumbnail: "https://images.unsplash.com/photo-1584281722234-404e4dc10ae2?w=400&h=225&fit=crop", platform: "facebook" },
     ],
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
   },
   {
     id: "15", name: "רינת שרון",
@@ -307,6 +346,8 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-15a", title: "ירי למרחקים - טכניקת כיוון", thumbnail: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=400&h=225&fit=crop", platform: "youtube" },
     ],
     socialLinks: { instagram: "https://instagram.com" },
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
   },
   // --- 20 New instructors ---
   {
@@ -333,6 +374,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-16b", title: "ירי טקטי בתרגיל שטח", thumbnail: "https://images.unsplash.com/photo-1534854638093-bada1813ca19?w=400&h=225&fit=crop", platform: "instagram" },
     ],
     socialLinks: { youtube: "https://youtube.com", instagram: "https://instagram.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["כוחות ביטחון"],
   },
   {
     id: "17", name: "נעמה ברגר",
@@ -361,13 +405,16 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-17c", title: "סיכום אימון קבוצתי", thumbnail: "https://images.unsplash.com/photo-1550345332-09e3ac987658?w=400&h=225&fit=crop", platform: "facebook" },
     ],
     socialLinks: { instagram: "https://instagram.com", youtube: "https://youtube.com", facebook: "https://facebook.com" },
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
+    deals: ["סטודנטים"],
   },
   {
     id: "18", name: "עידן צור",
     photo: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&h=300&fit=crop&crop=face",
     verified: true, eloShooting: 1890, eloInstruction: 1550, stars: 4.7,
     metrics: { service: 4.5, professionalism: 4.8, quality: 4.7 },
-    trainees: 720, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "אימון לילה", "כוונות השלכה"],
+    trainees: 720, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "אימון לילה", "כוונות השלכה", "מטרות נעות"],
     ranges: ["מטווח חיפה", "מטווח עכו", "מטווח נהריה"], city: "חיפה",
     available: true, nextSlot: "מחר, 10:00", priceFrom: 320,
     bio: "יורה תחרותי ומדריך מומחה. 14 שנות ניסיון. מתמחה בירי לילה ובכוונות השלכה מתקדמות.",
@@ -386,6 +433,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-18b", title: "כוונות השלכה - סקירה", thumbnail: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&h=225&fit=crop", platform: "youtube" },
     ],
     socialLinks: { youtube: "https://youtube.com", instagram: "https://instagram.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["כוחות ביטחון"],
   },
   {
     id: "19", name: "שי אדרי",
@@ -408,6 +458,8 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-19a", title: "מה לצפות בחידוש רישיון?", thumbnail: "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&h=225&fit=crop", platform: "youtube" },
       { id: "v-19b", title: "טיפים למתחמשים חדשים", thumbnail: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&h=225&fit=crop", platform: "instagram" },
     ],
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
   },
   {
     id: "20", name: "מאיה לוי",
@@ -437,13 +489,16 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-20c", title: "שאלות נפוצות למתחמשים חדשים", thumbnail: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&h=225&fit=crop", platform: "youtube" },
     ],
     socialLinks: { youtube: "https://youtube.com", instagram: "https://instagram.com", facebook: "https://facebook.com" },
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
+    deals: ["גמלאים"],
   },
   {
     id: "21", name: "אמיר סעדה",
     photo: "https://images.unsplash.com/photo-1556474835-b0f3ac40d4d1?w=300&h=300&fit=crop&crop=face",
     verified: true, eloShooting: 1830, eloInstruction: 1700, stars: 4.8,
     metrics: { service: 4.7, professionalism: 4.9, quality: 4.8 },
-    trainees: 1150, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "ערכות הסבה", "כוונות השלכה"],
+    trainees: 1150, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "ערכות הסבה", "כוונות השלכה", "מטרות נעות"],
     ranges: ["מטווח באר שבע", "מטווח ערד", "מטווח דימונה"], city: "באר שבע",
     available: false, nextSlot: "יום ראשון, 08:00", priceFrom: 340,
     bio: "מומחה לנשק טקטי ולציוד מתקדם. 15 שנות ניסיון. מדריך בכיר בבית הספר לירי של צה\"ל לשעבר.",
@@ -463,6 +518,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-21c", title: "טיפים לבחירת כוונת", thumbnail: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&h=225&fit=crop", platform: "instagram" },
     ],
     socialLinks: { youtube: "https://youtube.com", instagram: "https://instagram.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["כוחות ביטחון", "סטודנטים"],
   },
   {
     id: "22", name: "דניאל אזולאי",
@@ -484,6 +542,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     videos: [
       { id: "v-22a", title: "הטעויות הנפוצות של מתחילים", thumbnail: "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&h=225&fit=crop", platform: "youtube" },
     ],
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
+    deals: ["סטודנטים"],
   },
   {
     id: "23", name: "הילה מרום",
@@ -509,13 +570,15 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-23b", title: "יום קבוצתי במטווח", thumbnail: "https://images.unsplash.com/photo-1550345332-09e3ac987658?w=400&h=225&fit=crop", platform: "instagram" },
     ],
     socialLinks: { instagram: "https://instagram.com", facebook: "https://facebook.com" },
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
   },
   {
     id: "24", name: "תום ביטון",
     photo: "https://images.unsplash.com/photo-1508341591423-4347099e1f19?w=300&h=300&fit=crop&crop=face",
     verified: true, eloShooting: 1960, eloInstruction: 1430, stars: 4.6,
     metrics: { service: 4.3, professionalism: 4.9, quality: 4.6 },
-    trainees: 450, trainingTypes: ["ירי מקצועי", "סדנת ירי", "אימון לילה", "ערכות הסבה"],
+    trainees: 450, trainingTypes: ["ירי מקצועי", "סדנת ירי", "אימון לילה", "ערכות הסבה", "מטרות נעות"],
     ranges: ["מטווח הרצליה", "מטווח כפר סבא"], city: "הרצליה",
     available: true, nextSlot: "מחר, 19:00", priceFrom: 400,
     bio: "אלוף ישראל בירי מעשי IPSC. 10 שנות ניסיון. מתמחה באימוני לילה ובנשק טקטי מתקדם.",
@@ -535,6 +598,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-24b", title: "IPSC Finals - תום ביטון", thumbnail: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=225&fit=crop", platform: "youtube" },
     ],
     socialLinks: { youtube: "https://youtube.com", instagram: "https://instagram.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: false,
+    deals: ["כוחות ביטחון"],
   },
   {
     id: "25", name: "סבטלנה קוזלוב",
@@ -560,6 +626,8 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-25b", title: "אימון קבוצתי בחיפה", thumbnail: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=225&fit=crop", platform: "facebook" },
     ],
     socialLinks: { facebook: "https://facebook.com", youtube: "https://youtube.com" },
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
   },
   {
     id: "26", name: "אסף דהן",
@@ -581,6 +649,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     videos: [
       { id: "v-26a", title: "כל מה שצריך לדעת לפני אימון", thumbnail: "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&h=225&fit=crop", platform: "youtube" },
     ],
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
+    deals: ["סטודנטים"],
   },
   {
     id: "27", name: "מור בן דוד",
@@ -605,6 +676,8 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-27b", title: "קבוצת הנשים שלנו", thumbnail: "https://images.unsplash.com/photo-1550345332-09e3ac987658?w=400&h=225&fit=crop", platform: "instagram" },
     ],
     socialLinks: { instagram: "https://instagram.com" },
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
   },
   {
     id: "28", name: "יוסף חמו",
@@ -634,6 +707,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-28c", title: "כוונות השלכה במבחן שטח", thumbnail: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=225&fit=crop", platform: "instagram" },
     ],
     socialLinks: { youtube: "https://youtube.com", instagram: "https://instagram.com", facebook: "https://facebook.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["כוחות ביטחון"],
   },
   {
     id: "29", name: "ליאור פרידמן",
@@ -655,6 +731,8 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     videos: [
       { id: "v-29a", title: "חידוש רישיון - צעד אחר צעד", thumbnail: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&h=225&fit=crop", platform: "youtube" },
     ],
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: false,
   },
   {
     id: "30", name: "ענת יוסף",
@@ -680,6 +758,8 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-30b", title: "קבוצת נשים בנצרת", thumbnail: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&h=225&fit=crop", platform: "instagram" },
     ],
     socialLinks: { instagram: "https://instagram.com", youtube: "https://youtube.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
   },
   {
     id: "31", name: "ניסים אוחנה",
@@ -703,6 +783,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-31b", title: "ערכות הסבה - מדריך למתחילים", thumbnail: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=225&fit=crop", platform: "facebook" },
     ],
     socialLinks: { facebook: "https://facebook.com" },
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
+    deals: ["גמלאים"],
   },
   {
     id: "32", name: "אורית פלד",
@@ -723,13 +806,15 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     videos: [
       { id: "v-32a", title: "אימון ראשון לנשים - מה לצפות", thumbnail: "https://images.unsplash.com/photo-1550345332-09e3ac987658?w=400&h=225&fit=crop", platform: "instagram" },
     ],
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: false,
   },
   {
     id: "33", name: "בועז שגיא",
     photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
     verified: true, eloShooting: 1850, eloInstruction: 1750, stars: 4.8,
     metrics: { service: 4.7, professionalism: 5.0, quality: 4.8 },
-    trainees: 1780, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "אימון לילה", "כוונות השלכה", "ערכות הסבה"],
+    trainees: 1780, trainingTypes: ["ירי מקצועי", "סדנת ירי", "רענון", "אימון לילה", "כוונות השלכה", "ערכות הסבה", "מטרות נעות"],
     ranges: ["מטווח תל אביב", "מטווח ראשון לציון", "מטווח רמת גן", "מטווח פתח תקווה"], city: "רמת גן",
     available: true, nextSlot: "היום, 18:00", priceFrom: 420,
     bio: "בעל ניסיון של 20 שנה בהדרכת ירי. מדריך בכיר בצה\"ל לשעבר. מומחה לכל סוגי הנשק והאימונים המיוחדים.",
@@ -751,6 +836,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-33c", title: "ערכות הסבה - הסבר מעשי", thumbnail: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&h=225&fit=crop", platform: "instagram" },
     ],
     socialLinks: { youtube: "https://youtube.com", instagram: "https://instagram.com", facebook: "https://facebook.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["כוחות ביטחון", "גמלאים"],
   },
   {
     id: "34", name: "כרמל עוז",
@@ -773,6 +861,9 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-34a", title: "אימון בצפון - מטווח צפת", thumbnail: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=400&h=225&fit=crop", platform: "youtube" },
     ],
     socialLinks: { instagram: "https://instagram.com" },
+    rangeType: ["מטווח סגור"],
+    countsAsRefresh: true,
+    deals: ["סטודנטים"],
   },
   {
     id: "35", name: "משה אליהו",
@@ -798,6 +889,8 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       { id: "v-35b", title: "רענון מקצועי - תרגיל מלא", thumbnail: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=225&fit=crop", platform: "youtube" },
     ],
     socialLinks: { youtube: "https://youtube.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
   },
 ];
 

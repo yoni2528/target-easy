@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, SlidersHorizontal, X, Check, MapPin, Calendar, DollarSign, ShieldCheck, Clock } from "lucide-react";
+import { Search, SlidersHorizontal, X, Check, MapPin, Calendar, DollarSign, ShieldCheck, Clock, Star, Target, Sparkles, TreePine, Percent, ChevronDown, RefreshCw, Crosshair, User, GraduationCap, Trophy, Crown, Moon as MoonIcon, Move, Swords, Scale } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FILTER_TREE, type FilterNode } from "../lib/filter-tree";
 import { MOCK_INSTRUCTORS } from "../lib/mock-data";
@@ -11,10 +11,49 @@ export interface Filters {
   day: string | null;
   verifiedOnly: boolean;
   availableOnly: boolean;
-  maxPrice: number | null;
+  maxPrice: "₪" | "₪₪" | "₪₪₪" | null;
+  countsAsRefresh: boolean | null;
+  minStars: number | null;
+  trainingLevel: string | null;
+  specialTraining: string | null;
+  rangeType: string | null;
+  deal: string | null;
 }
 
+export const DEFAULT_FILTERS: Filters = {
+  city: null, day: null, verifiedOnly: false, availableOnly: false,
+  maxPrice: null, countsAsRefresh: null, minStars: null, trainingLevel: null,
+  specialTraining: null, rangeType: null, deal: null,
+};
+
 const DAYS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
+const PRICE_TIERS = [
+  { id: "₪" as const, label: "₪", max: 200 },
+  { id: "₪₪" as const, label: "₪₪", max: 350 },
+  { id: "₪₪₪" as const, label: "₪₪₪", max: 9999 },
+];
+const TRAINING_LEVELS = [
+  { id: "beginner", label: "מתחילים 1200+", icon: User, color: "#4ade80" },
+  { id: "advanced", label: "מתקדמים 1400+", icon: GraduationCap, color: "#60a5fa" },
+  { id: "expert", label: "מומחים 1600+", icon: Trophy, color: "#fbbf24" },
+  { id: "champion", label: "אלופים 1800+", icon: Crown, color: "#f87171" },
+];
+const SPECIAL_TRAININGS = [
+  { id: "ערכות הסבה", label: "ערכות הסבה" },
+  { id: "כוונות השלכה", label: "כוונות" },
+  { id: "אימון נשים", label: "נשים בלבד" },
+  { id: "אימון לילה", label: "לילה" },
+  { id: "מטרות נעות", label: "מטרות נעות" },
+];
+const RANGE_TYPES = [
+  { id: "מטווח סגור", label: "מטווח סגור" },
+  { id: "מטווח פתוח", label: "מטווח פתוח" },
+];
+const DEALS = [
+  { id: "כוחות ביטחון", label: "הטבה לכוחות הביטחון" },
+  { id: "סטודנטים", label: "הטבה לסטודנטים" },
+  { id: "גמלאים", label: "הטבת גמלאי" },
+];
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -40,6 +79,12 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
     filters.verifiedOnly,
     filters.availableOnly,
     filters.maxPrice,
+    filters.countsAsRefresh !== null,
+    filters.minStars,
+    filters.trainingLevel,
+    filters.specialTraining,
+    filters.rangeType,
+    filters.deal,
   ].filter(Boolean).length;
 
   const handleTopClick = (node: FilterNode) => {
@@ -88,8 +133,11 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
     onCategorySelect(null);
   };
 
+  const [expandedFilter, setExpandedFilter] = useState<string | null>(null);
+
   const clearAllFilters = () => {
-    onFiltersChange({ city: null, day: null, verifiedOnly: false, availableOnly: false, maxPrice: null });
+    onFiltersChange({ ...DEFAULT_FILTERS });
+    setExpandedFilter(null);
   };
 
   const expandedNode = expandedTop ? FILTER_TREE.find((n) => n.id === expandedTop) : null;
@@ -134,7 +182,7 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
             transition={{ duration: 0.25 }}
             className="overflow-hidden"
           >
-            <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-4 space-y-4">
+            <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-4 space-y-3">
               {/* Header */}
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold text-[var(--text-primary)]">סינון תוצאות</h3>
@@ -148,89 +196,155 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
                 </div>
               </div>
 
-              {/* City */}
-              <div>
-                <label className="flex items-center gap-1.5 text-xs font-semibold text-[var(--text-secondary)] mb-2">
-                  <MapPin className="w-3.5 h-3.5" /> עיר
-                </label>
-                <div className="flex flex-wrap gap-1.5">
-                  <button
-                    onClick={() => onFiltersChange({ ...filters, city: null })}
-                    className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium border transition-all ${!filters.city ? "bg-[var(--accent-green)]/15 border-[var(--accent-green)]/40 text-[var(--accent-green)]" : "bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)]"}`}
-                  >
-                    הכל
-                  </button>
-                  {allCities.map((city) => (
-                    <button
-                      key={city}
-                      onClick={() => onFiltersChange({ ...filters, city: filters.city === city ? null : city })}
-                      className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium border transition-all ${filters.city === city ? "bg-[var(--accent-green)]/15 border-[var(--accent-green)]/40 text-[var(--accent-green)]" : "bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-secondary)]"}`}
-                    >
-                      {city}
-                    </button>
-                  ))}
-                </div>
+              {/* Category buttons */}
+              <div className="space-y-1.5">
+                {/* 1. City */}
+                <FilterCategory
+                  icon={MapPin} label="עיר" color="#4ade80"
+                  active={!!filters.city} activeLabel={filters.city}
+                  expanded={expandedFilter === "city"} onToggle={() => setExpandedFilter(expandedFilter === "city" ? null : "city")}
+                >
+                  <div className="flex flex-wrap gap-1.5">
+                    {allCities.map((city) => (
+                      <Chip key={city} label={city} selected={filters.city === city} color="#4ade80"
+                        onClick={() => onFiltersChange({ ...filters, city: filters.city === city ? null : city })} />
+                    ))}
+                  </div>
+                </FilterCategory>
+
+                {/* 2. Training level */}
+                <FilterCategory
+                  icon={Target} label="רמת אימון" color="#f87171"
+                  active={!!filters.trainingLevel} activeLabel={TRAINING_LEVELS.find(l => l.id === filters.trainingLevel)?.label}
+                  expanded={expandedFilter === "level"} onToggle={() => setExpandedFilter(expandedFilter === "level" ? null : "level")}
+                >
+                  <div className="flex flex-wrap gap-1.5">
+                    {TRAINING_LEVELS.map((level) => (
+                      <Chip key={level.id} label={level.label} selected={filters.trainingLevel === level.id} color={level.color}
+                        onClick={() => onFiltersChange({ ...filters, trainingLevel: filters.trainingLevel === level.id ? null : level.id })} />
+                    ))}
+                  </div>
+                </FilterCategory>
+
+                {/* 3. Max price */}
+                <FilterCategory
+                  icon={DollarSign} label="מחיר מקסימלי" color="#fbbf24"
+                  active={!!filters.maxPrice} activeLabel={filters.maxPrice}
+                  expanded={expandedFilter === "price"} onToggle={() => setExpandedFilter(expandedFilter === "price" ? null : "price")}
+                >
+                  <div className="flex flex-wrap gap-1.5">
+                    {PRICE_TIERS.map((tier) => (
+                      <Chip key={tier.id} label={tier.label} selected={filters.maxPrice === tier.id} color="#fbbf24"
+                        onClick={() => onFiltersChange({ ...filters, maxPrice: filters.maxPrice === tier.id ? null : tier.id })} />
+                    ))}
+                  </div>
+                </FilterCategory>
+
+                {/* 4. Day of week */}
+                <FilterCategory
+                  icon={Calendar} label="יום בשבוע" color="#60a5fa"
+                  active={!!filters.day} activeLabel={filters.day ? `יום ${filters.day}` : undefined}
+                  expanded={expandedFilter === "day"} onToggle={() => setExpandedFilter(expandedFilter === "day" ? null : "day")}
+                >
+                  <div className="flex flex-wrap gap-1.5">
+                    {DAYS.map((day) => (
+                      <Chip key={day} label={`יום ${day}`} selected={filters.day === day} color="#60a5fa"
+                        onClick={() => onFiltersChange({ ...filters, day: filters.day === day ? null : day })} />
+                    ))}
+                  </div>
+                </FilterCategory>
+
+                {/* 5. Special training */}
+                <FilterCategory
+                  icon={Sparkles} label="אימון מיוחד" color="#a78bfa"
+                  active={!!filters.specialTraining} activeLabel={SPECIAL_TRAININGS.find(s => s.id === filters.specialTraining)?.label}
+                  expanded={expandedFilter === "special"} onToggle={() => setExpandedFilter(expandedFilter === "special" ? null : "special")}
+                >
+                  <div className="flex flex-wrap gap-1.5">
+                    {SPECIAL_TRAININGS.map((s) => (
+                      <Chip key={s.id} label={s.label} selected={filters.specialTraining === s.id} color="#a78bfa"
+                        onClick={() => onFiltersChange({ ...filters, specialTraining: filters.specialTraining === s.id ? null : s.id })} />
+                    ))}
+                  </div>
+                </FilterCategory>
+
+                {/* 6. Atmosphere / Range type */}
+                <FilterCategory
+                  icon={TreePine} label="באיזו אווירה" color="#34d399"
+                  active={!!filters.rangeType} activeLabel={filters.rangeType}
+                  expanded={expandedFilter === "range"} onToggle={() => setExpandedFilter(expandedFilter === "range" ? null : "range")}
+                >
+                  <div className="flex flex-wrap gap-1.5">
+                    {RANGE_TYPES.map((r) => (
+                      <Chip key={r.id} label={r.label} selected={filters.rangeType === r.id} color="#34d399"
+                        onClick={() => onFiltersChange({ ...filters, rangeType: filters.rangeType === r.id ? null : r.id })} />
+                    ))}
+                  </div>
+                </FilterCategory>
+
+                {/* 7. Instruction rating */}
+                <FilterCategory
+                  icon={Star} label="דירוג הדרכה" color="#fbbf24"
+                  active={!!filters.minStars} activeLabel={filters.minStars ? `${filters.minStars}+ כוכבים` : undefined}
+                  expanded={expandedFilter === "stars"} onToggle={() => setExpandedFilter(expandedFilter === "stars" ? null : "stars")}
+                >
+                  <div className="flex gap-2">
+                    {[5, 4, 3, 2, 1].map((n) => (
+                      <button key={n} onClick={() => onFiltersChange({ ...filters, minStars: filters.minStars === n ? null : n })}
+                        className={`flex items-center gap-1 px-3 py-2 rounded-lg border text-xs font-medium transition-all ${filters.minStars === n ? "bg-[#fbbf24]/15 border-[#fbbf24]/40 text-[#fbbf24]" : "bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)]"}`}
+                      >
+                        {n}<Star className="w-3 h-3 fill-current" />
+                      </button>
+                    ))}
+                  </div>
+                </FilterCategory>
+
+                {/* 8. Counts as refresh */}
+                <FilterCategory
+                  icon={RefreshCw} label="יכול להחשב כרענון" color="#38bdf8"
+                  active={filters.countsAsRefresh !== null} activeLabel={filters.countsAsRefresh === true ? "כן" : filters.countsAsRefresh === false ? "לא" : undefined}
+                  expanded={expandedFilter === "refresh"} onToggle={() => setExpandedFilter(expandedFilter === "refresh" ? null : "refresh")}
+                >
+                  <div className="flex gap-2">
+                    <Chip label="כן" selected={filters.countsAsRefresh === true} color="#38bdf8"
+                      onClick={() => onFiltersChange({ ...filters, countsAsRefresh: filters.countsAsRefresh === true ? null : true })} />
+                    <Chip label="לא" selected={filters.countsAsRefresh === false} color="#38bdf8"
+                      onClick={() => onFiltersChange({ ...filters, countsAsRefresh: filters.countsAsRefresh === false ? null : false })} />
+                  </div>
+                </FilterCategory>
+
+                {/* 9. Special deal */}
+                <FilterCategory
+                  icon={Percent} label="דיל מיוחד?" color="#fb923c"
+                  active={!!filters.deal} activeLabel={DEALS.find(d => d.id === filters.deal)?.label}
+                  expanded={expandedFilter === "deal"} onToggle={() => setExpandedFilter(expandedFilter === "deal" ? null : "deal")}
+                >
+                  <div className="flex flex-wrap gap-1.5">
+                    {DEALS.map((d) => (
+                      <Chip key={d.id} label={d.label} selected={filters.deal === d.id} color="#fb923c"
+                        onClick={() => onFiltersChange({ ...filters, deal: filters.deal === d.id ? null : d.id })} />
+                    ))}
+                  </div>
+                </FilterCategory>
               </div>
 
-              {/* Day of week */}
-              <div>
-                <label className="flex items-center gap-1.5 text-xs font-semibold text-[var(--text-secondary)] mb-2">
-                  <Calendar className="w-3.5 h-3.5" /> יום בשבוע
-                </label>
-                <div className="flex flex-wrap gap-1.5">
-                  <button
-                    onClick={() => onFiltersChange({ ...filters, day: null })}
-                    className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium border transition-all ${!filters.day ? "bg-[var(--accent-blue)]/15 border-[var(--accent-blue)]/40 text-[var(--accent-blue)]" : "bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)]"}`}
-                  >
-                    הכל
-                  </button>
-                  {DAYS.map((day) => (
-                    <button
-                      key={day}
-                      onClick={() => onFiltersChange({ ...filters, day: filters.day === day ? null : day })}
-                      className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium border transition-all ${filters.day === day ? "bg-[var(--accent-blue)]/15 border-[var(--accent-blue)]/40 text-[var(--accent-blue)]" : "bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-secondary)]"}`}
-                    >
-                      יום {day}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Max price */}
-              <div>
-                <label className="flex items-center gap-1.5 text-xs font-semibold text-[var(--text-secondary)] mb-2">
-                  <DollarSign className="w-3.5 h-3.5" /> מחיר מקסימלי
-                </label>
-                <div className="flex flex-wrap gap-1.5">
-                  {[null, 200, 250, 300, 400].map((price) => (
-                    <button
-                      key={price ?? "all"}
-                      onClick={() => onFiltersChange({ ...filters, maxPrice: filters.maxPrice === price ? null : price })}
-                      className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium border transition-all ${filters.maxPrice === price ? "bg-[var(--accent-amber)]/15 border-[var(--accent-amber)]/40 text-[var(--accent-amber)]" : "bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-secondary)]"}`}
-                    >
-                      {price === null ? "הכל" : `עד ₪${price}`}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Toggles row */}
-              <div className="flex gap-3">
+              {/* Toggle row */}
+              <div className="flex gap-2 pt-1">
                 <button
                   onClick={() => onFiltersChange({ ...filters, verifiedOnly: !filters.verifiedOnly })}
-                  className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border text-xs font-medium transition-all ${filters.verifiedOnly ? "bg-[var(--accent-green)]/15 border-[var(--accent-green)]/40 text-[var(--accent-green)]" : "bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)]"}`}
+                  className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border text-xs font-medium transition-all ${filters.verifiedOnly ? "bg-[var(--accent-green)]/15 border-[var(--accent-green)]/40 text-[var(--accent-green)]" : "bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)]"}`}
                 >
                   <ShieldCheck className="w-4 h-4" />
                   מאומתים בלבד
-                  {filters.verifiedOnly && <Check className="w-3.5 h-3.5" />}
+                  {filters.verifiedOnly && <Check className="w-3 h-3" />}
                 </button>
                 <button
                   onClick={() => onFiltersChange({ ...filters, availableOnly: !filters.availableOnly })}
-                  className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border text-xs font-medium transition-all ${filters.availableOnly ? "bg-[var(--accent-green)]/15 border-[var(--accent-green)]/40 text-[var(--accent-green)]" : "bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)]"}`}
+                  className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border text-xs font-medium transition-all ${filters.availableOnly ? "bg-[var(--accent-green)]/15 border-[var(--accent-green)]/40 text-[var(--accent-green)]" : "bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)]"}`}
                 >
                   <Clock className="w-4 h-4" />
                   פנויים בלבד
-                  {filters.availableOnly && <Check className="w-3.5 h-3.5" />}
+                  {filters.availableOnly && <Check className="w-3 h-3" />}
                 </button>
               </div>
             </div>
@@ -412,5 +526,59 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
         </div>
       </div>
     </div>
+  );
+}
+
+/* ── Helper components ── */
+
+function FilterCategory({ icon: Icon, label, color, active, activeLabel, expanded, onToggle, children }: {
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  label: string; color: string; active: boolean; activeLabel?: string | null;
+  expanded: boolean; onToggle: () => void; children: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-xl border border-[var(--border-subtle)] overflow-hidden transition-all">
+      <button
+        onClick={onToggle}
+        className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-right transition-all ${expanded ? "bg-[var(--bg-elevated)]" : "hover:bg-[var(--bg-elevated)]/50"}`}
+      >
+        <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+          style={{ background: active ? `${color}20` : `${color}08` }}>
+          <Icon className="w-4 h-4" style={{ color }} />
+        </div>
+        <span className="flex-1 text-xs font-semibold text-[var(--text-primary)]">{label}</span>
+        {active && activeLabel && (
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md" style={{ background: `${color}15`, color }}>{activeLabel}</span>
+        )}
+        <ChevronDown className={`w-4 h-4 text-[var(--text-muted)] transition-transform duration-200 ${expanded ? "rotate-180" : ""}`} />
+      </button>
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden"
+          >
+            <div className="px-3 pb-3 pt-1">
+              {children}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function Chip({ label, selected, color, onClick }: { label: string; selected: boolean; color: string; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium border transition-all ${selected ? "" : "bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-secondary)]"}`}
+      style={selected ? { background: `${color}15`, borderColor: `${color}66`, color } : undefined}
+    >
+      {label}
+    </button>
   );
 }

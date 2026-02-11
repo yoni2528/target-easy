@@ -5,7 +5,7 @@ import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, In
 import { useAuthStore } from "@/modules/auth";
 import { MOCK_INSTRUCTORS, SearchBar, InstructorCard, FeaturedInstructor } from "@/modules/instructors";
 import { BottomNav } from "@/components/BottomNav";
-import type { Filters } from "@/modules/instructors/components/SearchBar";
+import { type Filters, DEFAULT_FILTERS } from "@/modules/instructors/components/SearchBar";
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
@@ -13,7 +13,7 @@ export default function HomePage() {
   const [sortMode, setSortMode] = useState(50);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
-  const [filters, setFilters] = useState<Filters>({ city: null, day: null, verifiedOnly: false, availableOnly: false, maxPrice: null });
+  const [filters, setFilters] = useState<Filters>({ ...DEFAULT_FILTERS });
   const user = useAuthStore((s) => s.user);
 
   // Featured instructor: highest combined ELO + most trainees
@@ -94,7 +94,36 @@ export default function HomePage() {
       results = results.filter((i) => i.available);
     }
     if (filters.maxPrice) {
-      results = results.filter((i) => i.priceFrom <= filters.maxPrice!);
+      const priceMaxMap = { "₪": 200, "₪₪": 350, "₪₪₪": 9999 };
+      const maxVal = priceMaxMap[filters.maxPrice];
+      results = results.filter((i) => i.priceFrom <= maxVal);
+    }
+    if (filters.trainingLevel) {
+      const eloRanges: Record<string, { min: number; max: number }> = {
+        beginner: { min: 1200, max: 1399 },
+        advanced: { min: 1400, max: 1599 },
+        expert: { min: 1600, max: 1799 },
+        champion: { min: 1800, max: 9999 },
+      };
+      const range = eloRanges[filters.trainingLevel];
+      if (range) {
+        results = results.filter((i) => i.eloShooting >= range.min && i.eloShooting <= range.max);
+      }
+    }
+    if (filters.specialTraining) {
+      results = results.filter((i) => i.trainingTypes.includes(filters.specialTraining!));
+    }
+    if (filters.minStars) {
+      results = results.filter((i) => i.stars >= filters.minStars!);
+    }
+    if (filters.countsAsRefresh !== null) {
+      results = results.filter((i) => (i.countsAsRefresh ?? false) === filters.countsAsRefresh);
+    }
+    if (filters.rangeType) {
+      results = results.filter((i) => i.rangeType?.includes(filters.rangeType as "מטווח סגור" | "מטווח פתוח"));
+    }
+    if (filters.deal) {
+      results = results.filter((i) => i.deals?.includes(filters.deal as "כוחות ביטחון" | "סטודנטים" | "גמלאים"));
     }
     // Sort
     if (sortMode < 40) {

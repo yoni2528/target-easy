@@ -24,6 +24,9 @@ export interface Instructor {
     facebook?: string;
     youtube?: string;
   };
+  rangeType?: ("מטווח סגור" | "מטווח פתוח")[];
+  countsAsRefresh?: boolean;
+  deals?: ("כוחות ביטחון" | "סטודנטים" | "גמלאים")[];
 }
 
 export interface Review {
