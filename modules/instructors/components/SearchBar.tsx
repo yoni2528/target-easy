@@ -29,6 +29,7 @@ interface SearchBarProps {
 export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMode, onSortChange, filters, onFiltersChange }: SearchBarProps) {
   const [query, setQuery] = useState("");
   const [expandedTop, setExpandedTop] = useState<string | null>(null);
+  const [expandedSub, setExpandedSub] = useState<string | null>(null);
   const [filterOpen, setFilterOpen] = useState(false);
 
   const allCities = [...new Set(MOCK_INSTRUCTORS.map((i) => i.city))].sort((a, b) => a.localeCompare(b, "he"));
@@ -44,23 +45,46 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
   const handleTopClick = (node: FilterNode) => {
     if (expandedTop === node.id) {
       setExpandedTop(null);
+      setExpandedSub(null);
       onCategorySelect(null);
     } else {
       setExpandedTop(node.id);
+      setExpandedSub(null);
       onCategorySelect(node.id);
     }
   };
 
   const handleSubClick = (subNode: FilterNode) => {
-    if (selectedCategory === subNode.id) {
-      onCategorySelect(expandedTop);
+    if (subNode.children && subNode.children.length > 0) {
+      // This sub-node has children — expand the 3rd level
+      if (expandedSub === subNode.id) {
+        setExpandedSub(null);
+        onCategorySelect(expandedTop);
+      } else {
+        setExpandedSub(subNode.id);
+        onCategorySelect(subNode.id);
+      }
     } else {
-      onCategorySelect(subNode.id);
+      // Leaf node — just select/deselect
+      if (selectedCategory === subNode.id) {
+        onCategorySelect(expandedSub || expandedTop);
+      } else {
+        onCategorySelect(subNode.id);
+      }
+    }
+  };
+
+  const handleLeafClick = (leafNode: FilterNode) => {
+    if (selectedCategory === leafNode.id) {
+      onCategorySelect(expandedSub);
+    } else {
+      onCategorySelect(leafNode.id);
     }
   };
 
   const handleClear = () => {
     setExpandedTop(null);
+    setExpandedSub(null);
     onCategorySelect(null);
   };
 
@@ -70,6 +94,8 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
 
   const expandedNode = expandedTop ? FILTER_TREE.find((n) => n.id === expandedTop) : null;
   const subNodes = expandedNode?.children || [];
+  const expandedSubNode = expandedSub ? subNodes.find((n) => n.id === expandedSub) : null;
+  const leafNodes = expandedSubNode?.children || [];
 
   return (
     <div className="space-y-4">
@@ -265,7 +291,8 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
               <div className={`grid gap-1 ${subNodes.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
                 {subNodes.map((sub) => {
                   const SubIcon = sub.icon;
-                  const isSubSelected = selectedCategory === sub.id;
+                  const isSubSelected = selectedCategory === sub.id || expandedSub === sub.id || (selectedCategory?.startsWith(sub.id + ":") ?? false);
+                  const hasChildren = sub.children && sub.children.length > 0;
                   return (
                     <button key={sub.id} onClick={() => handleSubClick(sub)} className="flex flex-col items-center gap-1.5 py-2 transition-all duration-200">
                       <div
@@ -280,6 +307,57 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, sortMo
                       </div>
                       <span className={`text-[10px] leading-tight text-center font-medium ${isSubSelected ? "font-bold" : "text-[var(--text-secondary)]"}`} style={isSubSelected ? { color: sub.color } : undefined}>
                         {sub.label}
+                      </span>
+                      {hasChildren && (
+                        <div className={`w-1 h-1 rounded-full transition-all ${expandedSub === sub.id ? "scale-150" : ""}`} style={{ background: sub.color, opacity: expandedSub === sub.id ? 1 : 0.5 }} />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* 3b. Third-level leaf row (e.g. skill levels, workshop types) */}
+      <AnimatePresence>
+        {expandedSub && leafNodes.length > 0 && (
+          <motion.div
+            key={expandedSub}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25 }}
+            className="overflow-hidden"
+          >
+            <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-3">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-semibold" style={{ color: expandedSubNode?.color }}>
+                  {expandedSubNode?.label}
+                </span>
+                <button onClick={() => { setExpandedSub(null); onCategorySelect(expandedTop); }} className="p-1 text-[var(--text-muted)] hover:text-[var(--accent-red)] transition-colors">
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <div className={`grid gap-1 ${leafNodes.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
+                {leafNodes.map((leaf) => {
+                  const LeafIcon = leaf.icon;
+                  const isLeafSelected = selectedCategory === leaf.id;
+                  return (
+                    <button key={leaf.id} onClick={() => handleLeafClick(leaf)} className="flex flex-col items-center gap-1.5 py-2 transition-all duration-200">
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${isLeafSelected ? "shadow-md scale-110" : "border-[var(--border-subtle)] hover:scale-105"}`}
+                        style={{
+                          background: isLeafSelected ? `${leaf.color}20` : `${leaf.color}08`,
+                          borderColor: isLeafSelected ? leaf.color : `${leaf.color}30`,
+                          boxShadow: isLeafSelected ? `0 0 12px ${leaf.color}30` : undefined,
+                        }}
+                      >
+                        <LeafIcon className="w-4.5 h-4.5" style={{ color: leaf.color }} />
+                      </div>
+                      <span className={`text-[10px] leading-tight text-center font-medium ${isLeafSelected ? "font-bold" : "text-[var(--text-secondary)]"}`} style={isLeafSelected ? { color: leaf.color } : undefined}>
+                        {leaf.label}
                       </span>
                     </button>
                   );

@@ -28,7 +28,7 @@ export default function HomePage() {
     "new": ["מתחמש חדש"],
     "refresh": ["רענון"],
     "renewal": ["חידוש"],
-    "train": ["ירי מקצועי"],
+    "train": ["ירי מקצועי", "סדנת ירי"],
     "special": ["ערכות הסבה", "כוונות השלכה", "אימון נשים", "אימון לילה"],
     "new:training": ["מתחמש חדש"],
     "new:stores": ["מתחמש חדש"],
@@ -40,14 +40,28 @@ export default function HomePage() {
     "renewal:forms": ["חידוש"],
     "renewal:guide": ["חידוש"],
     "renewal:missed": ["חידוש"],
-    "train:pistol": ["ירי מקצועי"],
-    "train:rifle": ["ירי מקצועי"],
-    "train:dynamic": ["ירי מקצועי"],
-    "train:instructor": ["ירי מקצועי"],
+    "train:single": ["ירי מקצועי"],
+    "train:single:beginner": ["ירי מקצועי"],
+    "train:single:advanced": ["ירי מקצועי"],
+    "train:single:expert": ["ירי מקצועי"],
+    "train:single:champion": ["ירי מקצועי"],
+    "train:workshop": ["סדנת ירי"],
+    "train:workshop:2": ["סדנת ירי"],
+    "train:workshop:3": ["סדנת ירי"],
+    "train:workshop:combat": ["סדנת ירי"],
+    "train:workshop:legal": ["סדנת ירי"],
     "special:conversion": ["ערכות הסבה"],
     "special:sights": ["כוונות השלכה"],
     "special:women": ["אימון נשים"],
     "special:night": ["אימון לילה"],
+  };
+
+  // ELO ranges for single training skill levels
+  const ELO_FILTER_MAP: Record<string, { min: number; max: number }> = {
+    "train:single:beginner": { min: 1200, max: 1399 },
+    "train:single:advanced": { min: 1400, max: 1599 },
+    "train:single:expert": { min: 1600, max: 1799 },
+    "train:single:champion": { min: 1800, max: 9999 },
   };
 
   const filtered = useMemo(() => {
@@ -63,6 +77,11 @@ export default function HomePage() {
       results = results.filter((i) =>
         requiredTypes.some((type) => i.trainingTypes.includes(type))
       );
+      // Apply ELO range filter for skill level categories
+      const eloRange = ELO_FILTER_MAP[selectedCategory];
+      if (eloRange) {
+        results = results.filter((i) => i.eloShooting >= eloRange.min && i.eloShooting <= eloRange.max);
+      }
     }
     // Filter panel filters
     if (filters.city) {

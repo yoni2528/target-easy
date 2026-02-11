@@ -3,7 +3,8 @@ import {
   Crosshair, RefreshCw, FileCheck, Target, Flame,
   BookOpen, Store, HelpCircle, Timer, Dumbbell, UserSearch,
   CalendarClock, FileText, AlertCircle, ClipboardList,
-  Star, Wrench, ScanEye, PersonStanding, Moon
+  Star, Wrench, ScanEye, PersonStanding, Moon,
+  User, GraduationCap, Trophy, Crown, Layers, Swords, Scale
 } from "lucide-react";
 
 export interface FilterNode {
@@ -55,10 +56,30 @@ export const FILTER_TREE: FilterNode[] = [
     icon: Flame,
     color: "#f87171",
     children: [
-      { id: "train:pistol", label: "ירי אקדח", icon: Crosshair, color: "#f87171" },
-      { id: "train:rifle", label: "ירי רובה", icon: Target, color: "#f87171" },
-      { id: "train:dynamic", label: "ירי דינמי", icon: Flame, color: "#f87171" },
-      { id: "train:instructor", label: "מדריך לאימון", icon: UserSearch, color: "#f87171" },
+      {
+        id: "train:single",
+        label: "אימון בודד",
+        icon: Crosshair,
+        color: "#f87171",
+        children: [
+          { id: "train:single:beginner", label: "מתחילים 1200+", icon: User, color: "#4ade80" },
+          { id: "train:single:advanced", label: "מתקדמים 1400+", icon: GraduationCap, color: "#60a5fa" },
+          { id: "train:single:expert", label: "מומחים 1600+", icon: Trophy, color: "#fbbf24" },
+          { id: "train:single:champion", label: "אלופים 1800+", icon: Crown, color: "#f87171" },
+        ],
+      },
+      {
+        id: "train:workshop",
+        label: "סדנאות ירי",
+        icon: Layers,
+        color: "#f87171",
+        children: [
+          { id: "train:workshop:2", label: "סדנה 2 אימונים", icon: Layers, color: "#f87171" },
+          { id: "train:workshop:3", label: "סדנה 3 אימונים", icon: Layers, color: "#f87171" },
+          { id: "train:workshop:combat", label: "ירי + קרב מגע", icon: Swords, color: "#f87171" },
+          { id: "train:workshop:legal", label: "ירי + משפטי", icon: Scale, color: "#f87171" },
+        ],
+      },
     ],
   },
   {
