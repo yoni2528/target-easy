@@ -20,13 +20,13 @@ export function InstructorCard({ instructor, index }: { instructor: Instructor; 
           <div className="flex gap-3">
             <div className="relative flex-shrink-0">
               <img src={instructor.photo} alt={instructor.name}
-                className="w-16 h-16 rounded-xl object-cover ring-2 ring-[var(--border-subtle)] group-hover:ring-[var(--accent-green)]/30 transition-all" />
+                className="w-20 h-20 rounded-2xl object-cover ring-2 ring-[var(--border-subtle)] group-hover:ring-[var(--accent-green)]/30 transition-all" />
               {instructor.verified && (
                 <div className="absolute -bottom-1 -left-1 bg-[var(--accent-green)] rounded-full p-0.5">
-                  <CheckCircle className="w-3.5 h-3.5 text-[var(--bg-primary)]" strokeWidth={3} />
+                  <CheckCircle className="w-4 h-4 text-[var(--bg-primary)]" strokeWidth={3} />
                 </div>
               )}
-              <div className={`absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full border-2 border-[var(--bg-card)] ${instructor.available ? "bg-[var(--accent-green)] pulse-dot" : "bg-[var(--accent-red)]"}`} />
+              <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-[var(--bg-card)] ${instructor.available ? "bg-[var(--accent-green)] pulse-dot" : "bg-[var(--accent-red)]"}`} />
             </div>
 
             <div className="flex-1 min-w-0">

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, MapPin, ChevronDown } from "lucide-react";
+import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe } from "lucide-react";
 import { useAuthStore } from "@/modules/auth";
 import { MOCK_INSTRUCTORS, SearchBar, InstructorCard, FeaturedInstructor } from "@/modules/instructors";
 import { BottomNav } from "@/components/BottomNav";
+import type { Filters } from "@/modules/instructors/components/SearchBar";
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
@@ -12,14 +13,8 @@ export default function HomePage() {
   const [sortMode, setSortMode] = useState(50);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
-  const [selectedCity, setSelectedCity] = useState<string | null>(null);
-  const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
+  const [filters, setFilters] = useState<Filters>({ city: null, day: null, verifiedOnly: false, availableOnly: false, maxPrice: null });
   const user = useAuthStore((s) => s.user);
-
-  const allCities = useMemo(() => {
-    const cities = [...new Set(MOCK_INSTRUCTORS.map((i) => i.city))];
-    return cities.sort((a, b) => a.localeCompare(b, "he"));
-  }, []);
 
   // Featured instructor: highest combined ELO + most trainees
   const featuredInstructor = useMemo(() => {
@@ -30,13 +25,11 @@ export default function HomePage() {
 
   // Map filter IDs to training types for filtering
   const CATEGORY_TRAINING_MAP: Record<string, string[]> = {
-    // Top level categories
     "new": ["מתחמש חדש"],
     "refresh": ["רענון"],
     "renewal": ["חידוש"],
     "train": ["ירי מקצועי"],
     "special": ["ערכות הסבה", "כוונות השלכה", "אימון נשים", "אימון לילה"],
-    // Sub-categories
     "new:training": ["מתחמש חדש"],
     "new:stores": ["מתחמש חדש"],
     "new:help": ["מתחמש חדש"],
@@ -71,16 +64,27 @@ export default function HomePage() {
         requiredTypes.some((type) => i.trainingTypes.includes(type))
       );
     }
-    if (selectedCity) {
-      results = results.filter((i) => i.city === selectedCity);
+    // Filter panel filters
+    if (filters.city) {
+      results = results.filter((i) => i.city === filters.city);
     }
+    if (filters.verifiedOnly) {
+      results = results.filter((i) => i.verified);
+    }
+    if (filters.availableOnly) {
+      results = results.filter((i) => i.available);
+    }
+    if (filters.maxPrice) {
+      results = results.filter((i) => i.priceFrom <= filters.maxPrice!);
+    }
+    // Sort
     if (sortMode < 40) {
       results = [...results].sort((a, b) => b.eloInstruction - a.eloInstruction);
     } else if (sortMode > 60) {
       results = [...results].sort((a, b) => a.city.localeCompare(b.city));
     }
     return results;
-  }, [query, selectedCategory, sortMode, selectedCity]);
+  }, [query, selectedCategory, sortMode, filters]);
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);
@@ -136,7 +140,6 @@ export default function HomePage() {
             className="absolute top-0 left-0 bottom-0 w-72 bg-[var(--bg-card)] border-l border-[var(--border-subtle)] shadow-2xl flex flex-col animate-slide-in-right"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Sidebar header */}
             <div className="flex items-center justify-between px-4 h-14 border-b border-[var(--border-subtle)]">
               <div className="flex items-center gap-2">
                 <Crosshair className="w-5 h-5 text-[var(--accent-green)]" strokeWidth={1.5} />
@@ -149,16 +152,12 @@ export default function HomePage() {
                 <X className="w-4 h-4" />
               </button>
             </div>
-
-            {/* User info if logged in */}
             {user && (
               <div className="px-4 py-3 border-b border-[var(--border-subtle)] bg-[var(--bg-elevated)]">
                 <p className="text-sm font-semibold">{user.name}</p>
                 <p className="text-[10px] text-[var(--text-muted)]">{user.role === "admin" ? "מנהל מערכת" : "מדריך"}</p>
               </div>
             )}
-
-            {/* Menu items */}
             <nav className="flex-1 py-2 overflow-y-auto">
               {sidebarItems.map((item, i) => {
                 const Icon = item.icon;
@@ -180,8 +179,6 @@ export default function HomePage() {
                 );
               })}
             </nav>
-
-            {/* Footer */}
             <div className="px-4 py-3 border-t border-[var(--border-subtle)]">
               <p className="text-[10px] text-[var(--text-muted)] text-center">EasyTarget v1.0 · אחים עם נשק</p>
             </div>
@@ -197,57 +194,25 @@ export default function HomePage() {
           selectedCategory={selectedCategory}
           sortMode={sortMode}
           onSortChange={setSortMode}
+          filters={filters}
+          onFiltersChange={setFilters}
         />
       </div>
 
       {/* Featured Instructor */}
-      {featuredInstructor && !query && !selectedCity && (
+      {featuredInstructor && !query && !filters.city && (
         <div className="px-4 mt-4 max-w-2xl mx-auto">
           <FeaturedInstructor instructor={featuredInstructor} />
         </div>
       )}
 
-      {/* City filter + Results count */}
+      {/* Results count */}
       <div className="px-4 mt-4 max-w-2xl mx-auto">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-xs text-[var(--text-muted)]">{filtered.length} תוצאות</span>
-          <div className="relative">
-            <button
-              onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-all ${selectedCity ? "border-[var(--accent-green)]/40 bg-[var(--accent-green)]/10 text-[var(--accent-green)]" : "border-[var(--border-subtle)] bg-[var(--bg-card)] text-[var(--text-secondary)]"}`}
-            >
-              <MapPin className="w-3.5 h-3.5" />
-              {selectedCity || "כל הערים"}
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${cityDropdownOpen ? "rotate-180" : ""}`} />
-            </button>
-            {cityDropdownOpen && (
-              <>
-                <div className="fixed inset-0 z-30" onClick={() => setCityDropdownOpen(false)} />
-                <div className="absolute left-0 top-full mt-1 z-40 w-44 bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl shadow-xl overflow-hidden">
-                  <button
-                    onClick={() => { setSelectedCity(null); setCityDropdownOpen(false); }}
-                    className={`w-full text-right px-3 py-2.5 text-xs transition-colors ${!selectedCity ? "bg-[var(--accent-green)]/10 text-[var(--accent-green)] font-bold" : "text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)]"}`}
-                  >
-                    כל הערים
-                  </button>
-                  {allCities.map((city) => (
-                    <button
-                      key={city}
-                      onClick={() => { setSelectedCity(city); setCityDropdownOpen(false); }}
-                      className={`w-full text-right px-3 py-2.5 text-xs transition-colors ${selectedCity === city ? "bg-[var(--accent-green)]/10 text-[var(--accent-green)] font-bold" : "text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)]"}`}
-                    >
-                      {city}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+        <span className="text-xs text-[var(--text-muted)]">{filtered.length} תוצאות</span>
       </div>
 
       {/* Results */}
-      <div className="px-4 max-w-2xl mx-auto space-y-3">
+      <div className="px-4 mt-3 max-w-2xl mx-auto space-y-3">
         {filtered.map((instructor, i) => (
           <InstructorCard key={instructor.id} instructor={instructor} index={i} />
         ))}
