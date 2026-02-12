@@ -63,6 +63,17 @@ export default function AdminPage() {
             </div>
           </Link>
 
+          {/* System stats link */}
+          <Link href="/admin/stats" className="flex items-center gap-4 bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-4 hover:border-[var(--accent-green)]/30 transition-colors">
+            <div className="w-10 h-10 rounded-lg bg-[var(--bg-elevated)] flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 text-[var(--accent-green)]" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold">סטטיסטיקות מערכת</h3>
+              <p className="text-[10px] text-[var(--text-muted)]">נתונים כלליים, מגמות, התפלגויות</p>
+            </div>
+          </Link>
+
           {/* Statistics - expandable */}
           <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl overflow-hidden">
             <button onClick={() => setStatsOpen(!statsOpen)} className="w-full flex items-center gap-4 p-4 hover:bg-[var(--bg-elevated)]/50 transition-colors">

@@ -206,7 +206,7 @@ export default function HomePage() {
 
       {/* Sidebar overlay */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-50" onClick={() => setSidebarOpen(false)}>
+        <div className="fixed inset-0 z-[60]" onClick={() => setSidebarOpen(false)}>
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
           <div
             className="absolute top-0 left-0 bottom-0 w-72 bg-[var(--bg-card)] border-l border-[var(--border-subtle)] shadow-2xl flex flex-col animate-slide-in-right"
@@ -301,7 +301,7 @@ export default function HomePage() {
                       <Link href="/admin/instructors" onClick={() => setSidebarOpen(false)} className={sSub}>
                         <Users className={`${sSubIcon} text-[var(--accent-blue)]`} /> {t("manageInstructors")}
                       </Link>
-                      <Link href="/admin#stats" onClick={() => setSidebarOpen(false)} className={sSub}>
+                      <Link href="/admin/stats" onClick={() => setSidebarOpen(false)} className={sSub}>
                         <BarChart3 className={`${sSubIcon} text-[var(--accent-green)]`} /> {t("instructorStats")}
                       </Link>
                       <Link href="/admin#settings" onClick={() => setSidebarOpen(false)} className={sSub}>
