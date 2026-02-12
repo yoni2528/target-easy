@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Search, SlidersHorizontal, X, MapPin, Calendar, DollarSign, ShieldCheck, Clock, Star, Target, Sparkles, TreePine, Percent, RefreshCw, CalendarRange, User, GraduationCap, Trophy, Crown } from "lucide-react";
+import { Search, SlidersHorizontal, X, MapPin, Calendar, DollarSign, ShieldCheck, Clock, Star, Target, Sparkles, TreePine, Percent, RefreshCw, CalendarRange, User, GraduationCap, Trophy, Crown, Navigation, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguageStore } from "@/lib/language-store";
 import { useT, getDays, getDayValues } from "@/lib/translations";
 import { getFilterTree, type FilterNode } from "../lib/filter-tree";
 import { MOCK_INSTRUCTORS } from "../lib/mock-data";
+import { useLocationStore } from "@/lib/location-store";
+import { CITY_COORDS } from "../lib/geo-data";
 
 export interface Filters {
   city: string | null;
@@ -574,6 +576,69 @@ export function SearchBar({ onSearch, onCategorySelect, selectedCategory, select
             }}
           />
         </div>
+      </div>
+
+      {/* Location prompt when distance sort selected */}
+      {sortMode > 60 && <LocationPrompt t={t} />}
+    </div>
+  );
+}
+
+/* ── Location prompt ── */
+function LocationPrompt({ t }: { t: ReturnType<typeof useT> }) {
+  const { lat, lng, source, manualAddress, loading, error, requestGPS, setManualLocation, clear } = useLocationStore();
+  const hasLocation = lat !== null && lng !== null;
+  const cities = Object.keys(CITY_COORDS).sort();
+
+  if (hasLocation) {
+    return (
+      <div className="bg-[var(--accent-blue)]/5 border border-[var(--accent-blue)]/20 rounded-xl p-3 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Navigation className="w-4 h-4 text-[var(--accent-blue)]" />
+          <span className="text-xs font-medium text-[var(--accent-blue)]">
+            {t("locationActive")}{source === "manual" && manualAddress ? ` — ${manualAddress}` : ""}
+          </span>
+        </div>
+        <button onClick={clear} className="text-[10px] text-[var(--text-muted)] hover:text-[var(--text-primary)] underline">
+          {t("locationChange")}
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl p-3 space-y-2.5">
+      <p className="text-xs text-[var(--text-secondary)] flex items-center gap-1.5">
+        <MapPin className="w-3.5 h-3.5 text-[var(--accent-blue)]" />
+        {t("locationNeeded")}
+      </p>
+      <button
+        onClick={requestGPS}
+        disabled={loading}
+        className="w-full h-9 rounded-lg bg-[var(--accent-blue)] text-white text-xs font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all disabled:opacity-50"
+      >
+        {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Navigation className="w-4 h-4" />}
+        {loading ? t("locationLoading") : t("locationGPS")}
+      </button>
+      {error && (
+        <p className="text-[10px] text-red-400">{t(error === "denied" ? "locationDenied" : "locationNoGPS")}</p>
+      )}
+      <div>
+        <p className="text-[10px] text-[var(--text-muted)] mb-1.5">{t("locationManual")}</p>
+        <select
+          onChange={(e) => {
+            const city = e.target.value;
+            if (city && CITY_COORDS[city]) {
+              const [cLat, cLng] = CITY_COORDS[city];
+              setManualLocation(cLat, cLng, city);
+            }
+          }}
+          defaultValue=""
+          className="w-full h-9 px-3 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-xs text-[var(--text-primary)] appearance-none"
+        >
+          <option value="">{t("locationSelectCity")}</option>
+          {cities.map((c) => <option key={c} value={c}>{c}</option>)}
+        </select>
       </div>
     </div>
   );

@@ -404,6 +404,18 @@ const translations = {
   ttGroup: { he: "אימון קבוצתי", en: "Group Training" },
   ttMovingTargets: { he: "מטרות נעות", en: "Moving Targets" },
 
+  // ── Location / Distance ──
+  locationNeeded: { he: "כדי למיין לפי מרחק, צריך לדעת את המיקום שלך", en: "To sort by distance, we need to know your location" },
+  locationGPS: { he: "הפעל שירותי מיקום", en: "Enable Location Services" },
+  locationManual: { he: "או הזן כתובת ידנית:", en: "Or enter your address manually:" },
+  locationSelectCity: { he: "בחר עיר...", en: "Select city..." },
+  locationActive: { he: "מיקום פעיל", en: "Location active" },
+  locationChange: { he: "שנה מיקום", en: "Change location" },
+  locationLoading: { he: "מאתר מיקום...", en: "Getting location..." },
+  locationDenied: { he: "הגישה למיקום נדחתה. ניתן להזין כתובת ידנית.", en: "Location access denied. You can enter your address manually." },
+  locationNoGPS: { he: "המכשיר לא תומך ב-GPS. הזן כתובת ידנית.", en: "Device doesn't support GPS. Enter your address manually." },
+  kmAway: { he: 'ק"מ', en: "km" },
+
   // ── Map Page ──
   mapTitle: { he: "מפת מדריכים ומטווחים", en: "Instructors & Ranges Map" },
   mapAll: { he: "הכל", en: "All" },

@@ -10,6 +10,8 @@ import { MOCK_INSTRUCTORS, SearchBar, InstructorCard, FeaturedInstructor } from 
 import { BottomNav } from "@/components/BottomNav";
 import { CompareBar } from "@/components/CompareBar";
 import { type Filters, DEFAULT_FILTERS } from "@/modules/instructors/components/SearchBar";
+import { useLocationStore } from "@/lib/location-store";
+import { CITY_COORDS, distanceKm } from "@/modules/instructors/lib/geo-data";
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
@@ -24,6 +26,8 @@ export default function HomePage() {
   const toggleLang = useLanguageStore((s) => s.toggleLang);
   const t = useT(lang);
   const user = useAuthStore((s) => s.user);
+  const userLat = useLocationStore((s) => s.lat);
+  const userLng = useLocationStore((s) => s.lng);
 
   // Featured instructor: highest combined ELO + most trainees
   const featuredInstructor = useMemo(() => {
@@ -157,11 +161,19 @@ export default function HomePage() {
     // Sort
     if (sortMode < 40) {
       results = [...results].sort((a, b) => b.eloInstruction - a.eloInstruction);
+    } else if (sortMode > 60 && userLat !== null && userLng !== null) {
+      results = [...results].sort((a, b) => {
+        const coordsA = CITY_COORDS[a.city];
+        const coordsB = CITY_COORDS[b.city];
+        const distA = coordsA ? distanceKm(userLat, userLng, coordsA[0], coordsA[1]) : 9999;
+        const distB = coordsB ? distanceKm(userLat, userLng, coordsB[0], coordsB[1]) : 9999;
+        return distA - distB;
+      });
     } else if (sortMode > 60) {
       results = [...results].sort((a, b) => a.city.localeCompare(b.city));
     }
     return results;
-  }, [query, selectedCategory, selectedLevel, sortMode, filters]);
+  }, [query, selectedCategory, selectedLevel, sortMode, filters, userLat, userLng]);
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);

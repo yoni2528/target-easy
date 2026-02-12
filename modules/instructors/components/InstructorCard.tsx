@@ -7,16 +7,27 @@ import { useUserStore } from "../lib/user-store";
 import { useCompareStore } from "../lib/compare-store";
 import type { Instructor } from "../types";
 import { useLanguageStore } from "@/lib/language-store";
+import { useLocationStore } from "@/lib/location-store";
 import { useT, translateTrainingType } from "@/lib/translations";
+import { CITY_COORDS, distanceKm } from "../lib/geo-data";
 
 export function InstructorCard({ instructor, index }: { instructor: Instructor; index: number }) {
   const { toggleFavorite, isFavorite } = useUserStore();
   const { toggle: toggleCompare, isSelected: isCompareSelected } = useCompareStore();
   const lang = useLanguageStore((s) => s.lang);
   const t = useT(lang);
+  const userLat = useLocationStore((s) => s.lat);
+  const userLng = useLocationStore((s) => s.lng);
   const favorited = isFavorite(instructor.id);
   const compared = isCompareSelected(instructor.id);
   const mockViews = 120 + parseInt(instructor.id) * 37 + instructor.trainees;
+
+  const dist = (() => {
+    if (userLat === null || userLng === null) return null;
+    const coords = CITY_COORDS[instructor.city];
+    if (!coords) return null;
+    return Math.round(distanceKm(userLat, userLng, coords[0], coords[1]));
+  })();
 
   return (
     <motion.div
@@ -60,7 +71,7 @@ export function InstructorCard({ instructor, index }: { instructor: Instructor; 
 
               {/* Location + Trainees + Views */}
               <div className="flex items-center gap-3 mt-1.5 text-xs text-[var(--text-muted)]">
-                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{instructor.city}</span>
+                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{instructor.city}{dist !== null && <span className="text-[var(--accent-blue)]" style={{ fontFamily: "var(--font-rubik)" }}>{` · ${dist} ${t("kmAway")}`}</span>}</span>
                 <span className="flex items-center gap-1"><Users className="w-3 h-3" />{instructor.trainees.toLocaleString()}</span>
                 <span className="flex items-center gap-1"><Eye className="w-3 h-3" />{mockViews}</span>
               </div>
