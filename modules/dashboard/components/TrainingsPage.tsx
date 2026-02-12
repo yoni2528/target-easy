@@ -6,9 +6,10 @@ import { ArrowRight, Calendar } from "lucide-react";
 import { TrainingCalendar } from "./TrainingCalendar";
 import { TrainingDetail } from "./TrainingDetail";
 import { ShooterLogForm } from "./ShooterLogForm";
+import { BatchShooterLog } from "./BatchShooterLog";
 import type { ScheduledTraining, TrainingClient, ShooterLogEntry } from "../types";
 
-type View = "calendar" | "detail" | "report";
+type View = "calendar" | "detail" | "report" | "batch-report";
 
 export function TrainingsPage() {
   const [view, setView] = useState<View>("calendar");
@@ -26,10 +27,18 @@ export function TrainingsPage() {
   };
 
   const handleReportSubmit = (entry: ShooterLogEntry) => {
-    // Mark client report as filled in mock data
     if (selectedTraining && selectedClient) {
       const client = selectedTraining.clients.find((c) => c.id === selectedClient.id);
       if (client) client.reportFilled = true;
+    }
+  };
+
+  const handleBatchSubmit = (entries: ShooterLogEntry[]) => {
+    if (selectedTraining) {
+      for (const entry of entries) {
+        const client = selectedTraining.clients.find((c) => c.id === entry.clientId);
+        if (client) client.reportFilled = true;
+      }
     }
   };
 
@@ -56,6 +65,7 @@ export function TrainingsPage() {
             training={selectedTraining}
             onBack={() => setView("calendar")}
             onOpenReport={handleOpenReport}
+            onOpenBatchReport={() => setView("batch-report")}
           />
         )}
         {view === "report" && selectedClient && (
@@ -63,6 +73,13 @@ export function TrainingsPage() {
             client={selectedClient}
             onBack={() => setView("detail")}
             onSubmit={handleReportSubmit}
+          />
+        )}
+        {view === "batch-report" && selectedTraining && (
+          <BatchShooterLog
+            clients={selectedTraining.clients}
+            onBack={() => setView("detail")}
+            onSubmitAll={handleBatchSubmit}
           />
         )}
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, ShieldCheck, BarChart3, Wrench, ChevronDown, Users, Shield } from "lucide-react";
+import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, ShieldCheck, BarChart3, Wrench, ChevronDown, Users, Shield, GitCompareArrows, Trophy } from "lucide-react";
 import { useAuthStore } from "@/modules/auth";
 import { useLanguageStore } from "@/lib/language-store";
 import { useT, translateTrainingType } from "@/lib/translations";
@@ -176,6 +176,8 @@ export default function HomePage() {
     { icon: darkMode ? Sun : Moon, label: darkMode ? t("lightMode") : t("darkMode"), onClick: toggleTheme },
     { icon: ShieldCheck, label: t("verifiedLabel"), href: "/verified" },
     { icon: BarChart3, label: t("ratingLabel"), href: "/rating" },
+    { icon: GitCompareArrows, label: t("compareTitle"), href: "/compare" },
+    { icon: Trophy, label: t("lbTitle"), href: "/leaderboard" },
     { icon: Settings, label: t("settings"), href: "/settings" },
     { icon: LogIn, label: t("instructorLogin"), href: "/login" },
     { icon: Megaphone, label: t("promote"), href: "/promote" },

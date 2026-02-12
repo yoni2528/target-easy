@@ -4,6 +4,7 @@ export { TrainingsPage } from "./components/TrainingsPage";
 export { TrainingCalendar } from "./components/TrainingCalendar";
 export { TrainingDetail } from "./components/TrainingDetail";
 export { ShooterLogForm } from "./components/ShooterLogForm";
+export { BatchShooterLog } from "./components/BatchShooterLog";
 
 // Types
 export type { ScheduledTraining, TrainingClient, ShooterLogEntry } from "./types";

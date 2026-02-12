@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Clock, MapPin, Users, Phone, FileText, CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowRight, Clock, MapPin, Users, Phone, FileText, CheckCircle, ChevronDown, ChevronUp, ClipboardList } from "lucide-react";
 import type { ScheduledTraining, TrainingClient } from "../types";
 import { useState } from "react";
 
@@ -8,9 +8,10 @@ interface TrainingDetailProps {
   training: ScheduledTraining;
   onBack: () => void;
   onOpenReport: (client: TrainingClient) => void;
+  onOpenBatchReport: () => void;
 }
 
-export function TrainingDetail({ training, onBack, onOpenReport }: TrainingDetailProps) {
+export function TrainingDetail({ training, onBack, onOpenReport, onOpenBatchReport }: TrainingDetailProps) {
   const [expandedClient, setExpandedClient] = useState<string | null>(null);
 
   const statusColor = (s: ScheduledTraining["status"]) => {
@@ -65,6 +66,15 @@ export function TrainingDetail({ training, onBack, onOpenReport }: TrainingDetai
           </div>
         </div>
       </div>
+
+      {/* Batch report button */}
+      <button
+        onClick={onOpenBatchReport}
+        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--accent-green)] text-[var(--bg-primary)] text-sm font-bold"
+      >
+        <ClipboardList className="w-5 h-5" />
+        מלא דו״ח מקצים לכל הלקוחות ({training.clients.length})
+      </button>
 
       {/* Client list */}
       <div>
