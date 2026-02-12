@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "../lib/auth-store";
 import type { UserRole } from "../types";
@@ -13,8 +13,15 @@ interface AuthGuardProps {
 export function AuthGuard({ children, allowedRoles }: AuthGuardProps) {
   const user = useAuthStore((s) => s.user);
   const router = useRouter();
+  const [hydrated, setHydrated] = useState(false);
+
+  // Wait for Zustand persist to hydrate from localStorage
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
 
   useEffect(() => {
+    if (!hydrated) return;
     if (!user) {
       router.replace("/login");
       return;
@@ -22,8 +29,9 @@ export function AuthGuard({ children, allowedRoles }: AuthGuardProps) {
     if (allowedRoles && !allowedRoles.includes(user.role)) {
       router.replace("/");
     }
-  }, [user, allowedRoles, router]);
+  }, [hydrated, user, allowedRoles, router]);
 
+  if (!hydrated) return null;
   if (!user) return null;
   if (allowedRoles && !allowedRoles.includes(user.role)) return null;
 

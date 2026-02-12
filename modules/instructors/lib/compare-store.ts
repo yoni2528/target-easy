@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 interface CompareStore {
-  selected: string[]; // max 2 instructor IDs
+  selected: string[]; // max 4 instructor IDs
   toggle: (id: string) => void;
   isSelected: (id: string) => boolean;
   clear: () => void;
@@ -14,9 +14,8 @@ export const useCompareStore = create<CompareStore>()((set, get) => ({
       if (s.selected.includes(id)) {
         return { selected: s.selected.filter((x) => x !== id) };
       }
-      if (s.selected.length >= 2) {
-        // Replace the first one
-        return { selected: [s.selected[1], id] };
+      if (s.selected.length >= 4) {
+        return { selected: [...s.selected.slice(1), id] };
       }
       return { selected: [...s.selected, id] };
     }),

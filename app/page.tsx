@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, ShieldCheck, BarChart3, Wrench, ChevronDown, Users, Shield, GitCompareArrows, Trophy } from "lucide-react";
+import Link from "next/link";
+import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, ShieldCheck, BarChart3, Wrench, ChevronDown, Users, Shield, GitCompareArrows, Trophy, Map, BookOpen } from "lucide-react";
 import { useAuthStore } from "@/modules/auth";
 import { useLanguageStore } from "@/lib/language-store";
 import { useT, translateTrainingType } from "@/lib/translations";
@@ -173,21 +174,8 @@ export default function HomePage() {
     else { await navigator.clipboard.writeText(window.location.origin); alert(t("linkCopied")); }
   };
 
-  const sidebarItems = [
-    { icon: darkMode ? Sun : Moon, label: darkMode ? t("lightMode") : t("darkMode"), onClick: toggleTheme },
-    { icon: ShieldCheck, label: t("verifiedLabel"), href: "/verified" },
-    { icon: BarChart3, label: t("ratingLabel"), href: "/rating" },
-    { icon: GitCompareArrows, label: t("compareTitle"), href: "/compare" },
-    { icon: Trophy, label: t("lbTitle"), href: "/leaderboard" },
-    { icon: Settings, label: t("settings"), href: "/settings" },
-    { icon: LogIn, label: t("instructorLogin"), href: "/login" },
-    { icon: Megaphone, label: t("promote"), href: "/promote" },
-    { icon: UserPlus, label: t("join"), href: "/join" },
-    { icon: Info, label: t("about"), href: "/about" },
-    { icon: Share2, label: t("share"), onClick: handleShare },
-    { icon: Phone, label: t("contact"), href: "/contact" },
-    { icon: Globe, label: lang === "he" ? "English" : "עברית", onClick: () => toggleLang() },
-  ];
+  const [toolsOpen, setToolsOpen] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
 
   return (
     <div className="min-h-screen pb-24">
@@ -239,32 +227,93 @@ export default function HomePage() {
               </div>
             )}
             <nav className="flex-1 py-2 overflow-y-auto">
-              {sidebarItems.map((item, i) => {
-                const Icon = item.icon;
-                if (item.onClick) {
-                  return (
-                    <button key={i} onClick={() => { item.onClick(); }}
-                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                      <Icon className="w-5 h-5 text-[var(--text-muted)]" />
-                      {item.label}
+              {/* Tools & Features */}
+              <div className="border-b border-[var(--border-subtle)] pb-1 mb-1">
+                <button onClick={() => setToolsOpen(!toolsOpen)}
+                  className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                  <div className="flex items-center gap-3">
+                    <BookOpen className="w-5 h-5 text-[var(--accent-green)]" />
+                    <span className="font-semibold">{lang === "he" ? "כלים והשוואות" : "Tools & Compare"}</span>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-[var(--text-muted)] transition-transform duration-200 ${toolsOpen ? "rotate-180" : ""}`} />
+                </button>
+                {toolsOpen && (
+                  <div className="bg-[var(--bg-elevated)]/30 pb-1">
+                    <Link href="/compare" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                      <GitCompareArrows className="w-4 h-4 text-[var(--accent-blue)]" /> {t("compareTitle")}
+                    </Link>
+                    <Link href="/leaderboard" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                      <Trophy className="w-4 h-4 text-[var(--accent-amber)]" /> {t("lbTitle")}
+                    </Link>
+                    <Link href="/map" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                      <Map className="w-4 h-4 text-[var(--accent-green)]" /> {lang === "he" ? "מפה אינטראקטיבית" : "Interactive Map"}
+                    </Link>
+                    <Link href="/rating" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                      <BarChart3 className="w-4 h-4 text-[var(--accent-green)]" /> {t("ratingLabel")}
+                    </Link>
+                    <Link href="/verified" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                      <ShieldCheck className="w-4 h-4 text-[var(--accent-green)]" /> {t("verifiedLabel")}
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Quick actions */}
+              <Link href="/login" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                <LogIn className="w-5 h-5 text-[var(--text-muted)]" /> {t("instructorLogin")}
+              </Link>
+              <Link href="/settings" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                <Settings className="w-5 h-5 text-[var(--text-muted)]" /> {t("settings")}
+              </Link>
+
+              {/* Info & More */}
+              <div className="border-t border-[var(--border-subtle)] mt-1 pt-1">
+                <button onClick={() => setInfoOpen(!infoOpen)}
+                  className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                  <div className="flex items-center gap-3">
+                    <Info className="w-5 h-5 text-[var(--text-muted)]" />
+                    <span className="font-semibold">{lang === "he" ? "עוד" : "More"}</span>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-[var(--text-muted)] transition-transform duration-200 ${infoOpen ? "rotate-180" : ""}`} />
+                </button>
+                {infoOpen && (
+                  <div className="bg-[var(--bg-elevated)]/30 pb-1">
+                    <Link href="/about" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                      <Info className="w-4 h-4 text-[var(--text-muted)]" /> {t("about")}
+                    </Link>
+                    <Link href="/promote" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                      <Megaphone className="w-4 h-4 text-[var(--text-muted)]" /> {t("promote")}
+                    </Link>
+                    <Link href="/join" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                      <UserPlus className="w-4 h-4 text-[var(--text-muted)]" /> {t("join")}
+                    </Link>
+                    <Link href="/contact" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                      <Phone className="w-4 h-4 text-[var(--text-muted)]" /> {t("contact")}
+                    </Link>
+                    <button onClick={handleShare} className="w-full flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                      <Share2 className="w-4 h-4 text-[var(--text-muted)]" /> {t("share")}
                     </button>
-                  );
-                }
-                return (
-                  <a key={i} href={item.href} onClick={() => setSidebarOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                    <Icon className="w-5 h-5 text-[var(--text-muted)]" />
-                    {item.label}
-                  </a>
-                );
-              })}
+                  </div>
+                )}
+              </div>
+
+              {/* Theme & Language toggles */}
+              <div className="border-t border-[var(--border-subtle)] mt-1 pt-1">
+                <button onClick={toggleTheme} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                  {darkMode ? <Sun className="w-5 h-5 text-[var(--text-muted)]" /> : <Moon className="w-5 h-5 text-[var(--text-muted)]" />}
+                  {darkMode ? t("lightMode") : t("darkMode")}
+                </button>
+                <button onClick={() => toggleLang()} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                  <Globe className="w-5 h-5 text-[var(--text-muted)]" /> {lang === "he" ? "English" : "עברית"}
+                </button>
+              </div>
 
               {/* Admin Tools - only visible for admin users */}
               {user?.role === "admin" && (
                 <div className="border-t border-[var(--border-subtle)] mt-1">
                   <button
                     onClick={() => setAdminToolsOpen(!adminToolsOpen)}
-                    className="w-full flex items-center justify-between px-4 py-3 text-sm text-[var(--accent-amber)] hover:bg-[var(--bg-elevated)] transition-colors"
+                    className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-[var(--accent-amber)] hover:bg-[var(--bg-elevated)] transition-colors"
                   >
                     <div className="flex items-center gap-3">
                       <Wrench className="w-5 h-5" />
@@ -274,26 +323,18 @@ export default function HomePage() {
                   </button>
                   {adminToolsOpen && (
                     <div className="bg-[var(--bg-elevated)]/50 pb-1">
-                      <a href="/admin" onClick={() => setSidebarOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                        <Shield className="w-4 h-4 text-[var(--accent-red)]" />
-                        {t("adminPanel")}
-                      </a>
-                      <a href="/admin/instructors" onClick={() => setSidebarOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                        <Users className="w-4 h-4 text-[var(--accent-blue)]" />
-                        {t("manageInstructors")}
-                      </a>
-                      <a href="/admin#stats" onClick={() => setSidebarOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                        <BarChart3 className="w-4 h-4 text-[var(--accent-green)]" />
-                        {t("instructorStats")}
-                      </a>
-                      <a href="/admin#settings" onClick={() => setSidebarOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                        <Settings className="w-4 h-4 text-[var(--accent-amber)]" />
-                        {t("systemSettings")}
-                      </a>
+                      <Link href="/admin" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                        <Shield className="w-4 h-4 text-[var(--accent-red)]" /> {t("adminPanel")}
+                      </Link>
+                      <Link href="/admin/instructors" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                        <Users className="w-4 h-4 text-[var(--accent-blue)]" /> {t("manageInstructors")}
+                      </Link>
+                      <Link href="/admin#stats" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                        <BarChart3 className="w-4 h-4 text-[var(--accent-green)]" /> {t("instructorStats")}
+                      </Link>
+                      <Link href="/admin#settings" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
+                        <Settings className="w-4 h-4 text-[var(--accent-amber)]" /> {t("systemSettings")}
+                      </Link>
                     </div>
                   )}
                 </div>
