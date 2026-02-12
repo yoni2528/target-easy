@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Edit } from "lucide-react";
+import { ArrowRight, Edit, Calendar } from "lucide-react";
 import Link from "next/link";
 import { DashboardStats } from "./DashboardStats";
 import { EloTrendChart } from "./EloTrendChart";
@@ -29,6 +29,17 @@ export function InstructorDashboard() {
       </header>
 
       <div className="px-4 pt-6 max-w-3xl mx-auto space-y-6">
+        {/* Training Calendar Link */}
+        <Link href="/dashboard/trainings" className="flex items-center gap-4 bg-[var(--bg-card)] border border-[var(--accent-green)]/20 rounded-xl p-4 hover:border-[var(--accent-green)]/40 transition-colors">
+          <div className="w-10 h-10 rounded-lg bg-[var(--accent-green)]/10 flex items-center justify-center">
+            <Calendar className="w-5 h-5 text-[var(--accent-green)]" />
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold">יומן אימונים</h3>
+            <p className="text-[10px] text-[var(--text-muted)]">צפה באימונים מתוזמנים, רשימות לקוחות ודו״חות מקצים</p>
+          </div>
+        </Link>
+
         <DashboardStats />
         <EloTrendChart />
         <ConversionFunnel />
