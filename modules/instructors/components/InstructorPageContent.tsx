@@ -7,6 +7,7 @@ import Link from "next/link";
 import { MOCK_INSTRUCTORS } from "../lib/mock-data";
 import { getShootingLevelLabel, getInstructionLevelLabel } from "../lib/elo-utils";
 import { useUserStore } from "../lib/user-store";
+import { moderateReview } from "../lib/review-moderation";
 import { VideoSection } from "./VideoSection";
 import { BottomNav } from "@/components/BottomNav";
 import { useLanguageStore } from "@/lib/language-store";
@@ -20,6 +21,7 @@ export default function InstructorPageContent({ id }: { id: string }) {
   const [reviewName, setReviewName] = useState("");
   const [reviewText, setReviewText] = useState("");
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
+  const [reviewError, setReviewError] = useState("");
 
   const lang = useLanguageStore((s) => s.lang);
   const t = useT(lang);
@@ -263,16 +265,19 @@ export default function InstructorPageContent({ id }: { id: string }) {
                 <label className="text-xs text-[var(--text-muted)] mb-1.5 block">{t("reviewComment")}</label>
                 <textarea
                   value={reviewText}
-                  onChange={(e) => setReviewText(e.target.value)}
+                  onChange={(e) => { setReviewText(e.target.value); setReviewError(""); }}
                   placeholder={t("reviewCommentPlaceholder")}
                   rows={3}
                   className="w-full px-3 py-2.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-green)] resize-none"
                 />
               </div>
+              {reviewError && (
+                <p className="text-xs text-red-500 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">{reviewError}</p>
+              )}
               {/* Actions */}
               <div className="flex gap-2">
                 <button
-                  onClick={() => setShowReviewForm(false)}
+                  onClick={() => { setShowReviewForm(false); setReviewError(""); }}
                   className="flex-1 h-10 rounded-xl border border-[var(--border-subtle)] text-xs font-medium text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
                 >
                   {t("cancel")}
@@ -280,6 +285,17 @@ export default function InstructorPageContent({ id }: { id: string }) {
                 <button
                   onClick={() => {
                     if (reviewRating > 0 && reviewName.trim() && reviewText.trim()) {
+                      const result = moderateReview(reviewText);
+                      if (!result.ok) {
+                        setReviewError(t(result.reason === "too_short" ? "reviewTooShort" : "reviewBlocked"));
+                        return;
+                      }
+                      const nameResult = moderateReview(reviewName);
+                      if (!nameResult.ok && nameResult.reason === "profanity") {
+                        setReviewError(t("reviewBlocked"));
+                        return;
+                      }
+                      setReviewError("");
                       setReviewSubmitted(true);
                       setShowReviewForm(false);
                     }

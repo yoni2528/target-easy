@@ -184,6 +184,8 @@ const translations = {
   sendReview: { he: "שלח תגובה", en: "Submit Review" },
   reviewSent: { he: "התגובה נשלחה בהצלחה!", en: "Review submitted successfully!" },
   reviewPending: { he: "התגובה תופיע לאחר אישור המערכת", en: "Your review will appear after system approval" },
+  reviewBlocked: { he: "התגובה מכילה תוכן פוגעני ולא ניתן לשלוח אותה. אפשר לכתוב ביקורת קשה, אבל בלי קללות או ביטויים פוגעניים.", en: "Your review contains offensive content and cannot be submitted. You can write tough criticism, but without profanity or offensive language." },
+  reviewTooShort: { he: "התגובה קצרה מדי, כתוב לפחות כמה מילים", en: "Review is too short, please write at least a few words" },
 
   // ── Favorites ──
   favoritesTitle: { he: "מועדפים", en: "Favorites" },
