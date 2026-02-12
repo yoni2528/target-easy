@@ -16,6 +16,7 @@ export { CITY_COORDS, RANGE_COORDS } from "./lib/geo-data";
 
 // Stores
 export { useUserStore } from "./lib/user-store";
+export { useCompareStore } from "./lib/compare-store";
 
 // Components
 export { SearchBar } from "./components/SearchBar";

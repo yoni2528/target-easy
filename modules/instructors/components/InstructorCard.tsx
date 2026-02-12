@@ -1,18 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, CheckCircle, MapPin, Users, Crosshair, GraduationCap, Eye, PhoneCall, Heart } from "lucide-react";
+import { Star, CheckCircle, MapPin, Users, Crosshair, GraduationCap, Eye, PhoneCall, Heart, GitCompareArrows } from "lucide-react";
 import Link from "next/link";
 import { useUserStore } from "../lib/user-store";
+import { useCompareStore } from "../lib/compare-store";
 import type { Instructor } from "../types";
 import { useLanguageStore } from "@/lib/language-store";
 import { useT, translateTrainingType } from "@/lib/translations";
 
 export function InstructorCard({ instructor, index }: { instructor: Instructor; index: number }) {
   const { toggleFavorite, isFavorite } = useUserStore();
+  const { toggle: toggleCompare, isSelected: isCompareSelected } = useCompareStore();
   const lang = useLanguageStore((s) => s.lang);
   const t = useT(lang);
   const favorited = isFavorite(instructor.id);
+  const compared = isCompareSelected(instructor.id);
   const mockViews = 120 + parseInt(instructor.id) * 37 + instructor.trainees;
 
   return (
@@ -97,6 +100,10 @@ export function InstructorCard({ instructor, index }: { instructor: Instructor; 
               </span>
             </div>
             <div className="flex items-center gap-2">
+              <span onClick={(e) => { e.preventDefault(); toggleCompare(instructor.id); }}
+                className={`w-8 h-8 rounded-lg border flex items-center justify-center transition-colors ${compared ? "border-[var(--accent-blue)]/30 bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]" : "border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--accent-blue)] hover:border-[var(--accent-blue)]/30"}`}>
+                <GitCompareArrows className="w-3.5 h-3.5" />
+              </span>
               <span onClick={(e) => { e.preventDefault(); toggleFavorite(instructor.id); }}
                 className={`w-8 h-8 rounded-lg border flex items-center justify-center transition-colors ${favorited ? "border-red-500/30 text-red-500" : "border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-red-500 hover:border-red-500/30"}`}>
                 <Heart className={`w-3.5 h-3.5 ${favorited ? "fill-red-500" : ""}`} />

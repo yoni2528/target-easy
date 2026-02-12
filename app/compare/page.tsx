@@ -1,7 +1,10 @@
-"use client";
-
+import { Suspense } from "react";
 import { CompareContent } from "@/modules/compare/components/CompareContent";
 
 export default function ComparePage() {
-  return <CompareContent />;
+  return (
+    <Suspense>
+      <CompareContent />
+    </Suspense>
+  );
 }

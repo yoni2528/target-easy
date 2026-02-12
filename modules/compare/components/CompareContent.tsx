@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, GitCompareArrows, ChevronDown, Star, Users, TrendingUp, Shield, Trophy, MapPin } from "lucide-react";
-import { MOCK_INSTRUCTORS } from "@/modules/instructors";
+import { MOCK_INSTRUCTORS, useCompareStore } from "@/modules/instructors";
 import { useLanguageStore } from "@/lib/language-store";
 import { useT } from "@/lib/translations";
 import { BottomNav } from "@/components/BottomNav";
@@ -17,9 +18,20 @@ function StatBar({ value, max, color }: { value: number; max: number; color: str
 }
 
 export function CompareContent() {
-  const [idA, setIdA] = useState<string>("");
-  const [idB, setIdB] = useState<string>("");
+  const searchParams = useSearchParams();
+  const paramA = searchParams.get("a") ?? "";
+  const paramB = searchParams.get("b") ?? "";
+  const [idA, setIdA] = useState<string>(paramA);
+  const [idB, setIdB] = useState<string>(paramB);
+  const clearStore = useCompareStore((s) => s.clear);
   const lang = useLanguageStore((s) => s.lang);
+
+  // Sync from URL params and clear the compare store (user landed on compare page)
+  useEffect(() => {
+    if (paramA) setIdA(paramA);
+    if (paramB) setIdB(paramB);
+    if (paramA && paramB) clearStore();
+  }, [paramA, paramB, clearStore]);
   const t = useT(lang);
 
   const instA = MOCK_INSTRUCTORS.find((i) => i.id === idA);

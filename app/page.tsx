@@ -7,6 +7,7 @@ import { useLanguageStore } from "@/lib/language-store";
 import { useT, translateTrainingType } from "@/lib/translations";
 import { MOCK_INSTRUCTORS, SearchBar, InstructorCard, FeaturedInstructor } from "@/modules/instructors";
 import { BottomNav } from "@/components/BottomNav";
+import { CompareBar } from "@/components/CompareBar";
 import { type Filters, DEFAULT_FILTERS } from "@/modules/instructors/components/SearchBar";
 
 export default function HomePage() {
@@ -351,6 +352,7 @@ export default function HomePage() {
         </svg>
       </a>
 
+      <CompareBar />
       <BottomNav />
     </div>
   );
