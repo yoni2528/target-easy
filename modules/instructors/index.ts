@@ -12,6 +12,7 @@ export {
 // Utils
 export { getShootingLevel, getInstructionLevel, SHOOTING_LEVELS, INSTRUCTION_LEVELS } from "./lib/elo-utils";
 export { CATEGORY_ICON_MAP } from "./lib/category-icons";
+export { CITY_COORDS, RANGE_COORDS } from "./lib/geo-data";
 
 // Stores
 export { useUserStore } from "./lib/user-store";

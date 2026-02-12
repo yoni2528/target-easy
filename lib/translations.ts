@@ -401,6 +401,55 @@ const translations = {
   ttNight: { he: "אימון לילה", en: "Night Training" },
   ttGroup: { he: "אימון קבוצתי", en: "Group Training" },
   ttMovingTargets: { he: "מטרות נעות", en: "Moving Targets" },
+
+  // ── Map Page ──
+  mapTitle: { he: "מפת מדריכים ומטווחים", en: "Instructors & Ranges Map" },
+  mapAll: { he: "הכל", en: "All" },
+  mapInstructors: { he: "מדריכים", en: "Instructors" },
+  mapRanges: { he: "מטווחים", en: "Ranges" },
+  navMap: { he: "מפה", en: "Map" },
+
+  // ── Compare Page ──
+  compareTitle: { he: "השוואת מדריכים", en: "Compare Instructors" },
+  compareInstructor: { he: "מדריך", en: "Instructor" },
+  compareChoose: { he: "בחר מדריך...", en: "Choose instructor..." },
+  compareHint: { he: "בחר שני מדריכים להשוואה", en: "Select two instructors to compare" },
+  compareEloShooting: { he: "ELO ירי", en: "Shooting ELO" },
+  compareEloInstruction: { he: "ELO הדרכה", en: "Instruction ELO" },
+  compareStars: { he: "דירוג כוכבים", en: "Star Rating" },
+  compareTrainees: { he: "מתאמנים", en: "Trainees" },
+  compareService: { he: "שירות", en: "Service" },
+  compareProfessionalism: { he: "מקצועיות", en: "Professionalism" },
+  compareQuality: { he: "איכות", en: "Quality" },
+  compareExperience: { he: "שנות ניסיון", en: "Years Experience" },
+  comparePrice: { he: "מחיר מ-₪", en: "Price from ₪" },
+  compareSharedTypes: { he: "סוגי אימונים משותפים", en: "Shared Training Types" },
+  compareNoShared: { he: "אין סוגי אימונים משותפים", en: "No shared training types" },
+
+  // ── Leaderboard Page ──
+  lbTitle: { he: "לוח מובילים", en: "Leaderboard" },
+  lbShooting: { he: "ירי", en: "Shooting" },
+  lbInstruction: { he: "הדרכה", en: "Instruction" },
+  lbStars: { he: "דירוג", en: "Rating" },
+  lbTrainees: { he: "מתאמנים", en: "Trainees" },
+
+  // ── Verify Page ──
+  verifyTitle: { he: "אימות מדריך", en: "Instructor Verification" },
+  verifyLoginRequired: { he: "התחבר כמדריך כדי להתחיל תהליך אימות", en: "Log in as an instructor to start verification" },
+  verifyProgress: { he: "התקדמות אימות", en: "Verification Progress" },
+  verifyComplete: { he: "כל המסמכים אומתו! התג הירוק הופעל בפרופיל שלך.", en: "All documents verified! Green badge activated on your profile." },
+  verifyLicense: { he: "רישיון מדריך ירי", en: "Shooting Instructor License" },
+  verifyLicenseDesc: { he: "תעודת מדריך ירי בתוקף מטעם משרד הביטחון", en: "Valid shooting instructor certificate from Ministry of Defense" },
+  verifyCertificate: { he: "הסמכה מקצועית", en: "Professional Certification" },
+  verifyCertificateDesc: { he: "תעודת הסמכה מגוף מוכר (צה\"ל / משטרה / גוף אזרחי)", en: "Certification from recognized body (IDF / Police / Civilian)" },
+  verifyInsurance: { he: "ביטוח מקצועי", en: "Professional Insurance" },
+  verifyInsuranceDesc: { he: "פוליסת ביטוח אחריות מקצועית בתוקף", en: "Valid professional liability insurance policy" },
+  verifyUpload: { he: "העלה מסמך", en: "Upload Document" },
+  verifyUploading: { he: "מעלה...", en: "Uploading..." },
+  verifyProcessing: { he: "בודק אוטומטית...", en: "Auto-verifying..." },
+  verifyApproved: { he: "אושר ✓", en: "Approved ✓" },
+  verifyRejected: { he: "נדחה", en: "Rejected" },
+  verifyAutoNote: { he: "המערכת בודקת את המסמכים באופן אוטומטי. תהליך האימות אורך כ-30 שניות. לאחר אישור כל 3 המסמכים, התג הירוק יופעל אוטומטית בפרופיל שלך.", en: "The system verifies documents automatically. Verification takes about 30 seconds. After all 3 documents are approved, the green badge will be automatically activated on your profile." },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

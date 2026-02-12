@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Sparkles, Heart, Clock } from "lucide-react";
+import { Search, Sparkles, Heart, Clock, MapPin } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguageStore } from "@/lib/language-store";
@@ -13,6 +13,7 @@ export function BottomNav() {
 
   const tabs = [
     { href: "/", label: t("navSearch"), icon: Search },
+    { href: "/map", label: t("navMap"), icon: MapPin },
     { href: "/quiz", label: t("navQuiz"), icon: Sparkles },
     { href: "/favorites", label: t("navFavorites"), icon: Heart },
     { href: "/history", label: t("navHistory"), icon: Clock },
