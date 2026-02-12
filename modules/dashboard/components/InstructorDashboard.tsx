@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Edit, Calendar } from "lucide-react";
+import { ArrowRight, Edit, Calendar, BarChart3 } from "lucide-react";
 import Link from "next/link";
 import { DashboardStats } from "./DashboardStats";
 import { EloTrendChart } from "./EloTrendChart";
@@ -37,6 +37,17 @@ export function InstructorDashboard() {
           <div>
             <h3 className="text-sm font-semibold">יומן אימונים</h3>
             <p className="text-[10px] text-[var(--text-muted)]">צפה באימונים מתוזמנים, רשימות לקוחות ודו״חות מקצים</p>
+          </div>
+        </Link>
+
+        {/* Smart Rating System Link */}
+        <Link href="/dashboard/rating" className="flex items-center gap-4 bg-[var(--bg-card)] border border-[var(--accent-amber)]/20 rounded-xl p-4 hover:border-[var(--accent-amber)]/40 transition-colors">
+          <div className="w-10 h-10 rounded-lg bg-[var(--accent-amber)]/10 flex items-center justify-center">
+            <BarChart3 className="w-5 h-5 text-[var(--accent-amber)]" />
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold">מערכת דירוג חכמה</h3>
+            <p className="text-[10px] text-[var(--text-muted)]">טבלת ליגה, מגמות שימור, שאלוני לקוחות ונוסחת ELO</p>
           </div>
         </Link>
 

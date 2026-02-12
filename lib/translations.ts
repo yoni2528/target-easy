@@ -450,6 +450,26 @@ const translations = {
   verifyApproved: { he: "אושר ✓", en: "Approved ✓" },
   verifyRejected: { he: "נדחה", en: "Rejected" },
   verifyAutoNote: { he: "המערכת בודקת את המסמכים באופן אוטומטי. תהליך האימות אורך כ-30 שניות. לאחר אישור כל 3 המסמכים, התג הירוק יופעל אוטומטית בפרופיל שלך.", en: "The system verifies documents automatically. Verification takes about 30 seconds. After all 3 documents are approved, the green badge will be automatically activated on your profile." },
+
+  // ── Rating System ──
+  ratingSmartSystem: { he: "מערכת דירוג חכמה", en: "Smart Rating System" },
+  ratingFormula: { he: "מנגנון הדירוג", en: "Rating Mechanism" },
+  ratingProfessional: { he: "רגל מקצועית (ELO)", en: "Professional Leg (ELO)" },
+  ratingExperience: { he: "רגל חווייתית ושימור", en: "Experience & Retention" },
+  ratingLeague: { he: "טבלת ליגה - ציון כולל", en: "League Table - Total Score" },
+  ratingRetention: { he: "מגמת שימור לקוחות", en: "Client Retention Trend" },
+  ratingFeedbackDemo: { he: "דמו שאלון לקוח", en: "Client Feedback Demo" },
+  ratingScore: { he: "ציון", en: "Score" },
+  ratingRetRate: { he: "שימור", en: "Retention" },
+  ratingMostImproved: { he: "שיפור מרבי", en: "Most Improved" },
+  ratingMostDeclined: { he: "ירידה מרבית", en: "Most Declined" },
+  ratingThankYou: { he: "תודה על המשוב!", en: "Thanks for your feedback!" },
+  ratingSaved: { he: "הדירוג נשמר בהצלחה", en: "Rating saved successfully" },
+  ratingGreatJob: { he: "כל הכבוד!", en: "Great job!" },
+  ratingCompleted: { he: "אימון הושלם", en: "Training Completed" },
+  ratingAlert: { he: "התראת חריגה", en: "Alert: Low Score" },
+  ratingRateTraining: { he: "דרג את האימון", en: "Rate Training" },
+  ratingThankYouLong: { he: "המשוב שלך עוזר לנו לשפר את חוויית האימון", en: "Your feedback helps improve the training experience" },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
