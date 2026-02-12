@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, ShieldCheck, BarChart3, Wrench, ChevronDown, Users, Shield, GitCompareArrows, Trophy, Map, BookOpen } from "lucide-react";
+import { Crosshair, Menu, X, Sun, Moon, Settings, LogIn, Megaphone, UserPlus, Info, Share2, Phone, Globe, ShieldCheck, BarChart3, Wrench, ChevronDown, Users, Shield, GitCompareArrows, Trophy, Map } from "lucide-react";
 import { useAuthStore } from "@/modules/auth";
 import { useLanguageStore } from "@/lib/language-store";
 import { useT, translateTrainingType } from "@/lib/translations";
@@ -174,8 +174,12 @@ export default function HomePage() {
     else { await navigator.clipboard.writeText(window.location.origin); alert(t("linkCopied")); }
   };
 
-  const [toolsOpen, setToolsOpen] = useState(false);
-  const [infoOpen, setInfoOpen] = useState(false);
+  // sidebar link helper
+  const sLink = "flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors";
+  const sBtn = "w-full " + sLink;
+  const sIcon = "w-5 h-5 text-[var(--text-muted)]";
+  const sSub = "flex items-center gap-3 px-4 py-2 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors";
+  const sSubIcon = "w-4 h-4";
 
   return (
     <div className="min-h-screen pb-24">
@@ -227,94 +231,62 @@ export default function HomePage() {
               </div>
             )}
             <nav className="flex-1 py-2 overflow-y-auto">
-              {/* Tools & Features */}
-              <div className="border-b border-[var(--border-subtle)] pb-1 mb-1">
-                <button onClick={() => setToolsOpen(!toolsOpen)}
-                  className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                  <div className="flex items-center gap-3">
-                    <BookOpen className="w-5 h-5 text-[var(--accent-green)]" />
-                    <span className="font-semibold">{lang === "he" ? "כלים והשוואות" : "Tools & Compare"}</span>
-                  </div>
-                  <ChevronDown className={`w-4 h-4 text-[var(--text-muted)] transition-transform duration-200 ${toolsOpen ? "rotate-180" : ""}`} />
-                </button>
-                {toolsOpen && (
-                  <div className="bg-[var(--bg-elevated)]/30 pb-1">
-                    <Link href="/compare" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                      <GitCompareArrows className="w-4 h-4 text-[var(--accent-blue)]" /> {t("compareTitle")}
-                    </Link>
-                    <Link href="/leaderboard" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                      <Trophy className="w-4 h-4 text-[var(--accent-amber)]" /> {t("lbTitle")}
-                    </Link>
-                    <Link href="/map" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                      <Map className="w-4 h-4 text-[var(--accent-green)]" /> {lang === "he" ? "מפה אינטראקטיבית" : "Interactive Map"}
-                    </Link>
-                    <Link href="/rating" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                      <BarChart3 className="w-4 h-4 text-[var(--accent-green)]" /> {t("ratingLabel")}
-                    </Link>
-                    <Link href="/verified" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                      <ShieldCheck className="w-4 h-4 text-[var(--accent-green)]" /> {t("verifiedLabel")}
-                    </Link>
-                  </div>
-                )}
-              </div>
-
-              {/* Quick actions */}
-              <Link href="/login" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                <LogIn className="w-5 h-5 text-[var(--text-muted)]" /> {t("instructorLogin")}
+              {/* Main navigation - flat, clean */}
+              <Link href="/map" onClick={() => setSidebarOpen(false)} className={sLink}>
+                <Map className={sIcon} /> {lang === "he" ? "מפה אינטראקטיבית" : "Interactive Map"}
               </Link>
-              <Link href="/settings" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                <Settings className="w-5 h-5 text-[var(--text-muted)]" /> {t("settings")}
+              <Link href="/compare" onClick={() => setSidebarOpen(false)} className={sLink}>
+                <GitCompareArrows className={sIcon} /> {t("compareTitle")}
+              </Link>
+              <Link href="/leaderboard" onClick={() => setSidebarOpen(false)} className={sLink}>
+                <Trophy className={sIcon} /> {t("lbTitle")}
+              </Link>
+              <Link href="/rating" onClick={() => setSidebarOpen(false)} className={sLink}>
+                <BarChart3 className={sIcon} /> {t("ratingLabel")}
+              </Link>
+              <Link href="/verified" onClick={() => setSidebarOpen(false)} className={sLink}>
+                <ShieldCheck className={sIcon} /> {t("verifiedLabel")}
               </Link>
 
-              {/* Info & More */}
-              <div className="border-t border-[var(--border-subtle)] mt-1 pt-1">
-                <button onClick={() => setInfoOpen(!infoOpen)}
-                  className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Info className="w-5 h-5 text-[var(--text-muted)]" />
-                    <span className="font-semibold">{lang === "he" ? "עוד" : "More"}</span>
-                  </div>
-                  <ChevronDown className={`w-4 h-4 text-[var(--text-muted)] transition-transform duration-200 ${infoOpen ? "rotate-180" : ""}`} />
-                </button>
-                {infoOpen && (
-                  <div className="bg-[var(--bg-elevated)]/30 pb-1">
-                    <Link href="/about" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                      <Info className="w-4 h-4 text-[var(--text-muted)]" /> {t("about")}
-                    </Link>
-                    <Link href="/promote" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                      <Megaphone className="w-4 h-4 text-[var(--text-muted)]" /> {t("promote")}
-                    </Link>
-                    <Link href="/join" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                      <UserPlus className="w-4 h-4 text-[var(--text-muted)]" /> {t("join")}
-                    </Link>
-                    <Link href="/contact" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                      <Phone className="w-4 h-4 text-[var(--text-muted)]" /> {t("contact")}
-                    </Link>
-                    <button onClick={handleShare} className="w-full flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                      <Share2 className="w-4 h-4 text-[var(--text-muted)]" /> {t("share")}
-                    </button>
-                  </div>
-                )}
-              </div>
+              <div className="border-t border-[var(--border-subtle)] my-1" />
 
-              {/* Theme & Language toggles */}
-              <div className="border-t border-[var(--border-subtle)] mt-1 pt-1">
-                <button onClick={toggleTheme} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                  {darkMode ? <Sun className="w-5 h-5 text-[var(--text-muted)]" /> : <Moon className="w-5 h-5 text-[var(--text-muted)]" />}
-                  {darkMode ? t("lightMode") : t("darkMode")}
-                </button>
-                <button onClick={() => toggleLang()} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                  <Globe className="w-5 h-5 text-[var(--text-muted)]" /> {lang === "he" ? "English" : "עברית"}
-                </button>
-              </div>
+              <Link href="/login" onClick={() => setSidebarOpen(false)} className={sLink}>
+                <LogIn className={sIcon} /> {t("instructorLogin")}
+              </Link>
+              <Link href="/join" onClick={() => setSidebarOpen(false)} className={sLink}>
+                <UserPlus className={sIcon} /> {t("join")}
+              </Link>
+              <Link href="/promote" onClick={() => setSidebarOpen(false)} className={sLink}>
+                <Megaphone className={sIcon} /> {t("promote")}
+              </Link>
 
-              {/* Admin Tools - only visible for admin users */}
+              <div className="border-t border-[var(--border-subtle)] my-1" />
+
+              <Link href="/about" onClick={() => setSidebarOpen(false)} className={sLink}>
+                <Info className={sIcon} /> {t("about")}
+              </Link>
+              <Link href="/contact" onClick={() => setSidebarOpen(false)} className={sLink}>
+                <Phone className={sIcon} /> {t("contact")}
+              </Link>
+              <button onClick={handleShare} className={sBtn}>
+                <Share2 className={sIcon} /> {t("share")}
+              </button>
+              <Link href="/settings" onClick={() => setSidebarOpen(false)} className={sLink}>
+                <Settings className={sIcon} /> {t("settings")}
+              </Link>
+              <button onClick={toggleTheme} className={sBtn}>
+                {darkMode ? <Sun className={sIcon} /> : <Moon className={sIcon} />}
+                {darkMode ? t("lightMode") : t("darkMode")}
+              </button>
+              <button onClick={() => toggleLang()} className={sBtn}>
+                <Globe className={sIcon} /> {lang === "he" ? "English" : "עברית"}
+              </button>
+
+              {/* Admin Tools */}
               {user?.role === "admin" && (
                 <div className="border-t border-[var(--border-subtle)] mt-1">
-                  <button
-                    onClick={() => setAdminToolsOpen(!adminToolsOpen)}
-                    className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-[var(--accent-amber)] hover:bg-[var(--bg-elevated)] transition-colors"
-                  >
+                  <button onClick={() => setAdminToolsOpen(!adminToolsOpen)}
+                    className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-[var(--accent-amber)] hover:bg-[var(--bg-elevated)] transition-colors">
                     <div className="flex items-center gap-3">
                       <Wrench className="w-5 h-5" />
                       <span className="font-semibold">{t("adminTools")}</span>
@@ -323,17 +295,17 @@ export default function HomePage() {
                   </button>
                   {adminToolsOpen && (
                     <div className="bg-[var(--bg-elevated)]/50 pb-1">
-                      <Link href="/admin" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                        <Shield className="w-4 h-4 text-[var(--accent-red)]" /> {t("adminPanel")}
+                      <Link href="/admin" onClick={() => setSidebarOpen(false)} className={sSub}>
+                        <Shield className={`${sSubIcon} text-[var(--accent-red)]`} /> {t("adminPanel")}
                       </Link>
-                      <Link href="/admin/instructors" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                        <Users className="w-4 h-4 text-[var(--accent-blue)]" /> {t("manageInstructors")}
+                      <Link href="/admin/instructors" onClick={() => setSidebarOpen(false)} className={sSub}>
+                        <Users className={`${sSubIcon} text-[var(--accent-blue)]`} /> {t("manageInstructors")}
                       </Link>
-                      <Link href="/admin#stats" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                        <BarChart3 className="w-4 h-4 text-[var(--accent-green)]" /> {t("instructorStats")}
+                      <Link href="/admin#stats" onClick={() => setSidebarOpen(false)} className={sSub}>
+                        <BarChart3 className={`${sSubIcon} text-[var(--accent-green)]`} /> {t("instructorStats")}
                       </Link>
-                      <Link href="/admin#settings" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-2.5 pr-12 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors">
-                        <Settings className="w-4 h-4 text-[var(--accent-amber)]" /> {t("systemSettings")}
+                      <Link href="/admin#settings" onClick={() => setSidebarOpen(false)} className={sSub}>
+                        <Settings className={`${sSubIcon} text-[var(--accent-amber)]`} /> {t("systemSettings")}
                       </Link>
                     </div>
                   )}
