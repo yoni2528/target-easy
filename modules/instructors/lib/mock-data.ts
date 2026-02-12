@@ -482,7 +482,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
   },
   {
     id: "20", name: "מאיה לוי",
-    photo: "https://images.pexels.com/photos/1139312/pexels-photo-1139312.jpeg?w=300&h=300&fit=crop",
+    photo: "https://images.pexels.com/photos/6091851/pexels-photo-6091851.jpeg?w=300&h=300&fit=crop",
     verified: true, eloShooting: 1560, eloInstruction: 1810, stars: 5.0,
     metrics: { service: 5.0, professionalism: 5.0, quality: 5.0 },
     trainees: 2800, trainingTypes: ["מתחמש חדש", "רענון", "אימוני קבוצות", "סדנת ירי", "אימון נשים", "חידוש"],
