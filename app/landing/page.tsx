@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {
   HeroSection,
+  VideoShowcase,
   StatsBar,
   ModulesShowcase,
   FeaturesSection,
@@ -16,6 +17,7 @@ export default function LandingPage() {
   return (
     <main className="min-h-screen">
       <HeroSection />
+      <VideoShowcase />
       <StatsBar />
       <ModulesShowcase />
       <FeaturesSection />
