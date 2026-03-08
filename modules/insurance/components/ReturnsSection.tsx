@@ -130,7 +130,7 @@ export const ReturnsSection = () => {
           </p>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 mt-5 px-8 py-3 bg-[var(--accent-amber)] text-[var(--bg-primary)] font-bold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-[var(--accent-amber)]/20"
+            className="inline-flex items-center gap-2 mt-5 px-8 py-3 bg-[var(--accent-amber)] text-white font-bold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-[var(--accent-amber)]/20"
           >
             רוצה לשמוע עוד
             <ArrowLeft className="w-4 h-4" />

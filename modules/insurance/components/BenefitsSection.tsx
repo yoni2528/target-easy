@@ -11,7 +11,7 @@ const benefits = [
     icon: Zap,
     title: "תהליך מהיר",
     desc: "הצטרפות פשוטה ומהירה. ללא בירוקרטיה מיותרת, ללא תקופות המתנה ארוכות.",
-    accent: "var(--accent-green)",
+    accent: "var(--accent-blue)",
   },
   {
     icon: HandCoins,

@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import {
   InsuranceHero,
   InsuranceStats,
+  PainSection,
+  ScenariosSection,
   InsuranceModules,
   ReturnsSection,
+  TimelineSection,
   BenefitsSection,
   InsuranceCTA,
 } from "@/modules/insurance";
@@ -20,8 +23,11 @@ export default function InsurancePage() {
     <main className="min-h-screen insurance-theme">
       <InsuranceHero />
       <InsuranceStats />
+      <PainSection />
+      <ScenariosSection />
       <InsuranceModules />
       <ReturnsSection />
+      <TimelineSection />
       <BenefitsSection />
       <InsuranceCTA />
       <footer className="py-8 px-6 border-t border-[var(--border-subtle)] text-center space-y-3">

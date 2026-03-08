@@ -43,7 +43,7 @@ const CountUp = ({ target, suffix }: { target: number; suffix: string }) => {
   }, [started, target]);
 
   return (
-    <span ref={ref} className="text-4xl md:text-5xl font-black text-[var(--accent-green)]">
+    <span ref={ref} className="text-4xl md:text-5xl font-black text-[var(--accent-blue)]">
       {count.toLocaleString()}{suffix}
     </span>
   );
