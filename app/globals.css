@@ -283,8 +283,3 @@ body:has(.insurance-theme)::after {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-
-@keyframes debris-float {
-  0% { transform: translate(0, 0) rotate(0deg); opacity: 0.6; }
-  100% { transform: translate(var(--dx, 3px), var(--dy, -4px)) rotate(8deg); opacity: 0.35; }
-}
