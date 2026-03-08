@@ -1,3 +1,4 @@
+export { InsuranceNavbar } from "./components/InsuranceNavbar";
 export { InsuranceHero } from "./components/HeroSection";
 export { ReturnsSection } from "./components/ReturnsSection";
 export { PainSection } from "./components/PainSection";
