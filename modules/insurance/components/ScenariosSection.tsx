@@ -81,7 +81,7 @@ export const ScenariosSection = () => {
                   style={{ ...style, transition: "transform 0.5s ease, opacity 0.5s ease", pointerEvents: style.zIndex === 10 ? "auto" : "none" }}
                 >
                   <div className="w-full max-w-sm">
-                    <ScenarioVisual index={i} />
+                    <ScenarioVisual index={i} isActive={i === active} />
                   </div>
                 </div>
               );
