@@ -2,6 +2,7 @@ export { InsuranceNavbar } from "./components/InsuranceNavbar";
 export { InsuranceHero } from "./components/HeroSection";
 export { ReturnsSection } from "./components/ReturnsSection";
 export { ScenariosSection } from "./components/ScenariosSection";
+export { TargetDiagram } from "./components/TargetDiagram";
 export { SolutionSection } from "./components/SolutionSection";
 export { TimelineSection } from "./components/TimelineSection";
 export { FAQSection } from "./components/FAQSection";

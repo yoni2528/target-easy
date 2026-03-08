@@ -4,6 +4,7 @@ import {
   InsuranceHero,
   ReturnsSection,
   ScenariosSection,
+  TargetDiagram,
   SolutionSection,
   TimelineSection,
   FAQSection,
@@ -24,6 +25,7 @@ export default function InsurancePage() {
       <InsuranceHero />
       <ReturnsSection />
       <ScenariosSection />
+      <TargetDiagram />
       <SolutionSection />
       <TimelineSection />
       <FAQSection />
