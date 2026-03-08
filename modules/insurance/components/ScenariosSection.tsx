@@ -1,14 +1,15 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Crosshair, CarFront, Gavel, Building2, Heart, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ScenarioVisual } from "./ScenarioVisuals";
 
 const scenarios = [
-  { icon: Crosshair, title: "ירי באימון", desc: "כדור פגע בצד שלישי במטווח. מי משלם על הטיפול הרפואי, על הנזק, על התביעה?" },
-  { icon: CarFront, title: "גניבת נשק", desc: "הנשק נגנב מהרכב או מהבית. חקירה משטרתית, תביעה אזרחית — ואתה לבד." },
-  { icon: Gavel, title: "חקירה פלילית", desc: "השתמשת בנשק באירוע. צריך עורך דין פלילי עכשיו — לא מחר." },
-  { icon: Building2, title: "תביעת נזיקין", desc: "נזק לרכוש של צד שלישי. תביעה של מאות אלפי שקלים." },
-  { icon: Heart, title: "הצלת חיים", desc: "פעלת נכון ומנעת פיגוע — ועדיין פותחים נגדך חקירה." },
+  { title: "ירי באימון", desc: "כדור פגע בצד שלישי במטווח. מי משלם על הטיפול הרפואי, על הנזק, על התביעה?" },
+  { title: "גניבת נשק", desc: "הנשק נגנב מהרכב או מהבית. חקירה משטרתית, תביעה אזרחית — ואתה לבד." },
+  { title: "חקירה פלילית", desc: "השתמשת בנשק באירוע. צריך עורך דין פלילי עכשיו — לא מחר." },
+  { title: "תביעת נזיקין", desc: "נזק לרכוש של צד שלישי. תביעה של מאות אלפי שקלים." },
+  { title: "הצלת חיים", desc: "פעלת נכון ומנעת פיגוע — ועדיין פותחים נגדך חקירה." },
 ];
 
 export const ScenariosSection = () => {
@@ -79,21 +80,11 @@ export const ScenariosSection = () => {
                   className="absolute inset-0 flex items-center justify-center"
                   style={{ ...style, transition: "transform 0.5s ease, opacity 0.5s ease", pointerEvents: style.zIndex === 10 ? "auto" : "none" }}
                 >
-                  <div className="w-full max-w-sm rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-lg p-8 flex flex-col items-center">
-                    {/* Dominant visual — large icon with rings */}
-                    <div className="relative w-28 h-28 flex items-center justify-center mb-4">
-                      <div className="absolute inset-0 rounded-full border-2 border-[var(--accent-red)]/15 animate-[pulse_3s_ease-in-out_infinite]" />
-                      <div className="absolute inset-4 rounded-full border border-[var(--accent-red)]/10" />
-                      <div className="w-16 h-16 rounded-2xl bg-[var(--accent-red)]/10 flex items-center justify-center relative">
-                        <div
-                          className="absolute inset-0 rounded-2xl bg-[var(--accent-red)]/15"
-                          style={{ animation: i === active ? "alert-ping 1.5s ease-out infinite" : "none" }}
-                        />
-                        <s.icon className="w-9 h-9 text-[var(--accent-red)] relative z-10" strokeWidth={1.5} />
-                      </div>
-                    </div>
+                  <div className="w-full max-w-sm rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-lg p-6 pt-8 flex flex-col items-center">
+                    {/* Visual scene */}
+                    <ScenarioVisual index={i} isActive={i === active} />
                     {/* Number + Title */}
-                    <span className="text-xs font-bold tracking-widest text-[var(--accent-red)] mb-1">
+                    <span className="text-xs font-bold tracking-widest text-[var(--accent-red)] mt-3 mb-1">
                       תרחיש {String(i + 1).padStart(2, "0")}
                     </span>
                     <h3 className="text-2xl font-black text-[var(--text-primary)]">{s.title}</h3>
