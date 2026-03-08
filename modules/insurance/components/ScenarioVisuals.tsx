@@ -42,19 +42,19 @@ const messages = [
 
 const WhatsAppScene = ({ isActive }: SceneProps) => (
   <PhoneFrame>
-    <div className="h-full rounded-t-xl overflow-hidden bg-[var(--bg-card)] border border-[var(--border-subtle)] flex flex-col" dir="rtl">
-      <div className="bg-[var(--bg-elevated)] px-3 py-1.5 flex items-center gap-2 border-b border-[var(--border-subtle)] shrink-0">
-        <div className="w-5 h-5 rounded-full" style={{ background: "color-mix(in srgb, var(--accent-red) 20%, transparent)" }} />
-        <span className="text-[11px] text-[var(--text-primary)] font-bold">עו״ד פלילי</span>
+    <div className="h-full overflow-hidden flex flex-col" dir="rtl">
+      <div className="bg-[var(--bg-elevated)] px-2 py-1 flex items-center gap-1.5 border-b border-[var(--border-subtle)] shrink-0">
+        <div className="w-4 h-4 rounded-full" style={{ background: "color-mix(in srgb, var(--accent-red) 20%, transparent)" }} />
+        <span className="text-[9px] text-[var(--text-primary)] font-bold">עו״ד פלילי</span>
       </div>
-      <div className="flex-1 p-2 space-y-1.5 overflow-hidden">
+      <div className="flex-1 p-1.5 space-y-1 overflow-hidden">
         {messages.map((m, i) => (
           <div key={i} className={`flex justify-${m.side}`}
-            style={{ opacity: isActive ? 1 : 0, transform: isActive ? "translateX(0)" : `translateX(${m.side === "end" ? "-15px" : "15px"})`, transition: `all 0.4s cubic-bezier(0.16,1,0.3,1) ${0.15 + i * 0.25}s` }}>
-            <div className={`rounded-xl ${m.side === "end" ? "rounded-tr-none" : "rounded-tl-none"} px-2.5 py-1.5 max-w-[85%] ${m.accent ? "border border-[var(--accent-red)]/30" : ""}`}
+            style={{ opacity: isActive ? 1 : 0, transform: isActive ? "translateX(0)" : `translateX(${m.side === "end" ? "-10px" : "10px"})`, transition: `all 0.4s cubic-bezier(0.16,1,0.3,1) ${0.15 + i * 0.25}s` }}>
+            <div className={`rounded-lg ${m.side === "end" ? "rounded-tr-none" : "rounded-tl-none"} px-1.5 py-1 max-w-[88%] ${m.accent ? "border border-[var(--accent-red)]/30" : ""}`}
               style={{ background: m.bg }}>
-              <p className={`text-[11px] ${m.accent ? "text-[var(--accent-red)] font-bold" : "text-[var(--text-primary)]"}`}>{m.text}</p>
-              <span className="text-[8px] text-[var(--text-muted)] float-left mt-0.5">{m.time}</span>
+              <p className={`text-[8px] leading-snug ${m.accent ? "text-[var(--accent-red)] font-bold" : "text-[var(--text-primary)]"}`}>{m.text}</p>
+              <span className="text-[6px] text-[var(--text-muted)] float-left mt-0.5">{m.time}</span>
             </div>
           </div>
         ))}
@@ -146,29 +146,29 @@ const notifications = [
 
 const NotificationsScene = ({ isActive }: SceneProps) => (
   <PhoneFrame>
-    <div className="h-full flex flex-col justify-center px-1 space-y-1.5" dir="rtl">
+    <div className="h-full flex flex-col justify-center px-1 space-y-1" dir="rtl">
       <div className="text-center mb-1" style={anim(isActive, 0.1)}>
-        <p className="text-2xl font-black text-[var(--text-primary)] leading-none">21:47</p>
-        <p className="text-[9px] text-[var(--text-muted)]">שבת, 8 במרץ</p>
+        <p className="text-lg font-black text-[var(--text-primary)] leading-none">21:47</p>
+        <p className="text-[7px] text-[var(--text-muted)]">שבת, 8 במרץ</p>
       </div>
       {notifications.map((n, i) => (
         <div key={n.title}
-          className="rounded-xl bg-[var(--bg-elevated)]/80 backdrop-blur border px-2.5 py-1.5 flex items-center gap-2"
+          className="rounded-lg bg-[var(--bg-elevated)]/80 backdrop-blur border px-1.5 py-1 flex items-center gap-1.5"
           style={{
             borderColor: n.urgent ? "color-mix(in srgb, var(--accent-red) 40%, transparent)" : "var(--border-subtle)",
             opacity: isActive ? 1 : 0,
-            transform: isActive ? "translateX(0)" : "translateX(-20px)",
+            transform: isActive ? "translateX(0)" : "translateX(-15px)",
             transition: `all 0.4s cubic-bezier(0.16,1,0.3,1) ${0.3 + i * 0.2}s`,
           }}>
-          <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0"
+          <div className="w-5 h-5 rounded flex items-center justify-center shrink-0"
             style={{ background: n.urgent ? "color-mix(in srgb, var(--accent-red) 15%, transparent)" : "color-mix(in srgb, var(--accent-red) 10%, transparent)" }}>
-            <span className={`text-[9px] font-black ${n.urgent ? "text-[var(--accent-red)]" : "text-[var(--text-secondary)]"}`}>{n.icon}</span>
+            <span className={`text-[7px] font-black ${n.urgent ? "text-[var(--accent-red)]" : "text-[var(--text-secondary)]"}`}>{n.icon}</span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className={`text-[9px] font-bold truncate ${n.urgent ? "text-[var(--accent-red)]" : "text-[var(--text-primary)]"}`}>{n.title}</p>
-            <p className="text-[8px] text-[var(--text-muted)] truncate">{n.sub}</p>
+            <p className={`text-[7px] font-bold truncate ${n.urgent ? "text-[var(--accent-red)]" : "text-[var(--text-primary)]"}`}>{n.title}</p>
+            <p className="text-[6px] text-[var(--text-muted)] truncate">{n.sub}</p>
           </div>
-          <span className="text-[7px] text-[var(--text-muted)]">{n.time}</span>
+          <span className="text-[6px] text-[var(--text-muted)]">{n.time}</span>
         </div>
       ))}
     </div>

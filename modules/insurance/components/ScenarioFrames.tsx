@@ -1,49 +1,64 @@
 const SCENE_H = "h-[280px]";
 
-/** Realistic phone frame — dark body, dynamic island, side buttons */
+/** Realistic iPhone-style phone frame */
 export const PhoneFrame = ({ children }: { children: React.ReactNode }) => (
-  <div className={`w-full ${SCENE_H} relative`}>
-    {/* Phone body */}
-    <div className="absolute inset-0 rounded-[2.5rem] bg-[#1c1c1e] shadow-[0_8px_40px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
-      {/* Side buttons */}
-      <div className="absolute -right-[2px] top-[72px] w-[3px] h-[28px] rounded-l-sm bg-[#2c2c2e]" />
-      <div className="absolute -left-[2px] top-[56px] w-[3px] h-[16px] rounded-r-sm bg-[#2c2c2e]" />
-      <div className="absolute -left-[2px] top-[80px] w-[3px] h-[16px] rounded-r-sm bg-[#2c2c2e]" />
+  <div className={`w-full ${SCENE_H} flex items-center justify-center`}>
+    <div className="relative h-full" style={{ width: 165, aspectRatio: "auto" }}>
+      {/* Phone body — dark titanium with metallic edge */}
+      <div className="absolute inset-0 rounded-[28px] bg-[#1a1a1e]"
+        style={{ boxShadow: "0 12px 40px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3), inset 0 0.5px 0 rgba(255,255,255,0.08), inset 0 -0.5px 0 rgba(255,255,255,0.03)" }}>
 
-      {/* Screen */}
-      <div className="absolute inset-[3px] rounded-[2.2rem] overflow-hidden bg-[var(--bg-primary,var(--bg-card))]">
-        {/* Dynamic island */}
-        <div className="flex justify-center pt-[6px] pb-0 relative z-20">
-          <div className="w-[76px] h-[20px] bg-black rounded-full flex items-center justify-between px-2.5">
-            <div className="w-[4px] h-[4px] rounded-full bg-[#1a2a3a]/60" />
-            <div className="w-[5px] h-[5px] rounded-full bg-[#0d2818] ring-1 ring-[#1a4a3a]/30" />
-          </div>
-        </div>
+        {/* Metallic frame edge */}
+        <div className="absolute inset-0 rounded-[28px] border border-[#3a3a3e]/60" />
+        <div className="absolute inset-[0.5px] rounded-[27.5px] border border-white/[0.04]" />
 
-        {/* Status bar */}
-        <div className="flex items-center justify-between px-6 h-[18px] relative z-10">
-          <span className="text-[9px] font-semibold text-[var(--text-primary)]">9:41</span>
-          <div className="flex items-center gap-1.5">
-            <div className="flex items-end gap-[1.5px] h-[9px]">
-              {[3, 5, 7, 9].map((h) => (
-                <div key={h} className="w-[2.5px] rounded-sm bg-[var(--text-primary)]" style={{ height: h }} />
-              ))}
-            </div>
-            <div className="flex items-center">
-              <div className="w-[16px] h-[8px] rounded-[2px] border border-[var(--text-primary)]/60 p-[1.5px]">
-                <div className="h-full w-[65%] rounded-[1px] bg-[var(--text-primary)]" />
+        {/* Side buttons */}
+        <div className="absolute -right-[1.5px] top-[65px] w-[2.5px] h-[24px] rounded-l-[1px] bg-[#2a2a2e] shadow-[-1px_0_2px_rgba(0,0,0,0.3)]" />
+        <div className="absolute -left-[1.5px] top-[50px] w-[2.5px] h-[13px] rounded-r-[1px] bg-[#2a2a2e] shadow-[1px_0_2px_rgba(0,0,0,0.3)]" />
+        <div className="absolute -left-[1.5px] top-[70px] w-[2.5px] h-[13px] rounded-r-[1px] bg-[#2a2a2e] shadow-[1px_0_2px_rgba(0,0,0,0.3)]" />
+
+        {/* Screen area */}
+        <div className="absolute inset-[3px] rounded-[25px] overflow-hidden bg-black">
+          {/* Screen content bg */}
+          <div className="absolute inset-0 bg-[var(--bg-primary,var(--bg-card))]">
+            {/* Dynamic island */}
+            <div className="flex justify-center pt-[5px] relative z-20">
+              <div className="w-[58px] h-[16px] bg-black rounded-full flex items-center justify-between px-2">
+                <div className="w-[3px] h-[3px] rounded-full bg-[#1a1a2e]/70" />
+                <div className="w-[4px] h-[4px] rounded-full bg-[#0d1f18] ring-[0.5px] ring-[#1a3a2a]/40" />
               </div>
-              <div className="w-[1.5px] h-[3px] rounded-r-sm bg-[var(--text-primary)]/60 ml-[0.5px]" />
             </div>
+
+            {/* Status bar */}
+            <div className="flex items-center justify-between px-4 h-[14px] relative z-10">
+              <span className="text-[7px] font-semibold text-[var(--text-primary)]">9:41</span>
+              <div className="flex items-center gap-1">
+                <div className="flex items-end gap-[1px] h-[7px]">
+                  {[2.5, 4, 5.5, 7].map((h) => (
+                    <div key={h} className="w-[2px] rounded-[0.5px] bg-[var(--text-primary)]" style={{ height: h }} />
+                  ))}
+                </div>
+                <div className="flex items-center">
+                  <div className="w-[13px] h-[6.5px] rounded-[1.5px] border border-[var(--text-primary)]/50 p-[1px]">
+                    <div className="h-full w-[60%] rounded-[0.5px] bg-[var(--text-primary)]" />
+                  </div>
+                  <div className="w-[1px] h-[2.5px] rounded-r-[0.5px] bg-[var(--text-primary)]/50 ml-[0.5px]" />
+                </div>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="h-[calc(100%-42px)] overflow-hidden">{children}</div>
           </div>
+
+          {/* Screen inner edge shadow */}
+          <div className="absolute inset-0 rounded-[25px] pointer-events-none"
+            style={{ boxShadow: "inset 0 0 4px rgba(0,0,0,0.15)" }} />
         </div>
 
-        {/* Content */}
-        <div className="h-[calc(100%-50px)] overflow-hidden">{children}</div>
+        {/* Home indicator */}
+        <div className="absolute bottom-[4px] left-1/2 -translate-x-1/2 w-[60px] h-[3px] rounded-full bg-white/15" />
       </div>
-
-      {/* Home indicator */}
-      <div className="absolute bottom-[5px] left-1/2 -translate-x-1/2 w-[90px] h-[4px] rounded-full bg-white/15 z-10" />
     </div>
   </div>
 );
