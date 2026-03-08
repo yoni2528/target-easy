@@ -1,35 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Crosshair, CarFront, Gavel, Building2, Heart } from "lucide-react";
 
 const scenarios = [
-  {
-    icon: Crosshair,
-    title: "ירי באימון",
-    desc: "כדור פגע בצד שלישי במטווח. מי משלם על הנזק?",
-  },
-  {
-    icon: CarFront,
-    title: "גניבת נשק",
-    desc: "הנשק נגנב מהרכב או מהבית. חקירה ותביעה מובטחות.",
-  },
-  {
-    icon: Gavel,
-    title: "חקירה פלילית",
-    desc: "השתמשת בנשק באירוע. צריך עורך דין — עכשיו.",
-  },
-  {
-    icon: Building2,
-    title: "תביעת נזיקין",
-    desc: "נזק לרכוש של צד שלישי. תביעה של מאות אלפים.",
-  },
-  {
-    icon: Heart,
-    title: "פעולה להצלת חיים",
-    desc: "פעלת נכון ומנעת פיגוע — ועדיין חוקרים אותך.",
-  },
+  { icon: Crosshair, title: "ירי באימון", desc: "כדור פגע בצד שלישי במטווח. מי משלם על הנזק?" },
+  { icon: CarFront, title: "גניבת נשק", desc: "הנשק נגנב מהרכב או מהבית. חקירה ותביעה מובטחות." },
+  { icon: Gavel, title: "חקירה פלילית", desc: "השתמשת בנשק באירוע. צריך עורך דין — עכשיו." },
+  { icon: Building2, title: "תביעת נזיקין", desc: "נזק לרכוש של צד שלישי. תביעה של מאות אלפים." },
+  { icon: Heart, title: "פעולה להצלת חיים", desc: "פעלת נכון ומנעת פיגוע — ועדיין חוקרים אותך." },
 ];
+
+const handleTilt = (e: React.MouseEvent<HTMLDivElement>) => {
+  const el = e.currentTarget;
+  const rect = el.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
+  const y = ((e.clientY - rect.top) / rect.height - 0.5) * -8;
+  el.style.transform = `perspective(800px) rotateY(${x}deg) rotateX(${y}deg) scale3d(1.02,1.02,1.02)`;
+};
+
+const resetTilt = (e: React.MouseEvent<HTMLDivElement>) => {
+  e.currentTarget.style.transform = "";
+};
 
 export const ScenariosSection = () => {
   const [visible, setVisible] = useState(false);
@@ -57,25 +49,33 @@ export const ScenariosSection = () => {
         </p>
         <div className="space-y-4">
           {scenarios.map((s, i) => (
+            /* Outer: entrance animation */
             <div
               key={s.title}
-              className="flex items-center gap-5 p-5 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-sm hover:border-[var(--accent-red)]/30 hover:shadow-md transition-all duration-300"
               style={{
                 opacity: visible ? 1 : 0,
-                transform: visible ? "translateX(0)" : "translateX(-20px)",
+                transform: visible ? "translateX(0)" : (i % 2 === 0 ? "translateX(-30px)" : "translateX(30px)"),
                 transition: `opacity 0.5s ease ${i * 0.1}s, transform 0.5s ease ${i * 0.1}s`,
               }}
             >
-              <div className="w-12 h-12 rounded-xl bg-[var(--accent-red)]/10 flex items-center justify-center shrink-0">
-                <s.icon className="w-6 h-6 text-[var(--accent-red)]" strokeWidth={1.5} />
+              {/* Inner: 3D tilt */}
+              <div
+                className="flex items-center gap-5 p-5 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-sm hover:border-[var(--accent-red)]/30 hover:shadow-md transition-[border,box-shadow] duration-300"
+                style={{ transition: "transform 0.15s ease, border-color 0.3s, box-shadow 0.3s" }}
+                onMouseMove={handleTilt}
+                onMouseLeave={resetTilt}
+              >
+                <div className="w-12 h-12 rounded-xl bg-[var(--accent-red)]/10 flex items-center justify-center shrink-0">
+                  <s.icon className="w-6 h-6 text-[var(--accent-red)]" strokeWidth={1.5} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-[var(--text-primary)] mb-0.5">{s.title}</h3>
+                  <p className="text-sm text-[var(--text-secondary)]">{s.desc}</p>
+                </div>
+                <span className="text-3xl font-black text-[var(--accent-red)]/10 hidden md:block">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-[var(--text-primary)] mb-0.5">{s.title}</h3>
-                <p className="text-sm text-[var(--text-secondary)]">{s.desc}</p>
-              </div>
-              <span className="text-3xl font-black text-[var(--accent-red)]/10 hidden md:block">
-                {String(i + 1).padStart(2, "0")}
-              </span>
             </div>
           ))}
         </div>

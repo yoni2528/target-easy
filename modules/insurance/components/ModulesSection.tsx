@@ -59,12 +59,23 @@ const VisualCard = ({ module, isActive }: { module: InsuranceModule; isActive: b
             className="w-20 h-20 rounded-2xl flex items-center justify-center"
             style={{ background: `color-mix(in srgb, ${module.accent} 10%, transparent)` }}
           >
-            <Icon className="w-10 h-10" style={{ color: module.accent }} strokeWidth={1.5} />
+            <Icon className="w-10 h-10" style={{
+              color: module.accent,
+              transform: isActive ? "scale(1) rotate(0deg)" : "scale(0.5) rotate(-10deg)",
+              transition: "transform 0.5s ease",
+            }} strokeWidth={1.5} />
           </div>
         </div>
-        {/* Key stat */}
-        <span className="text-5xl font-black mb-1" style={{ color: module.accent }}>{module.stat}</span>
-        <span className="text-sm text-[var(--text-secondary)] mb-6">{module.statLabel}</span>
+        {/* Key stat with delayed entrance */}
+        <span className="text-5xl font-black mb-1" style={{
+          color: module.accent,
+          transform: isActive ? "scale(1) translateY(0)" : "scale(0.7) translateY(10px)",
+          transition: "transform 0.5s ease 0.15s",
+        }}>{module.stat}</span>
+        <span className="text-sm text-[var(--text-secondary)] mb-6" style={{
+          transform: isActive ? "translateY(0)" : "translateY(8px)",
+          transition: "transform 0.4s ease 0.25s",
+        }}>{module.statLabel}</span>
         {/* Feature pills */}
         <div className="flex flex-wrap justify-center gap-2 max-w-[380px]">
           {module.features.map((f, i) => (

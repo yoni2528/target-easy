@@ -45,10 +45,18 @@ export const PainSection = () => {
           }}
         >
           <AlertTriangle className="w-14 h-14 text-[#cc3333] mx-auto mb-6" strokeWidth={1} />
-          <h2 className="text-4xl md:text-6xl font-black text-white mb-4 leading-tight">
+          {/* Shake title */}
+          <h2
+            className="text-4xl md:text-6xl font-black text-white mb-4 leading-tight"
+            style={{ animation: visible ? "shake 0.6s ease-in-out 0.8s" : "none" }}
+          >
             נשק בלי ביטוח?
           </h2>
-          <p className="text-xl md:text-2xl text-[#cc3333] font-bold mb-6">
+          {/* Glitch red text */}
+          <p
+            className="text-xl md:text-2xl text-[#cc3333] font-bold mb-6"
+            style={{ animation: visible ? "glitch-flicker 4s linear 1.5s infinite" : "none" }}
+          >
             כמו רכב בלי ביטוח חובה.
           </p>
           <p className="text-lg text-[#8a96b0] max-w-xl mx-auto leading-relaxed">
@@ -65,8 +73,14 @@ export const PainSection = () => {
             transition: "opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s",
           }}
         >
-          {stats.map((item) => (
-            <div key={item.label} className="p-4 rounded-xl border border-[#cc3333]/20 bg-[#cc3333]/5">
+          {stats.map((item, i) => (
+            <div
+              key={item.label}
+              className="p-4 rounded-xl border border-[#cc3333]/20 bg-[#cc3333]/5 hover:bg-[#cc3333]/10 hover:border-[#cc3333]/40 transition-all duration-300 hover:scale-105"
+              style={{
+                animation: visible ? `step-pop 0.5s ease ${0.6 + i * 0.1}s both` : "none",
+              }}
+            >
               <span className="text-2xl font-black text-[#cc3333]">{item.num}</span>
               <p className="text-xs text-[#8a96b0] mt-1">{item.label}</p>
             </div>

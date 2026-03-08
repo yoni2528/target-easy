@@ -4,48 +4,38 @@ import { useEffect, useRef, useState } from "react";
 import { Crosshair, FileCheck, ShoppingBag, ArrowLeft } from "lucide-react";
 
 const returns = [
-  {
-    icon: Crosshair,
-    title: "אימוני ירי",
-    amount: 600,
-    desc: "החזר על אימוני ירי ורענון שנתי",
-  },
-  {
-    icon: FileCheck,
-    title: "חידוש רישיון",
-    amount: 300,
-    desc: "החזר על תהליך חידוש רישיון הנשק",
-  },
-  {
-    icon: ShoppingBag,
-    title: "ציוד במטווח",
-    amount: 450,
-    desc: "החזר על ציוד ואביזרי ירי במטווח",
-  },
+  { icon: Crosshair, title: "אימוני ירי", amount: 600, desc: "החזר על אימוני ירי ורענון שנתי" },
+  { icon: FileCheck, title: "חידוש רישיון", amount: 300, desc: "החזר על תהליך חידוש רישיון הנשק" },
+  { icon: ShoppingBag, title: "ציוד במטווח", amount: 450, desc: "החזר על ציוד ואביזרי ירי במטווח" },
 ];
 
 const CountUp = ({ target, started }: { target: number; started: boolean }) => {
   const [count, setCount] = useState(0);
-
   useEffect(() => {
     if (!started) return;
-    const duration = 1200;
     const steps = 30;
     const inc = target / steps;
     let current = 0;
     const interval = setInterval(() => {
       current += inc;
-      if (current >= target) {
-        setCount(target);
-        clearInterval(interval);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, duration / steps);
+      if (current >= target) { setCount(target); clearInterval(interval); }
+      else setCount(Math.floor(current));
+    }, 1200 / steps);
     return () => clearInterval(interval);
   }, [started, target]);
-
   return <>{count.toLocaleString()}</>;
+};
+
+const handleTilt = (e: React.MouseEvent<HTMLDivElement>) => {
+  const el = e.currentTarget;
+  const rect = el.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
+  const y = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
+  el.style.transform = `perspective(800px) rotateY(${x}deg) rotateX(${y}deg) scale3d(1.03,1.03,1.03)`;
+};
+
+const resetTilt = (e: React.MouseEvent<HTMLDivElement>) => {
+  e.currentTarget.style.transform = "";
 };
 
 export const ReturnsSection = () => {
@@ -67,7 +57,6 @@ export const ReturnsSection = () => {
 
   return (
     <section ref={ref} className="py-24 px-6 relative overflow-hidden">
-      {/* Glow background */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[var(--accent-amber)]/5 blur-[100px]" />
       </div>
@@ -80,36 +69,37 @@ export const ReturnsSection = () => {
           זה לא סתם ביטוח — כל שנה תקבל החזרים על אימונים, חידוש רישיון וציוד
         </p>
 
-        {/* Return cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
           {returns.map((r, i) => (
-            <div
-              key={r.title}
-              className="group p-6 rounded-2xl bg-[var(--bg-card)] border border-[var(--accent-amber)]/20 hover:border-[var(--accent-amber)]/40 transition-all duration-300"
+            <div key={r.title}
               style={{
                 opacity: visible ? 1 : 0,
                 transform: visible ? "translateY(0)" : "translateY(30px)",
                 transition: `opacity 0.6s ease ${i * 0.15}s, transform 0.6s ease ${i * 0.15}s`,
               }}
             >
-              <div className="w-12 h-12 rounded-xl bg-[var(--accent-amber)]/10 flex items-center justify-center mb-4 group-hover:bg-[var(--accent-amber)]/20 transition-colors">
-                <r.icon className="w-6 h-6 text-[var(--accent-amber)]" strokeWidth={1.5} />
-              </div>
-              <h3 className="text-lg font-bold text-[var(--text-primary)] mb-1">
-                {r.title}
-              </h3>
-              <p className="text-sm text-[var(--text-muted)] mb-4">{r.desc}</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-black text-[var(--accent-amber)]">
-                  <CountUp target={r.amount} started={visible} />
-                </span>
-                <span className="text-sm text-[var(--text-muted)]">₪ בשנה</span>
+              <div
+                className="group p-6 rounded-2xl bg-[var(--bg-card)] border border-[var(--accent-amber)]/20 hover:border-[var(--accent-amber)]/40 shadow-sm"
+                style={{ transition: "transform 0.15s ease, border-color 0.3s, box-shadow 0.3s" }}
+                onMouseMove={handleTilt}
+                onMouseLeave={resetTilt}
+              >
+                <div className="w-12 h-12 rounded-xl bg-[var(--accent-amber)]/10 flex items-center justify-center mb-4 group-hover:bg-[var(--accent-amber)]/20 transition-colors">
+                  <r.icon className="w-6 h-6 text-[var(--accent-amber)]" strokeWidth={1.5} />
+                </div>
+                <h3 className="text-lg font-bold text-[var(--text-primary)] mb-1">{r.title}</h3>
+                <p className="text-sm text-[var(--text-muted)] mb-4">{r.desc}</p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-black text-[var(--accent-amber)]">
+                    <CountUp target={r.amount} started={visible} />
+                  </span>
+                  <span className="text-sm text-[var(--text-muted)]">₪ בשנה</span>
+                </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Total highlight */}
         <div
           className="p-6 rounded-2xl bg-gradient-to-l from-[var(--accent-amber)]/10 to-[var(--accent-amber)]/5 border border-[var(--accent-amber)]/30 text-center"
           style={{
@@ -125,11 +115,8 @@ export const ReturnsSection = () => {
             </span>
             <span className="text-xl text-[var(--text-muted)]">₪</span>
           </div>
-          <p className="text-sm text-[var(--text-secondary)] mt-2">
-            הביטוח משלם על עצמו — ואתה מוגן בכל רגע
-          </p>
-          <a
-            href="#contact"
+          <p className="text-sm text-[var(--text-secondary)] mt-2">הביטוח משלם על עצמו — ואתה מוגן בכל רגע</p>
+          <a href="#contact"
             className="inline-flex items-center gap-2 mt-5 px-8 py-3 bg-[var(--accent-amber)] text-white font-bold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-[var(--accent-amber)]/20"
           >
             רוצה לשמוע עוד
