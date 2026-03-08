@@ -4,12 +4,12 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { ScenarioVisual } from "./ScenarioVisuals";
 
 const scenarios = [
-  { title: "פליטת כדור", subtitle: "מה קורה עכשיו?", desc: "הנפגע תובע. אתה משלם עד 3,000,000₪." },
-  { title: "הסנגוריה הציבורית", subtitle: "מה קורה עכשיו?", desc: "עו״ד של המדינה. לא מומחה לנשק. לא זמין 24/7." },
-  { title: "עצירת פיגוע נכונה", subtitle: "מה קורה עכשיו?", desc: "פעלת נכון — עדיין חשוף לתביעה אזרחית." },
-  { title: "עצירת פיגוע שגויה", subtitle: "מה קורה עכשיו?", desc: "תביעה אזרחית + חקירה פלילית. מ-50K₪." },
-  { title: "גניבת נשק", subtitle: "מה קורה עכשיו?", desc: "תיק פלילי נפתח. הפסדת את האקדח." },
-  { title: "תביעת נזיקין", subtitle: "מה קורה עכשיו?", desc: "כתב הגנה בלבד: 65,000–100,000₪." },
+  { title: "פליטת כדור", stat: "₪3,000,000", desc: "הנפגע תובע. אתה משלם." },
+  { title: "הסנגוריה הציבורית", stat: "לא מומחה", desc: "עו״ד של המדינה. לא זמין 24/7." },
+  { title: "עצירת פיגוע נכונה", stat: "₪65,000+", desc: "פעלת נכון — עדיין חשוף לתביעה." },
+  { title: "עצירת פיגוע שגויה", stat: "₪50,000+", desc: "תביעה אזרחית + חקירה פלילית." },
+  { title: "גניבת נשק", stat: "תיק פלילי", desc: "הנשק נגנב. תיק נפתח. הפסדת אקדח." },
+  { title: "תביעת נזיקין", stat: "₪65–100K", desc: "רק כתב הגנה. עוד לפני המשפט." },
 ];
 
 export const ScenariosSection = () => {
@@ -30,80 +30,85 @@ export const ScenariosSection = () => {
   }, []);
 
   const go = useCallback((dir: number) => {
-    setActive((p) => (p + dir + scenarios.length) % scenarios.length);
+    setActive((p) => Math.max(0, Math.min(scenarios.length - 1, p + dir)));
   }, []);
 
   const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX; };
   const onTouchEnd = (e: React.TouchEvent) => {
     const diff = touchStart.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) go(diff > 0 ? -1 : 1);
-  };
-
-  const getSlideStyle = (i: number) => {
-    const diff = i - active;
-    const half = Math.floor(scenarios.length / 2);
-    const w = diff > half ? diff - scenarios.length : diff < -half ? diff + scenarios.length : diff;
-    if (w === 0) return { transform: "translateX(0) scale(1) rotateY(0)", opacity: 1, zIndex: 10 };
-    if (w === 1 || w === -1) return { transform: `translateX(${w * -55}%) scale(0.85) rotateY(${w * 8}deg)`, opacity: 0.4, zIndex: 5 };
-    return { transform: `translateX(${w * -100}%) scale(0.7) rotateY(${w * 15}deg)`, opacity: 0, zIndex: 0 };
+    if (diff > 50) go(1);
+    if (diff < -50) go(-1);
   };
 
   return (
-    <section ref={ref} className="py-28 px-6 overflow-hidden bg-white">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-center text-[#37374e] mb-3"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
+    <section ref={ref} className="py-28 bg-white overflow-hidden">
+      <div className="max-w-5xl mx-auto px-6">
+        <h2 className="text-3xl md:text-5xl font-black text-center mb-2"
+          style={{ color: "#1d1d1f", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1)", letterSpacing: "-0.02em" }}>
           מקרים שקורים <span className="text-[var(--accent-red)]">כל שנה</span>
         </h2>
-        <p className="text-[#6b6b80] text-center mb-12"
-          style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 0.2s" }}>
+        <p className="text-center mb-14 text-lg" style={{ color: "#86868b", opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.2s" }}>
           6 תרחישים אמיתיים למחזיקי נשק
         </p>
 
-        <div className="relative mx-auto" style={{ maxWidth: 650, perspective: "1200px", opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 0.3s" }}
-          onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <div className="relative" style={{ height: 420 }}>
-            {scenarios.map((s, i) => {
-              const style = getSlideStyle(i);
-              return (
-                <div key={i} className="absolute inset-0 flex items-center justify-center"
-                  style={{ ...style, transition: "all 0.6s cubic-bezier(0.16,1,0.3,1)", pointerEvents: style.zIndex === 10 ? "auto" : "none", transformStyle: "preserve-3d" }}>
-                  <div className="w-full max-w-md h-full overflow-hidden flex flex-col"
-                    style={{
-                      borderRadius: "24px", background: "#f8faff", border: "1px solid #e8edf5",
-                      boxShadow: style.zIndex === 10 ? "0 25px 50px -12px rgba(0,0,0,0.1)" : "0 10px 20px -5px rgba(0,0,0,0.05)",
-                    }}>
-                    <div className="flex-1 min-h-0">
+        {/* Apple-style slider */}
+        <div className="relative" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
+          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1) 0.3s" }}>
+
+          <div className="overflow-hidden" style={{ borderRadius: "28px" }}>
+            <div style={{
+              display: "flex",
+              transform: `translateX(${active * 100}%)`,
+              transition: "transform 0.6s cubic-bezier(0.32, 0.72, 0, 1)",
+            }}>
+              {scenarios.map((s, i) => (
+                <div key={i} style={{ minWidth: "100%", flexShrink: 0 }}>
+                  <div className="flex flex-col items-center justify-center px-8 md:px-16"
+                    style={{ background: "linear-gradient(180deg, #f5f5f7 0%, #fbfbfd 100%)", minHeight: 480, paddingTop: 48, paddingBottom: 40 }}>
+                    <div style={{ width: "100%", maxWidth: 260, height: 220 }}>
                       <ScenarioVisual index={i} isActive={i === active} />
                     </div>
-                    <div className="p-4 pb-5 text-center" style={{ borderTop: "1px solid #e8edf5", background: "white", borderRadius: "0 0 24px 24px" }}>
-                      <h3 className="text-base font-black text-[#37374e] mb-0.5">{s.title}</h3>
-                      <p className="text-xs font-bold text-[var(--accent-red)] mb-1">{s.subtitle}</p>
-                      <p className="text-xs text-[#6b6b80]">{s.desc}</p>
+                    <div className="text-center mt-4">
+                      <span className="text-4xl md:text-5xl font-black block mb-3"
+                        style={{ color: "var(--accent-red)", letterSpacing: "-0.02em" }}>
+                        {s.stat}
+                      </span>
+                      <h3 className="text-xl md:text-2xl font-black mb-2" style={{ color: "#1d1d1f" }}>{s.title}</h3>
+                      <p className="text-base" style={{ color: "#86868b" }}>{s.desc}</p>
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
 
-          {[{ dir: 1, pos: "-right-4 md:-right-14", arrow: "→" }, { dir: -1, pos: "-left-4 md:-left-14", arrow: "←" }].map(({ dir, pos, arrow }) => (
-            <button key={dir} onClick={() => go(dir)}
-              className={`absolute top-1/2 -translate-y-1/2 ${pos} w-11 h-11 flex items-center justify-center hover:scale-105 transition-transform z-20`}
-              style={{ borderRadius: "50%", background: "white", border: "1px solid #e8edf5", boxShadow: "0 8px 20px -5px rgba(0,0,0,0.08)" }}>
-              <span className="text-[#6b6b80] text-lg">{arrow}</span>
+          {/* Arrows — glass blur, Apple-minimal */}
+          {active > 0 && (
+            <button onClick={() => go(-1)}
+              className="absolute top-1/2 -translate-y-1/2 right-3 md:-right-6 w-10 h-10 flex items-center justify-center rounded-full z-10"
+              style={{ background: "rgba(255,255,255,0.72)", backdropFilter: "blur(12px)", boxShadow: "0 1px 8px rgba(0,0,0,0.08)" }}>
+              <span style={{ color: "#1d1d1f", fontSize: 18 }}>›</span>
             </button>
-          ))}
+          )}
+          {active < scenarios.length - 1 && (
+            <button onClick={() => go(1)}
+              className="absolute top-1/2 -translate-y-1/2 left-3 md:-left-6 w-10 h-10 flex items-center justify-center rounded-full z-10"
+              style={{ background: "rgba(255,255,255,0.72)", backdropFilter: "blur(12px)", boxShadow: "0 1px 8px rgba(0,0,0,0.08)" }}>
+              <span style={{ color: "#1d1d1f", fontSize: 18 }}>‹</span>
+            </button>
+          )}
         </div>
 
-        <div className="flex justify-center gap-2.5 mt-6">
+        {/* Pill dots — Apple style */}
+        <div className="flex justify-center gap-2 mt-8">
           {scenarios.map((_, i) => (
             <button key={i} onClick={() => setActive(i)}
-              className="w-3 h-3 rounded-full transition-all duration-300"
+              className="transition-all duration-500"
               style={{
-                background: i === active ? "var(--accent-red)" : "#dde0e6",
-                transform: i === active ? "scale(1.3)" : "scale(1)",
-                boxShadow: i === active ? "0 4px 10px -2px color-mix(in srgb, var(--accent-red) 40%, transparent)" : "none",
+                width: i === active ? 28 : 8,
+                height: 8,
+                borderRadius: 4,
+                background: i === active ? "#1d1d1f" : "#d2d2d7",
               }} />
           ))}
         </div>
