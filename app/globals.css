@@ -195,6 +195,29 @@ input[type="range"]::-moz-range-thumb {
   --accent-blue: #64b5f6;
 }
 
+/* Override body bg + grid + crosshair when insurance page is active */
+body:has(.insurance-theme) {
+  background: #0a1228;
+}
+
+body:has(.insurance-theme)::before {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(100,181,246,0.03) 0%, transparent 200px),
+    linear-gradient(rgba(100,181,246,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100,181,246,0.025) 1px, transparent 1px),
+    linear-gradient(rgba(100,181,246,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100,181,246,0.012) 1px, transparent 1px);
+  background-size: 100% 100%, 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+}
+
+body:has(.insurance-theme)::after {
+  background:
+    linear-gradient(transparent calc(50% - 0.5px), #64b5f6 calc(50% - 0.5px), #64b5f6 calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    linear-gradient(90deg, transparent calc(50% - 0.5px), #64b5f6 calc(50% - 0.5px), #64b5f6 calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    radial-gradient(circle at center, transparent 58px, #64b5f6 58px, #64b5f6 60px, transparent 60px),
+    radial-gradient(circle at center, transparent 28px, #64b5f6 28px, #64b5f6 30px, transparent 30px);
+}
+
 /* Landing page animations */
 @keyframes fadeIn {
   from { opacity: 0; }
