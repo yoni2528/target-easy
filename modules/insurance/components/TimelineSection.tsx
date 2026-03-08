@@ -25,7 +25,7 @@ export const TimelineSection = () => {
   }, []);
 
   return (
-    <section ref={ref} className="py-20 px-6 bg-white">
+    <section ref={ref} className="py-28 px-6 bg-white">
       <div className="max-w-3xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-black text-center text-[#37374e] mb-12">
           <span className="text-[var(--accent-blue)]">3 שלבים</span> וזה הכל

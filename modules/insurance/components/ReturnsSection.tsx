@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { Crosshair, FileCheck, ShoppingBag } from "lucide-react";
 
 const returns = [
-  { icon: Crosshair, title: "אימוני ירי", desc: "עד 600₪ החזר בשנה", amount: 600, color: "#4A90D9" },
-  { icon: FileCheck, title: "חידוש רישיון", desc: "עד 300₪ החזר בשנה", amount: 300, color: "#5BA0E8" },
-  { icon: ShoppingBag, title: "ציוד במטווח", desc: "עד 450₪ החזר בשנה", amount: 450, color: "#6BB0F0" },
+  { icon: Crosshair, title: "אימוני ירי", desc: "החזר שנתי", amount: 600, color: "#4A90D9" },
+  { icon: FileCheck, title: "חידוש רישיון", desc: "החזר שנתי", amount: 300, color: "#5BA0E8" },
+  { icon: ShoppingBag, title: "ציוד במטווח", desc: "החזר שנתי", amount: 450, color: "#6BB0F0" },
 ];
 
 const CountUp = ({ target, started }: { target: number; started: boolean }) => {
@@ -44,7 +44,7 @@ export const ReturnsSection = () => {
   const total = returns.reduce((s, r) => s + r.amount, 0);
 
   return (
-    <section ref={ref} className="py-20 px-6 bg-white">
+    <section ref={ref} className="py-28 px-6 bg-white">
       <div className="max-w-3xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-black text-center text-[#37374e] mb-12"
           style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>

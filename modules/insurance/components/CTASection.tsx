@@ -3,13 +3,13 @@
 import { ArrowLeft } from "lucide-react";
 
 export const InsuranceCTA = () => (
-  <section id="contact" className="py-24 px-6 text-center bg-[#fafbfe]">
+  <section id="contact" className="py-32 px-6 text-center bg-[#fafbfe]">
     <div className="max-w-lg mx-auto">
       <h2 className="text-3xl md:text-4xl font-black text-[#37374e] mb-4">
         רוצה להיות <span className="text-[var(--accent-blue)]">מוגן</span>?
       </h2>
       <p className="text-[#6b6b80] mb-8">
-        השאירו פרטים ונחזור אליכם עם הצעת מחיר מותאמת — ללא התחייבות.
+        הצעת מחיר בשיחה אחת. ללא התחייבות.
       </p>
       <a href="tel:0552281168"
         className="inline-flex items-center gap-2 px-10 py-4 bg-[var(--accent-blue)] text-white font-bold text-lg hover:scale-105 transition-transform"

@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 
 const coverages = [
-  { title: "עו״ד מומחה 24/7", desc: "קו חם לעורך דין — לפני העדות, לא אחרי.", stat: "24/7" },
-  { title: "הגנה פלילית ומנהלית", desc: "ייצוג מלא, ערעורים, הגנה בהליכים מנהליים.", stat: "400,000₪" },
-  { title: "כיסוי צד שלישי", desc: "נזקי גוף ורכוש לצד שלישי — אתה לא משלם.", stat: "3,000,000₪" },
-  { title: "כיסוי אירועי טרור", desc: "שימוש בנשק באירוע טרור + הגנה משפטית אחרי.", stat: "כלול" },
-  { title: "גניבת נשק", desc: "כיסוי פלילי + החזר כספי על האקדח.", stat: "כלול" },
+  { stat: "24/7", title: "עו״ד שלך, לא של המדינה", desc: "מומחה לנשק. זמין תמיד." },
+  { stat: "400,000₪", title: "הגנה משפטית מלאה", desc: "עו״ד, משפט, ערעורים — מכוסה." },
+  { stat: "3,000,000₪", title: "אתה לא משלם", desc: "נזקי צד שלישי — עלינו." },
+  { stat: "כלול", title: "כיסוי טרור", desc: "השתמשת בנשק באירוע? מכוסה." },
+  { stat: "כלול", title: "גניבת נשק", desc: "תיק פלילי + החזר על האקדח." },
 ];
 
 export const SolutionSection = () => {
@@ -26,21 +26,17 @@ export const SolutionSection = () => {
   }, []);
 
   return (
-    <section ref={ref} id="modules" className="py-20 px-6 bg-[#fafbfe]">
+    <section ref={ref} id="modules" className="py-28 px-6 bg-[#fafbfe]">
       <div className="max-w-3xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-center text-[#37374e] mb-3"
+        <h2 className="text-3xl md:text-4xl font-black text-center text-[#37374e] mb-16"
           style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
           מה הביטוח <span className="text-[var(--accent-blue)]">נותן לך</span>?
         </h2>
-        <p className="text-[#6b6b80] text-center mb-12"
-          style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 0.2s" }}>
-          הכיסוי המלא למחזיקי נשק ברישיון
-        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5" style={{ perspective: "1000px" }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ perspective: "1000px" }}>
           {coverages.map((c, i) => (
             <div key={c.title}
-              className="p-5 hover:scale-[1.02] transition-transform cursor-default"
+              className="p-7 text-center hover:scale-[1.02] transition-transform cursor-default"
               style={{
                 borderRadius: "24px",
                 background: "white",
@@ -50,13 +46,11 @@ export const SolutionSection = () => {
                 transform: visible
                   ? "translateZ(0) rotateX(0) rotateY(0)"
                   : `translateZ(-40px) rotateX(8deg) rotateY(${i % 2 === 0 ? -4 : 4}deg)`,
-                transition: `all 0.7s cubic-bezier(0.16,1,0.3,1) ${0.15 + i * 0.08}s`,
+                transition: `all 0.7s cubic-bezier(0.16,1,0.3,1) ${0.15 + i * 0.1}s`,
                 transformStyle: "preserve-3d",
               }}>
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-base font-black text-[#37374e]">{c.title}</h3>
-                <span className="text-lg font-black text-[var(--accent-blue)]">{c.stat}</span>
-              </div>
+              <span className="text-3xl md:text-4xl font-black text-[var(--accent-blue)] block mb-3">{c.stat}</span>
+              <h3 className="text-base font-black text-[#37374e] mb-1">{c.title}</h3>
               <p className="text-sm text-[#6b6b80]">{c.desc}</p>
             </div>
           ))}
