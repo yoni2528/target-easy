@@ -35,22 +35,16 @@ export const ScenariosSection = () => {
   const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX; };
   const onTouchEnd = (e: React.TouchEvent) => {
     const diff = touchStart.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) go(diff > 0 ? -1 : 1); // RTL: swipe left = next (go -1 in RTL)
+    if (Math.abs(diff) > 50) go(diff > 0 ? -1 : 1);
   };
 
   const getSlideStyle = (i: number) => {
     const diff = i - active;
-    const wrappedDiff = diff > 2 ? diff - scenarios.length : diff < -2 ? diff + scenarios.length : diff;
-
-    if (wrappedDiff === 0) return { transform: "translateX(0) scale(1)", opacity: 1, zIndex: 10 };
-    if (wrappedDiff === 1 || wrappedDiff === -1) {
-      const xDir = wrappedDiff * -65; // RTL
-      return { transform: `translateX(${xDir}%) scale(0.8)`, opacity: 0.35, zIndex: 5 };
-    }
-    return { transform: `translateX(${wrappedDiff * -100}%) scale(0.6)`, opacity: 0, zIndex: 0 };
+    const w = diff > 2 ? diff - scenarios.length : diff < -2 ? diff + scenarios.length : diff;
+    if (w === 0) return { transform: "translateX(0) scale(1)", opacity: 1, zIndex: 10 };
+    if (w === 1 || w === -1) return { transform: `translateX(${w * -65}%) scale(0.8)`, opacity: 0.3, zIndex: 5 };
+    return { transform: `translateX(${w * -100}%) scale(0.6)`, opacity: 0, zIndex: 0 };
   };
-
-  const ActiveIcon = scenarios[active].icon;
 
   return (
     <section ref={ref} className="py-24 px-6 overflow-hidden">
@@ -75,64 +69,67 @@ export const ScenariosSection = () => {
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
-          {/* Slides container */}
-          <div className="relative" style={{ height: 320 }}>
+          {/* Visual slides — icon dominant */}
+          <div className="relative" style={{ height: 260 }}>
             {scenarios.map((s, i) => {
               const style = getSlideStyle(i);
               return (
                 <div
                   key={s.title}
                   className="absolute inset-0 flex items-center justify-center"
-                  style={{
-                    ...style,
-                    transition: "transform 0.5s ease, opacity 0.5s ease",
-                    pointerEvents: style.zIndex === 10 ? "auto" : "none",
-                  }}
+                  style={{ ...style, transition: "transform 0.5s ease, opacity 0.5s ease", pointerEvents: style.zIndex === 10 ? "auto" : "none" }}
                 >
-                  <div className="w-full max-w-md p-8 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-lg text-center">
-                    {/* Large icon */}
-                    <div className="relative w-20 h-20 rounded-2xl bg-[var(--accent-red)]/10 flex items-center justify-center mx-auto mb-6">
-                      <div
-                        className="absolute inset-0 rounded-2xl bg-[var(--accent-red)]/15"
-                        style={{
-                          animation: i === active ? "alert-ping 1.5s ease-out infinite" : "none",
-                        }}
-                      />
-                      <s.icon className="w-10 h-10 text-[var(--accent-red)] relative z-10" strokeWidth={1.5} />
+                  <div className="w-full max-w-sm rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-lg p-8 flex flex-col items-center">
+                    {/* Dominant visual — large icon with rings */}
+                    <div className="relative w-28 h-28 flex items-center justify-center mb-4">
+                      <div className="absolute inset-0 rounded-full border-2 border-[var(--accent-red)]/15 animate-[pulse_3s_ease-in-out_infinite]" />
+                      <div className="absolute inset-4 rounded-full border border-[var(--accent-red)]/10" />
+                      <div className="w-16 h-16 rounded-2xl bg-[var(--accent-red)]/10 flex items-center justify-center relative">
+                        <div
+                          className="absolute inset-0 rounded-2xl bg-[var(--accent-red)]/15"
+                          style={{ animation: i === active ? "alert-ping 1.5s ease-out infinite" : "none" }}
+                        />
+                        <s.icon className="w-9 h-9 text-[var(--accent-red)] relative z-10" strokeWidth={1.5} />
+                      </div>
                     </div>
-                    {/* Number badge */}
-                    <span className="text-xs font-bold tracking-widest text-[var(--accent-red)] mb-2 block">
+                    {/* Number + Title */}
+                    <span className="text-xs font-bold tracking-widest text-[var(--accent-red)] mb-1">
                       תרחיש {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="text-2xl font-black text-[var(--text-primary)] mb-3">{s.title}</h3>
-                    <p className="text-base text-[var(--text-secondary)] leading-relaxed">{s.desc}</p>
+                    <h3 className="text-2xl font-black text-[var(--text-primary)]">{s.title}</h3>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          {/* Navigation arrows */}
-          <button
-            onClick={() => go(1)}
+          {/* Arrows */}
+          <button onClick={() => go(1)}
             className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-14 w-10 h-10 rounded-full bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-md flex items-center justify-center hover:bg-[var(--bg-elevated)] transition-colors z-20"
           >
             <ChevronRight className="w-5 h-5 text-[var(--text-secondary)]" />
           </button>
-          <button
-            onClick={() => go(-1)}
+          <button onClick={() => go(-1)}
             className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-14 w-10 h-10 rounded-full bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-md flex items-center justify-center hover:bg-[var(--bg-elevated)] transition-colors z-20"
           >
             <ChevronLeft className="w-5 h-5 text-[var(--text-secondary)]" />
           </button>
         </div>
 
+        {/* Description below — only active */}
+        <div className="max-w-md mx-auto text-center mt-6 min-h-[60px]">
+          <p
+            key={active}
+            className="text-base text-[var(--text-secondary)] leading-relaxed animate-[fadeInUp_0.4s_ease-out]"
+          >
+            {scenarios[active].desc}
+          </p>
+        </div>
+
         {/* Dots */}
-        <div className="flex justify-center gap-2 mt-8">
+        <div className="flex justify-center gap-2 mt-6">
           {scenarios.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(i)}
+            <button key={i} onClick={() => setActive(i)}
               className="w-2.5 h-2.5 rounded-full transition-all duration-300"
               style={{
                 background: i === active ? "var(--accent-red)" : "var(--border-default)",
