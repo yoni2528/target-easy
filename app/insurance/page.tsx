@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function InsurancePage() {
   return (
-    <main className="min-h-screen insurance-theme">
+    <main className="min-h-screen insurance-theme overflow-x-hidden">
       <InsuranceNavbar />
       <InsuranceHero />
       <ReturnsSection />

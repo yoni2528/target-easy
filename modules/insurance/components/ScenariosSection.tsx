@@ -44,7 +44,7 @@ export const ScenariosSection = () => {
   };
 
   return (
-    <section ref={ref} className="py-28 bg-white">
+    <section ref={ref} className="py-28 bg-white overflow-hidden">
       <div className="max-w-5xl mx-auto px-6">
         <h2 className="text-3xl md:text-5xl font-black text-center mb-2"
           style={{ color: "#1d1d1f", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1)", letterSpacing: "-0.02em" }}>

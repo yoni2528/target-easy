@@ -283,3 +283,8 @@ body:has(.insurance-theme)::after {
   0% { transform: translateX(0); }
   100% { transform: translateX(-33.333%); }
 }
+
+@keyframes ticker-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% - 20px)); }
+}

@@ -31,15 +31,15 @@ const Phone = ({ children, tiltY = 0 }: { children: React.ReactNode; tiltY?: num
     {/* Front face */}
     <div className="absolute inset-0 rounded-[32px] overflow-hidden"
       style={{ background: "white", border: "6px solid #1d1d1f", boxShadow: "0 30px 60px rgba(0,0,0,0.22), 0 10px 20px rgba(0,0,0,0.1)", transform: "translateZ(7px)" }}>
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#1d1d1f] rounded-b-xl z-10" />
-      <div className="flex justify-between items-center px-5 pt-6 pb-1 text-[8px] font-bold text-[#1d1d1f]">
-        <span>9:41</span>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-4 bg-[#1d1d1f] rounded-b-lg z-10" />
+      <div className="flex justify-between items-center px-4 pt-5 pb-0.5" style={{ fontSize: 7 }}>
+        <span className="font-bold text-[#1d1d1f]">9:41</span>
         <div className="flex gap-0.5">
-          <div className="w-3 h-1.5 rounded-sm bg-[#1d1d1f]" />
-          <div className="w-1.5 h-1.5 rounded-full bg-[#1d1d1f]" />
+          <div className="w-2.5 h-1 rounded-sm bg-[#1d1d1f]" />
+          <div className="w-1 h-1 rounded-full bg-[#1d1d1f]" />
         </div>
       </div>
-      <div className="px-3 pt-1 pb-3 flex flex-col gap-2 h-[calc(100%-48px)] overflow-hidden">
+      <div className="px-2.5 pt-0.5 pb-2 flex flex-col gap-1.5 h-[calc(100%-38px)] overflow-hidden">
         {children}
       </div>
     </div>
@@ -47,11 +47,14 @@ const Phone = ({ children, tiltY = 0 }: { children: React.ReactNode; tiltY?: num
 );
 
 const Bubble = ({ text, bot, delay }: { text: string; bot?: boolean; delay: number }) => (
-  <div className={`max-w-[85%] px-3 py-2 text-xs leading-relaxed ${bot ? "self-start" : "self-end"}`}
+  <div className={`max-w-[88%] ${bot ? "self-start" : "self-end"}`}
     style={{
+      padding: "4px 8px",
+      fontSize: 9,
+      lineHeight: 1.4,
       background: bot ? "#f0f1f6" : "var(--accent-blue)",
       color: bot ? "#1d1d1f" : "white",
-      borderRadius: bot ? "16px 16px 16px 4px" : "16px 16px 4px 16px",
+      borderRadius: bot ? "10px 10px 10px 3px" : "10px 10px 3px 10px",
       animation: `step-pop 0.4s cubic-bezier(0.32,0.72,0,1) ${delay}s both`,
     }}>
     {text}
@@ -95,7 +98,7 @@ export const TimelineSection = () => {
 
               <div className="text-center" style={{ animation: vis ? "fadeInUp 0.8s cubic-bezier(0.32,0.72,0,1) 0.4s both" : "none", transformStyle: "preserve-3d" }}>
                 <Phone tiltY={8}>
-                  <div className="flex flex-col gap-2 mt-1">
+                  <div className="flex flex-col gap-1.5 mt-1">
                     <Bubble bot text="היי! רוצה להצטרף לביטוח נשק?" delay={0.8} />
                     <Bubble text="כן, בטח" delay={1.2} />
                     <Bubble bot text="מעולה! מה השם שלך?" delay={1.6} />
@@ -124,9 +127,9 @@ export const TimelineSection = () => {
                       </svg>
                     </div>
                     <div style={{ animation: `step-pop 0.4s ease 3.8s both` }}>
-                      <p className="text-base font-black text-[#1d1d1f]">הפוליסה פעילה!</p>
-                      <p className="text-[10px] text-[#86868b] mt-1">כיסוי עד ₪3,000,000</p>
-                      <p className="text-[10px] text-[#86868b]">הגנה משפטית 24/7</p>
+                      <p className="text-sm font-black text-[#1d1d1f]">הפוליסה פעילה!</p>
+                      <p className="text-[#86868b] mt-0.5" style={{ fontSize: 8 }}>כיסוי עד ₪3,000,000</p>
+                      <p className="text-[#86868b]" style={{ fontSize: 8 }}>הגנה משפטית 24/7</p>
                     </div>
                   </div>
                 </Phone>
