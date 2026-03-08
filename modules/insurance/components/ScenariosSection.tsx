@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ScenarioVisual } from "./ScenarioVisuals";
 
 const scenarios = [
@@ -99,11 +98,11 @@ export const ScenariosSection = () => {
             })}
           </div>
 
-          {[{ dir: 1, pos: "-right-4 md:-right-14", Icon: ChevronRight }, { dir: -1, pos: "-left-4 md:-left-14", Icon: ChevronLeft }].map(({ dir, pos, Icon }) => (
+          {[{ dir: 1, pos: "-right-4 md:-right-14", arrow: "→" }, { dir: -1, pos: "-left-4 md:-left-14", arrow: "←" }].map(({ dir, pos, arrow }) => (
             <button key={dir} onClick={() => go(dir)}
               className={`absolute top-1/2 -translate-y-1/2 ${pos} w-11 h-11 flex items-center justify-center hover:scale-105 transition-transform z-20`}
               style={{ borderRadius: "50%", background: "white", border: "1px solid #e8edf5", boxShadow: "0 8px 20px -5px rgba(0,0,0,0.08)" }}>
-              <Icon className="w-5 h-5 text-[#6b6b80]" />
+              <span className="text-[#6b6b80] text-lg">{arrow}</span>
             </button>
           ))}
         </div>
