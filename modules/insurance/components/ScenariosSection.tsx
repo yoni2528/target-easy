@@ -5,8 +5,9 @@ import { ScenarioVisual } from "./ScenarioVisuals";
 
 const scenarios = [
   { title: "פליטת כדור", subtitle: "מה קורה עכשיו?", desc: "הנפגע תובע. אתה משלם עד 3,000,000₪." },
-  { title: "עצירת פיגוע כמו שצריך", subtitle: "מה קורה עכשיו?", desc: "פעלת נכון — עדיין חשוף לתביעה אזרחית." },
-  { title: "עצירת פיגוע לא כמו שצריך", subtitle: "מה קורה עכשיו?", desc: "תביעה אזרחית + חקירה פלילית. מ-50K₪." },
+  { title: "הסנגוריה הציבורית", subtitle: "מה קורה עכשיו?", desc: "עו״ד של המדינה. לא מומחה לנשק. לא זמין 24/7." },
+  { title: "עצירת פיגוע נכונה", subtitle: "מה קורה עכשיו?", desc: "פעלת נכון — עדיין חשוף לתביעה אזרחית." },
+  { title: "עצירת פיגוע שגויה", subtitle: "מה קורה עכשיו?", desc: "תביעה אזרחית + חקירה פלילית. מ-50K₪." },
   { title: "גניבת נשק", subtitle: "מה קורה עכשיו?", desc: "תיק פלילי נפתח. הפסדת את האקדח." },
   { title: "תביעת נזיקין", subtitle: "מה קורה עכשיו?", desc: "כתב הגנה בלבד: 65,000–100,000₪." },
 ];
@@ -40,7 +41,8 @@ export const ScenariosSection = () => {
 
   const getSlideStyle = (i: number) => {
     const diff = i - active;
-    const w = diff > 2 ? diff - scenarios.length : diff < -2 ? diff + scenarios.length : diff;
+    const half = Math.floor(scenarios.length / 2);
+    const w = diff > half ? diff - scenarios.length : diff < -half ? diff + scenarios.length : diff;
     if (w === 0) return { transform: "translateX(0) scale(1) rotateY(0)", opacity: 1, zIndex: 10 };
     if (w === 1 || w === -1) return { transform: `translateX(${w * -55}%) scale(0.85) rotateY(${w * 8}deg)`, opacity: 0.4, zIndex: 5 };
     return { transform: `translateX(${w * -100}%) scale(0.7) rotateY(${w * 15}deg)`, opacity: 0, zIndex: 0 };
@@ -55,7 +57,7 @@ export const ScenariosSection = () => {
         </h2>
         <p className="text-[#6b6b80] text-center mb-12"
           style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 0.2s" }}>
-          5 תרחישים אמיתיים למחזיקי נשק
+          6 תרחישים אמיתיים למחזיקי נשק
         </p>
 
         <div className="relative mx-auto" style={{ maxWidth: 650, perspective: "1200px", opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 0.3s" }}

@@ -1,7 +1,6 @@
 export { InsuranceNavbar } from "./components/InsuranceNavbar";
 export { InsuranceHero } from "./components/HeroSection";
 export { ReturnsSection } from "./components/ReturnsSection";
-export { PainSection } from "./components/PainSection";
 export { ScenariosSection } from "./components/ScenariosSection";
 export { SolutionSection } from "./components/SolutionSection";
 export { TimelineSection } from "./components/TimelineSection";

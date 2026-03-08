@@ -3,7 +3,6 @@ import {
   InsuranceNavbar,
   InsuranceHero,
   ReturnsSection,
-  PainSection,
   ScenariosSection,
   SolutionSection,
   TimelineSection,
@@ -24,7 +23,6 @@ export default function InsurancePage() {
       <InsuranceNavbar />
       <InsuranceHero />
       <ReturnsSection />
-      <PainSection />
       <ScenariosSection />
       <SolutionSection />
       <TimelineSection />
