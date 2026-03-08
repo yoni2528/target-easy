@@ -10,7 +10,7 @@ const coverages = [
   { stat: "כלול", title: "גניבת נשק", desc: "תיק + החזר." },
 ];
 
-const items = [...coverages, ...coverages]; // duplicate for seamless loop
+const items = [...coverages, ...coverages, ...coverages]; // triple for seamless fill
 
 export const SolutionSection = () => {
   const [visible, setVisible] = useState(false);
@@ -37,11 +37,9 @@ export const SolutionSection = () => {
         </h2>
       </div>
 
-      {/* Auto-scrolling ticker — shows ~3 cubes at a time */}
       <div className="relative"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}>
-        {/* Edge fades */}
         <div className="absolute inset-y-0 left-0 w-12 md:w-24 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to right, #fafbfe, transparent)" }} />
         <div className="absolute inset-y-0 right-0 w-12 md:w-24 z-10 pointer-events-none"
@@ -52,7 +50,7 @@ export const SolutionSection = () => {
           gap: 20,
           direction: "ltr",
           width: "fit-content",
-          animation: visible ? "ticker 20s linear infinite" : "none",
+          animation: visible ? "ticker 30s linear infinite" : "none",
           animationPlayState: paused ? "paused" : "running",
         }}>
           {items.map((c, i) => (

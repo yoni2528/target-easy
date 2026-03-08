@@ -84,7 +84,7 @@ export const ReturnsSection = () => {
           })}
         </div>
 
-        {/* Total — elevated card */}
+        {/* Total — elevated card with glow */}
         <div className="p-8 text-center"
           style={{
             borderRadius: "30px",
@@ -93,7 +93,7 @@ export const ReturnsSection = () => {
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0) rotateX(0)" : "translateY(20px) rotateX(8deg)",
             transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s",
-            boxShadow: "0 25px 50px -15px color-mix(in srgb, var(--accent-blue) 12%, transparent)",
+            animation: visible ? "pulse-glow-blue 3s ease-in-out 1.5s infinite" : "none",
           }}>
           <p className="text-sm text-[#6b6b80] mb-2">סה״כ החזרים בשנה</p>
           <div className="flex items-baseline justify-center gap-1">

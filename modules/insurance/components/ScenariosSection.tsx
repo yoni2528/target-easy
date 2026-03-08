@@ -12,6 +12,8 @@ const scenarios = [
   { title: "תביעת נזיקין", stat: "₪65–100K", desc: "רק כתב הגנה. עוד לפני המשפט." },
 ];
 
+const N = scenarios.length;
+
 export const ScenariosSection = () => {
   const [active, setActive] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -21,18 +23,12 @@ export const ScenariosSection = () => {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.2 }
-    );
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.2 });
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
 
-  const go = useCallback((dir: number) => {
-    setActive((p) => Math.max(0, Math.min(scenarios.length - 1, p + dir)));
-  }, []);
-
+  const go = useCallback((dir: number) => setActive((p) => (p + dir + N) % N), []);
   const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX; };
   const onTouchEnd = (e: React.TouchEvent) => {
     const diff = touchStart.current - e.changedTouches[0].clientX;
@@ -40,8 +36,15 @@ export const ScenariosSection = () => {
     if (diff < -50) go(-1);
   };
 
+  const getOff = (i: number) => {
+    let d = i - active;
+    if (d > N / 2) d -= N;
+    if (d < -N / 2) d += N;
+    return d;
+  };
+
   return (
-    <section ref={ref} className="py-28 bg-white overflow-hidden">
+    <section ref={ref} className="py-28 bg-white">
       <div className="max-w-5xl mx-auto px-6">
         <h2 className="text-3xl md:text-5xl font-black text-center mb-2"
           style={{ color: "#1d1d1f", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1)", letterSpacing: "-0.02em" }}>
@@ -50,68 +53,61 @@ export const ScenariosSection = () => {
         <p className="text-center mb-14 text-lg" style={{ color: "#86868b", opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.2s" }}>
           6 תרחישים אמיתיים למחזיקי נשק
         </p>
+      </div>
 
-        {/* Apple-style slider */}
-        <div className="relative" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1) 0.3s" }}>
-
-          <div className="overflow-hidden" style={{ borderRadius: "28px" }}>
-            <div style={{
-              display: "flex",
-              transform: `translateX(${active * 100}%)`,
-              transition: "transform 0.6s cubic-bezier(0.32, 0.72, 0, 1)",
-            }}>
-              {scenarios.map((s, i) => (
-                <div key={i} style={{ minWidth: "100%", flexShrink: 0 }}>
-                  <div className="flex flex-col items-center justify-center px-8 md:px-16"
-                    style={{ background: "linear-gradient(180deg, #f5f5f7 0%, #fbfbfd 100%)", minHeight: 480, paddingTop: 48, paddingBottom: 40 }}>
-                    <div style={{ width: "100%", maxWidth: 260, height: 220 }}>
-                      <ScenarioVisual index={i} isActive={i === active} />
-                    </div>
-                    <div className="text-center mt-4">
-                      <span className="text-4xl md:text-5xl font-black block mb-3"
-                        style={{ color: "var(--accent-red)", letterSpacing: "-0.02em" }}>
-                        {s.stat}
-                      </span>
-                      <h3 className="text-xl md:text-2xl font-black mb-2" style={{ color: "#1d1d1f" }}>{s.title}</h3>
-                      <p className="text-base" style={{ color: "#86868b" }}>{s.desc}</p>
-                    </div>
+      {/* 3D Coverflow carousel — full width for overflow */}
+      <div className="relative" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
+        style={{ perspective: "1200px", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1) 0.3s" }}>
+        <div style={{ position: "relative", height: 480, maxWidth: 1000, margin: "0 auto" }}>
+          {scenarios.map((s, i) => {
+            const d = getOff(i);
+            const absD = Math.abs(d);
+            if (absD > 2) return null;
+            return (
+              <div key={i} className="absolute inset-y-0" style={{
+                width: 320,
+                left: "50%",
+                transform: `translateX(-50%) translateX(${d * 280}px) translateZ(${absD === 0 ? 30 : -60}px) rotateY(${d * -40}deg) scale(${absD === 0 ? 1 : 0.85})`,
+                opacity: absD === 0 ? 1 : absD === 1 ? 0.5 : 0.15,
+                zIndex: 10 - absD,
+                transition: "all 0.7s cubic-bezier(0.32, 0.72, 0, 1)",
+                pointerEvents: absD === 0 ? "auto" : "none",
+              }}>
+                <div className="h-full flex flex-col items-center justify-center px-6"
+                  style={{ borderRadius: 28, background: "linear-gradient(180deg, #f5f5f7, #fbfbfd)", boxShadow: absD === 0 ? "0 25px 50px -12px rgba(0,0,0,0.12)" : "none" }}>
+                  <div style={{ width: "100%", maxWidth: 230, height: 190 }}>
+                    <ScenarioVisual index={i} isActive={i === active} />
+                  </div>
+                  <div className="text-center mt-3">
+                    <span className="text-3xl md:text-4xl font-black block mb-2"
+                      style={{ color: "var(--accent-red)", letterSpacing: "-0.02em" }}>{s.stat}</span>
+                    <h3 className="text-lg md:text-xl font-black mb-1" style={{ color: "#1d1d1f" }}>{s.title}</h3>
+                    <p className="text-sm" style={{ color: "#86868b" }}>{s.desc}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Arrows — glass blur, Apple-minimal */}
-          {active > 0 && (
-            <button onClick={() => go(-1)}
-              className="absolute top-1/2 -translate-y-1/2 right-3 md:-right-6 w-10 h-10 flex items-center justify-center rounded-full z-10"
-              style={{ background: "rgba(255,255,255,0.72)", backdropFilter: "blur(12px)", boxShadow: "0 1px 8px rgba(0,0,0,0.08)" }}>
-              <span style={{ color: "#1d1d1f", fontSize: 18 }}>›</span>
-            </button>
-          )}
-          {active < scenarios.length - 1 && (
-            <button onClick={() => go(1)}
-              className="absolute top-1/2 -translate-y-1/2 left-3 md:-left-6 w-10 h-10 flex items-center justify-center rounded-full z-10"
-              style={{ background: "rgba(255,255,255,0.72)", backdropFilter: "blur(12px)", boxShadow: "0 1px 8px rgba(0,0,0,0.08)" }}>
-              <span style={{ color: "#1d1d1f", fontSize: 18 }}>‹</span>
-            </button>
-          )}
+              </div>
+            );
+          })}
         </div>
 
-        {/* Pill dots — Apple style */}
-        <div className="flex justify-center gap-2 mt-8">
-          {scenarios.map((_, i) => (
-            <button key={i} onClick={() => setActive(i)}
-              className="transition-all duration-500"
-              style={{
-                width: i === active ? 28 : 8,
-                height: 8,
-                borderRadius: 4,
-                background: i === active ? "#1d1d1f" : "#d2d2d7",
-              }} />
-          ))}
-        </div>
+        {/* Arrows — always visible */}
+        <button onClick={() => go(-1)}
+          className="absolute top-1/2 -translate-y-1/2 right-4 md:right-12 w-10 h-10 flex items-center justify-center rounded-full z-20 cursor-pointer"
+          style={{ background: "rgba(255,255,255,0.72)", backdropFilter: "blur(12px)", boxShadow: "0 1px 8px rgba(0,0,0,0.08)" }}>
+          <span style={{ color: "#1d1d1f", fontSize: 18 }}>›</span>
+        </button>
+        <button onClick={() => go(1)}
+          className="absolute top-1/2 -translate-y-1/2 left-4 md:left-12 w-10 h-10 flex items-center justify-center rounded-full z-20 cursor-pointer"
+          style={{ background: "rgba(255,255,255,0.72)", backdropFilter: "blur(12px)", boxShadow: "0 1px 8px rgba(0,0,0,0.08)" }}>
+          <span style={{ color: "#1d1d1f", fontSize: 18 }}>‹</span>
+        </button>
+      </div>
+
+      <div className="flex justify-center gap-2 mt-8">
+        {scenarios.map((_, i) => (
+          <button key={i} onClick={() => setActive(i)} className="transition-all duration-500 cursor-pointer"
+            style={{ width: i === active ? 28 : 8, height: 8, borderRadius: 4, background: i === active ? "#1d1d1f" : "#d2d2d7" }} />
+        ))}
       </div>
     </section>
   );
