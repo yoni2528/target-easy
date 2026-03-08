@@ -278,3 +278,8 @@ body:has(.insurance-theme)::after {
   50% { transform: scale(1.8); opacity: 0.3; }
   100% { transform: scale(2.2); opacity: 0; }
 }
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
