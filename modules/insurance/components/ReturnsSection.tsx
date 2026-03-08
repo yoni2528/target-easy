@@ -69,12 +69,12 @@ export const ReturnsSection = () => {
     <section ref={ref} className="py-24 px-6 relative overflow-hidden">
       {/* Glow background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[var(--accent-green)]/5 blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[var(--accent-amber)]/5 blur-[100px]" />
       </div>
 
       <div className="max-w-4xl mx-auto relative z-10">
         <h2 className="text-3xl md:text-4xl font-black text-center mb-3">
-          הביטוח שמחזיר <span className="text-[var(--accent-green)]">לך כסף</span>
+          הביטוח שמחזיר <span className="text-[var(--accent-amber)]">לך כסף</span>
         </h2>
         <p className="text-[var(--text-secondary)] text-center mb-14 max-w-lg mx-auto">
           זה לא סתם ביטוח — כל שנה תקבל החזרים על אימונים, חידוש רישיון וציוד
@@ -85,22 +85,22 @@ export const ReturnsSection = () => {
           {returns.map((r, i) => (
             <div
               key={r.title}
-              className="group p-6 rounded-2xl bg-[var(--bg-card)] border border-[var(--accent-green)]/20 hover:border-[var(--accent-green)]/40 transition-all duration-300"
+              className="group p-6 rounded-2xl bg-[var(--bg-card)] border border-[var(--accent-amber)]/20 hover:border-[var(--accent-amber)]/40 transition-all duration-300"
               style={{
                 opacity: visible ? 1 : 0,
                 transform: visible ? "translateY(0)" : "translateY(30px)",
                 transition: `opacity 0.6s ease ${i * 0.15}s, transform 0.6s ease ${i * 0.15}s`,
               }}
             >
-              <div className="w-12 h-12 rounded-xl bg-[var(--accent-green)]/10 flex items-center justify-center mb-4 group-hover:bg-[var(--accent-green)]/20 transition-colors">
-                <r.icon className="w-6 h-6 text-[var(--accent-green)]" strokeWidth={1.5} />
+              <div className="w-12 h-12 rounded-xl bg-[var(--accent-amber)]/10 flex items-center justify-center mb-4 group-hover:bg-[var(--accent-amber)]/20 transition-colors">
+                <r.icon className="w-6 h-6 text-[var(--accent-amber)]" strokeWidth={1.5} />
               </div>
               <h3 className="text-lg font-bold text-[var(--text-primary)] mb-1">
                 {r.title}
               </h3>
               <p className="text-sm text-[var(--text-muted)] mb-4">{r.desc}</p>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-black text-[var(--accent-green)]">
+                <span className="text-3xl font-black text-[var(--accent-amber)]">
                   <CountUp target={r.amount} started={visible} />
                 </span>
                 <span className="text-sm text-[var(--text-muted)]">₪ בשנה</span>
@@ -111,7 +111,7 @@ export const ReturnsSection = () => {
 
         {/* Total highlight */}
         <div
-          className="p-6 rounded-2xl bg-gradient-to-l from-[var(--accent-green)]/10 to-[var(--accent-green)]/5 border border-[var(--accent-green)]/30 text-center"
+          className="p-6 rounded-2xl bg-gradient-to-l from-[var(--accent-amber)]/10 to-[var(--accent-amber)]/5 border border-[var(--accent-amber)]/30 text-center"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(20px)",
@@ -120,7 +120,7 @@ export const ReturnsSection = () => {
         >
           <p className="text-sm text-[var(--text-secondary)] mb-2">סה״כ החזרים בשנה</p>
           <div className="flex items-baseline justify-center gap-2">
-            <span className="text-5xl md:text-6xl font-black text-[var(--accent-green)]">
+            <span className="text-5xl md:text-6xl font-black text-[var(--accent-amber)]">
               <CountUp target={total} started={visible} />
             </span>
             <span className="text-xl text-[var(--text-muted)]">₪</span>
@@ -130,7 +130,7 @@ export const ReturnsSection = () => {
           </p>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 mt-5 px-8 py-3 bg-[var(--accent-green)] text-[var(--bg-primary)] font-bold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-[var(--accent-green)]/20"
+            className="inline-flex items-center gap-2 mt-5 px-8 py-3 bg-[var(--accent-amber)] text-[var(--bg-primary)] font-bold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-[var(--accent-amber)]/20"
           >
             רוצה לשמוע עוד
             <ArrowLeft className="w-4 h-4" />

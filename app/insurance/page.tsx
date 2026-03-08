@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function InsurancePage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen insurance-theme">
       <InsuranceHero />
       <InsuranceStats />
       <InsuranceModules />
@@ -27,7 +27,7 @@ export default function InsurancePage() {
       <footer className="py-8 px-6 border-t border-[var(--border-subtle)] text-center space-y-3">
         <Link
           href="/landing"
-          className="text-sm text-[var(--accent-green)] hover:underline"
+          className="text-sm text-[var(--accent-blue)] hover:underline"
         >
           מטרה — מערכת ניהול מטווח חכמה &larr;
         </Link>

@@ -15,7 +15,7 @@ const modules = [
       "נזקי רכוש לצד שלישי",
       "מנורה ביטוח — יציבות ואמינות",
     ],
-    accent: "var(--accent-green)",
+    accent: "var(--accent-blue)",
   },
   {
     icon: Gavel,
@@ -41,7 +41,7 @@ const modules = [
       "ציוד במטווח — החזר עד 450 ש״ח",
       "סה״כ החזרים: עד 1,350 ש״ח בשנה",
     ],
-    accent: "var(--accent-green)",
+    accent: "var(--accent-amber)",
   },
   {
     icon: Phone,

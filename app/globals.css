@@ -176,6 +176,25 @@ input[type="range"]::-moz-range-thumb {
   border: 2px solid var(--bg-card);
 }
 
+/* Insurance page - Target brand (navy + light blue) */
+.insurance-theme {
+  --bg-primary: #0a1228;
+  --bg-secondary: #0d1830;
+  --bg-card: #121e3a;
+  --bg-elevated: #1a2744;
+  --bg-input: #1a2744;
+  --border-subtle: #1e3050;
+  --border-default: #2a4060;
+  --text-primary: #e8edf4;
+  --text-secondary: #8a96a6;
+  --text-muted: #546e7a;
+  --accent-green: #64b5f6;
+  --accent-green-dim: #42a5f5;
+  --accent-amber: #fbbf24;
+  --accent-red: #f87171;
+  --accent-blue: #64b5f6;
+}
+
 /* Landing page animations */
 @keyframes fadeIn {
   from { opacity: 0; }
