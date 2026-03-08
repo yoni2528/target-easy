@@ -1,9 +1,8 @@
 export { InsuranceHero } from "./components/HeroSection";
-export { InsuranceStats } from "./components/StatsBar";
 export { PainSection } from "./components/PainSection";
 export { ScenariosSection } from "./components/ScenariosSection";
 export { InsuranceModules } from "./components/ModulesSection";
 export { ReturnsSection } from "./components/ReturnsSection";
 export { TimelineSection } from "./components/TimelineSection";
-export { BenefitsSection } from "./components/BenefitsSection";
 export { InsuranceCTA } from "./components/CTASection";
+export { TaglineBanner } from "./components/TaglineBanner";

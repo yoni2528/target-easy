@@ -4,11 +4,11 @@ import { useRef, useState, useEffect } from "react";
 import { Crosshair, CarFront, Gavel, Building2, Heart } from "lucide-react";
 
 const scenarios = [
-  { icon: Crosshair, title: "ירי באימון", desc: "כדור פגע בצד שלישי במטווח. מי משלם על הנזק?" },
-  { icon: CarFront, title: "גניבת נשק", desc: "הנשק נגנב מהרכב או מהבית. חקירה ותביעה מובטחות." },
-  { icon: Gavel, title: "חקירה פלילית", desc: "השתמשת בנשק באירוע. צריך עורך דין — עכשיו." },
-  { icon: Building2, title: "תביעת נזיקין", desc: "נזק לרכוש של צד שלישי. תביעה של מאות אלפים." },
-  { icon: Heart, title: "פעולה להצלת חיים", desc: "פעלת נכון ומנעת פיגוע — ועדיין חוקרים אותך." },
+  { icon: Crosshair, title: "ירי באימון", desc: "כדור פגע בצד שלישי — מי משלם?" },
+  { icon: CarFront, title: "גניבת נשק", desc: "חקירה ותביעה מובטחות." },
+  { icon: Gavel, title: "חקירה פלילית", desc: "צריך עורך דין — עכשיו." },
+  { icon: Building2, title: "תביעת נזיקין", desc: "תביעה של מאות אלפים." },
+  { icon: Heart, title: "הצלת חיים", desc: "פעלת נכון — ועדיין חוקרים אותך." },
 ];
 
 const handleTilt = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -65,8 +65,14 @@ export const ScenariosSection = () => {
                 onMouseMove={handleTilt}
                 onMouseLeave={resetTilt}
               >
-                <div className="w-12 h-12 rounded-xl bg-[var(--accent-red)]/10 flex items-center justify-center shrink-0">
-                  <s.icon className="w-6 h-6 text-[var(--accent-red)]" strokeWidth={1.5} />
+                <div className="relative w-12 h-12 rounded-xl bg-[var(--accent-red)]/10 flex items-center justify-center shrink-0">
+                  <div
+                    className="absolute inset-0 rounded-xl bg-[var(--accent-red)]/20"
+                    style={{
+                      animation: visible ? `alert-ping 0.8s ease-out ${0.3 + i * 0.15}s both` : "none",
+                    }}
+                  />
+                  <s.icon className="w-6 h-6 text-[var(--accent-red)] relative z-10" strokeWidth={1.5} />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-[var(--text-primary)] mb-0.5">{s.title}</h3>
