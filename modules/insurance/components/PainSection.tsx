@@ -52,9 +52,9 @@ export const PainSection = () => {
   }, [handleScroll]);
 
   return (
-    <section className="relative">
+    <section className="relative bg-[#fafbfe]">
       <div className="pt-16 pb-6 px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-black mb-2">
+        <h2 className="text-3xl md:text-4xl font-black text-[#37374e] mb-2">
           אבל למה <span className="text-[var(--accent-red)]">באמת</span> צריך ביטוח?
         </h2>
       </div>
@@ -62,40 +62,52 @@ export const PainSection = () => {
       {/* Desktop: sticky layout */}
       <div className="hidden md:block">
         <div className="max-w-5xl mx-auto px-6" style={{ display: "flex", direction: "ltr" }}>
-          {/* Sticky visual — left */}
+          {/* Sticky visual — 3D card */}
           <div style={{ width: "45%", position: "relative" }}>
-            <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <div className="text-center">
+            <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", perspective: "800px" }}>
+              <div className="text-center p-10"
+                style={{
+                  borderRadius: "30px",
+                  background: "white",
+                  boxShadow: "0 30px 60px -15px rgba(0,0,0,0.1)",
+                  border: "1px solid #e8edf5",
+                  transform: "rotateY(-3deg) rotateX(2deg)",
+                  transformStyle: "preserve-3d",
+                  transition: "all 0.5s ease",
+                  minWidth: "280px",
+                }}>
                 {steps[activeIdx].highlight ? (
-                  <span className="text-6xl font-black text-[var(--accent-red)] animate-[fadeIn_0.3s_ease]" key={activeIdx}>
+                  <span className="text-5xl font-black text-[var(--accent-red)] block" key={activeIdx}
+                    style={{ animation: "fadeIn 0.3s ease" }}>
                     {steps[activeIdx].highlight}
                   </span>
                 ) : (
-                  <div key={activeIdx} className="animate-[fadeIn_0.3s_ease]">
+                  <div key={activeIdx} style={{ animation: "fadeIn 0.3s ease" }}>
                     {(() => { const Icon = steps[activeIdx].icon; return <Icon className="w-20 h-20 text-[var(--accent-red)] mx-auto" strokeWidth={1} />; })()}
                   </div>
                 )}
-                <p className="text-sm text-[var(--text-muted)] mt-3">שלב {activeIdx + 1} מתוך {steps.length}</p>
+                <p className="text-sm text-[#a0a0b0] mt-4">שלב {activeIdx + 1} מתוך {steps.length}</p>
               </div>
             </div>
           </div>
 
-          {/* Scrolling steps — right */}
+          {/* Scrolling steps */}
           <div style={{ width: "55%" }}>
             {steps.map((step, i) => {
               const Icon = step.icon;
               const isActive = i === activeIdx;
               return (
                 <div key={step.title} ref={(el) => { stepRefs.current[i] = el; }}
-                  style={{ minHeight: "80vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "48px 0", opacity: isActive ? 1 : 0.15, transition: "opacity 0.5s ease", direction: "rtl" }}>
+                  style={{ minHeight: "80vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "48px 0", opacity: isActive ? 1 : 0.12, transition: "opacity 0.5s ease", direction: "rtl" }}>
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-[var(--accent-red)]/10 flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-[var(--accent-red)]" strokeWidth={1.5} />
+                    <div className="w-12 h-12 flex items-center justify-center"
+                      style={{ borderRadius: "16px", background: "color-mix(in srgb, var(--accent-red) 8%, white)" }}>
+                      <Icon className="w-6 h-6 text-[var(--accent-red)]" strokeWidth={1.5} />
                     </div>
                     <span className="text-sm font-bold tracking-widest text-[var(--accent-red)]">{String(i + 1).padStart(2, "0")}</span>
                   </div>
-                  <h3 className="text-3xl font-black text-[var(--text-primary)] mb-3">{step.title}</h3>
-                  <p className="text-base text-[var(--text-secondary)] leading-relaxed max-w-md">{step.desc}</p>
+                  <h3 className="text-3xl font-black text-[#37374e] mb-3">{step.title}</h3>
+                  <p className="text-base text-[#6b6b80] leading-relaxed max-w-md">{step.desc}</p>
                 </div>
               );
             })}
@@ -103,19 +115,26 @@ export const PainSection = () => {
         </div>
       </div>
 
-      {/* Mobile: simple stack */}
-      <div className="md:hidden space-y-6 px-6 pb-12">
+      {/* Mobile */}
+      <div className="md:hidden space-y-4 px-6 pb-12" style={{ perspective: "800px" }}>
         {steps.map((step, i) => {
           const Icon = step.icon;
           return (
-            <div key={step.title} className="p-5 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+            <div key={step.title} className="p-5"
+              style={{
+                borderRadius: "24px",
+                background: "white",
+                border: "1px solid #e8edf5",
+                boxShadow: "0 10px 25px -8px rgba(0,0,0,0.06)",
+              }}>
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-9 h-9 rounded-lg bg-[var(--accent-red)]/10 flex items-center justify-center">
-                  <Icon className="w-4.5 h-4.5 text-[var(--accent-red)]" strokeWidth={1.5} />
+                <div className="w-10 h-10 flex items-center justify-center"
+                  style={{ borderRadius: "14px", background: "color-mix(in srgb, var(--accent-red) 8%, white)" }}>
+                  <Icon className="w-5 h-5 text-[var(--accent-red)]" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-lg font-black text-[var(--text-primary)]">{step.title}</h3>
+                <h3 className="text-lg font-black text-[#37374e]">{step.title}</h3>
               </div>
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{step.desc}</p>
+              <p className="text-sm text-[#6b6b80] leading-relaxed">{step.desc}</p>
               {step.highlight && (
                 <p className="text-2xl font-black text-[var(--accent-red)] mt-3">{step.highlight}</p>
               )}

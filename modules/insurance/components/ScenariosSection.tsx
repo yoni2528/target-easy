@@ -62,33 +62,36 @@ export const ScenariosSection = () => {
   const getSlideStyle = (i: number) => {
     const diff = i - active;
     const w = diff > 2 ? diff - scenarios.length : diff < -2 ? diff + scenarios.length : diff;
-    if (w === 0) return { transform: "translateX(0) scale(1)", opacity: 1, zIndex: 10 };
-    if (w === 1 || w === -1) return { transform: `translateX(${w * -55}%) scale(0.85)`, opacity: 0.3, zIndex: 5 };
-    return { transform: `translateX(${w * -100}%) scale(0.7)`, opacity: 0, zIndex: 0 };
+    if (w === 0) return { transform: "translateX(0) scale(1) rotateY(0)", opacity: 1, zIndex: 10 };
+    if (w === 1 || w === -1) return { transform: `translateX(${w * -55}%) scale(0.85) rotateY(${w * 8}deg)`, opacity: 0.4, zIndex: 5 };
+    return { transform: `translateX(${w * -100}%) scale(0.7) rotateY(${w * 15}deg)`, opacity: 0, zIndex: 0 };
   };
 
   return (
-    <section ref={ref} className="py-16 px-6 overflow-hidden">
+    <section ref={ref} className="py-20 px-6 overflow-hidden bg-white">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-center mb-3"
+        <h2 className="text-3xl md:text-4xl font-black text-center text-[#37374e] mb-3"
           style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
           מקרים שקורים <span className="text-[var(--accent-red)]">כל שנה</span>
         </h2>
-        <p className="text-[var(--text-secondary)] text-center mb-12"
+        <p className="text-[#6b6b80] text-center mb-12"
           style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 0.2s" }}>
           5 תרחישים אמיתיים למחזיקי נשק
         </p>
 
-        {/* Carousel */}
-        <div className="relative mx-auto" style={{ maxWidth: 650, opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 0.3s" }}
+        <div className="relative mx-auto" style={{ maxWidth: 650, perspective: "1200px", opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 0.3s" }}
           onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <div className="relative" style={{ height: 320 }}>
+          <div className="relative" style={{ height: 340 }}>
             {scenarios.map((_, i) => {
               const style = getSlideStyle(i);
               return (
                 <div key={i} className="absolute inset-0 flex items-center justify-center"
-                  style={{ ...style, transition: "transform 0.5s ease, opacity 0.5s ease", pointerEvents: style.zIndex === 10 ? "auto" : "none" }}>
-                  <div className="w-full max-w-md h-full rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] overflow-hidden">
+                  style={{ ...style, transition: "all 0.6s cubic-bezier(0.16,1,0.3,1)", pointerEvents: style.zIndex === 10 ? "auto" : "none", transformStyle: "preserve-3d" }}>
+                  <div className="w-full max-w-md h-full overflow-hidden"
+                    style={{
+                      borderRadius: "24px", background: "#f8faff", border: "1px solid #e8edf5",
+                      boxShadow: style.zIndex === 10 ? "0 25px 50px -12px rgba(0,0,0,0.1)" : "0 10px 20px -5px rgba(0,0,0,0.05)",
+                    }}>
                     <ScenarioVisual index={i} isActive={i === active} />
                   </div>
                 </div>
@@ -96,38 +99,35 @@ export const ScenariosSection = () => {
             })}
           </div>
 
-          {/* Arrows */}
-          <button onClick={() => go(1)}
-            className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-14 w-10 h-10 rounded-full bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-md flex items-center justify-center hover:bg-[var(--bg-elevated)] transition-colors z-20">
-            <ChevronRight className="w-5 h-5 text-[var(--text-secondary)]" />
-          </button>
-          <button onClick={() => go(-1)}
-            className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-14 w-10 h-10 rounded-full bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-md flex items-center justify-center hover:bg-[var(--bg-elevated)] transition-colors z-20">
-            <ChevronLeft className="w-5 h-5 text-[var(--text-secondary)]" />
-          </button>
+          {[{ dir: 1, pos: "-right-4 md:-right-14", Icon: ChevronRight }, { dir: -1, pos: "-left-4 md:-left-14", Icon: ChevronLeft }].map(({ dir, pos, Icon }) => (
+            <button key={dir} onClick={() => go(dir)}
+              className={`absolute top-1/2 -translate-y-1/2 ${pos} w-11 h-11 flex items-center justify-center hover:scale-105 transition-transform z-20`}
+              style={{ borderRadius: "50%", background: "white", border: "1px solid #e8edf5", boxShadow: "0 8px 20px -5px rgba(0,0,0,0.08)" }}>
+              <Icon className="w-5 h-5 text-[#6b6b80]" />
+            </button>
+          ))}
         </div>
 
-        {/* Text below */}
         <div className="max-w-md mx-auto text-center mt-8 min-h-[100px]">
-          <h3 key={`t-${active}`} className="text-xl font-black text-[var(--text-primary)] mb-1 animate-[fadeInUp_0.4s_ease-out]">
+          <h3 key={`t-${active}`} className="text-xl font-black text-[#37374e] mb-1 animate-[fadeInUp_0.4s_ease-out]">
             {scenarios[active].title}
           </h3>
           <p key={`s-${active}`} className="text-sm font-bold text-[var(--accent-red)] mb-2 animate-[fadeInUp_0.4s_ease-out]">
             {scenarios[active].subtitle}
           </p>
-          <p key={`d-${active}`} className="text-sm text-[var(--text-secondary)] leading-relaxed animate-[fadeInUp_0.4s_ease-out]">
+          <p key={`d-${active}`} className="text-sm text-[#6b6b80] leading-relaxed animate-[fadeInUp_0.4s_ease-out]">
             {scenarios[active].desc}
           </p>
         </div>
 
-        {/* Dots */}
-        <div className="flex justify-center gap-2 mt-6">
+        <div className="flex justify-center gap-2.5 mt-6">
           {scenarios.map((_, i) => (
             <button key={i} onClick={() => setActive(i)}
-              className="w-2.5 h-2.5 rounded-full transition-all duration-300"
+              className="w-3 h-3 rounded-full transition-all duration-300"
               style={{
-                background: i === active ? "var(--accent-red)" : "var(--border-default)",
-                transform: i === active ? "scale(1.4)" : "scale(1)",
+                background: i === active ? "var(--accent-red)" : "#dde0e6",
+                transform: i === active ? "scale(1.3)" : "scale(1)",
+                boxShadow: i === active ? "0 4px 10px -2px color-mix(in srgb, var(--accent-red) 40%, transparent)" : "none",
               }} />
           ))}
         </div>

@@ -11,12 +11,8 @@ const CountUp = ({ target, duration = 2000 }: { target: number; duration?: numbe
     let current = 0;
     const interval = setInterval(() => {
       current += inc;
-      if (current >= target) {
-        setCount(target);
-        clearInterval(interval);
-      } else {
-        setCount(Math.floor(current));
-      }
+      if (current >= target) { setCount(target); clearInterval(interval); }
+      else setCount(Math.floor(current));
     }, duration / steps);
     return () => clearInterval(interval);
   }, [target, duration]);
@@ -24,37 +20,66 @@ const CountUp = ({ target, duration = 2000 }: { target: number; duration?: numbe
 };
 
 export const InsuranceHero = () => {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => { setLoaded(true); }, []);
+
   return (
-    <section className="relative min-h-[100dvh] flex flex-col items-center justify-center px-6 overflow-hidden">
-      {/* Background counter */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-        <span className="text-[120px] md:text-[220px] font-black text-[var(--accent-red)]/[0.04] leading-none tracking-tight">
+    <section className="relative min-h-[100dvh] flex flex-col items-center justify-center px-6 overflow-hidden bg-gradient-to-b from-[#f8faff] to-white">
+      {/* Background counter — 3D depth */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+        style={{ perspective: "1000px" }}>
+        <span className="text-[100px] md:text-[200px] font-black leading-none tracking-tight"
+          style={{
+            color: "transparent",
+            WebkitTextStroke: "2px color-mix(in srgb, var(--accent-red) 8%, transparent)",
+            transform: loaded ? "translateZ(0) rotateX(0)" : "translateZ(-150px) rotateX(15deg)",
+            transition: "all 2s cubic-bezier(0.16,1,0.3,1)",
+          }}>
           <CountUp target={3000000} duration={2500} />₪
         </span>
       </div>
 
-      {/* Main title */}
-      <h1 className="relative z-10 text-4xl md:text-6xl font-black text-[var(--text-primary)] tracking-tight text-center animate-[fadeInUp_0.8s_ease-out] opacity-0 [animation-fill-mode:forwards]">
+      {/* Content */}
+      <h1 className="relative z-10 text-4xl md:text-6xl font-black text-[#37374e] tracking-tight text-center"
+        style={{
+          opacity: loaded ? 1 : 0,
+          transform: loaded ? "translateY(0)" : "translateY(30px)",
+          transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s",
+        }}>
         למה צריך ביטוח לאקדח?
       </h1>
 
-      {/* Subtitle */}
-      <p className="relative z-10 text-lg md:text-2xl text-[var(--text-secondary)] text-center mt-4 animate-[fadeInUp_0.8s_ease-out_0.2s] opacity-0 [animation-fill-mode:forwards]">
+      <p className="relative z-10 text-lg md:text-2xl text-[#6b6b80] text-center mt-4"
+        style={{
+          opacity: loaded ? 1 : 0,
+          transform: loaded ? "translateY(0)" : "translateY(20px)",
+          transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s",
+        }}>
         חוץ מזה שהוא מביא לי <span className="font-black text-[var(--accent-blue)]">1,350₪</span> בשנה.
       </p>
 
-      {/* CTA */}
-      <div className="relative z-10 mt-10 animate-[fadeInUp_0.8s_ease-out_0.4s] opacity-0 [animation-fill-mode:forwards]">
+      {/* CTA — Menora-style rounded button with warm shadow */}
+      <div className="relative z-10 mt-10"
+        style={{
+          opacity: loaded ? 1 : 0,
+          transform: loaded ? "translateY(0)" : "translateY(20px)",
+          transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 0.7s",
+        }}>
         <a href="#contact"
-          className="px-8 py-3.5 bg-[var(--accent-blue)] text-white font-bold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-[var(--accent-blue)]/20 text-lg">
+          className="px-10 py-4 bg-[var(--accent-blue)] text-white font-bold text-lg inline-block hover:scale-105 transition-transform"
+          style={{
+            borderRadius: "35px",
+            boxShadow: "0 12px 30px -5px color-mix(in srgb, var(--accent-blue) 40%, transparent)",
+          }}>
           קבלו הצעת מחיר
         </a>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 flex flex-col items-center gap-2 animate-[fadeIn_1s_ease-out_1.5s] opacity-0 [animation-fill-mode:forwards]">
-        <span className="text-xs text-[var(--text-muted)]">גלול למטה</span>
-        <ChevronDown className="w-4 h-4 text-[var(--text-muted)]" />
+      {/* Scroll */}
+      <div className="absolute bottom-8 flex flex-col items-center gap-2"
+        style={{ opacity: loaded ? 1 : 0, transition: "opacity 1s ease 1.5s" }}>
+        <span className="text-xs text-[#a0a0b0]">גלול למטה</span>
+        <ChevronDown className="w-4 h-4 text-[#a0a0b0]" />
       </div>
     </section>
   );

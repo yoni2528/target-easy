@@ -25,28 +25,38 @@ export const TimelineSection = () => {
   }, []);
 
   return (
-    <section ref={ref} className="py-16 px-6">
+    <section ref={ref} className="py-20 px-6 bg-white">
       <div className="max-w-3xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-black text-center mb-10 text-[var(--text-primary)]">
+        <h2 className="text-2xl md:text-3xl font-black text-center text-[#37374e] mb-12">
           <span className="text-[var(--accent-blue)]">3 שלבים</span> וזה הכל
         </h2>
 
-        <div className="relative flex items-start justify-between">
+        <div className="relative flex items-start justify-between" style={{ perspective: "800px" }}>
           {/* Connecting line */}
-          <div className="absolute top-8 left-[16.67%] right-[16.67%] h-px bg-[var(--border-subtle)] hidden md:block">
+          <div className="absolute top-10 left-[16.67%] right-[16.67%] h-px hidden md:block"
+            style={{ background: "#e8edf5" }}>
             <div className="h-full bg-[var(--accent-blue)]"
               style={{ transform: visible ? "scaleX(1)" : "scaleX(0)", transformOrigin: "right", transition: "transform 1s ease 0.3s" }} />
           </div>
 
           {steps.map((step, i) => (
             <div key={step.number} className="flex flex-col items-center text-center w-1/3 relative z-10 px-2">
-              <div className="w-16 h-16 rounded-xl bg-[var(--bg-card)] border border-[var(--accent-blue)]/20 flex items-center justify-center mb-3"
-                style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(10px)", transition: `all 0.5s ease ${0.2 + i * 0.2}s` }}>
-                <step.icon className="w-7 h-7 text-[var(--accent-blue)]" strokeWidth={1.5} />
+              <div className="w-20 h-20 flex items-center justify-center mb-4"
+                style={{
+                  borderRadius: "24px",
+                  background: "white",
+                  border: "1px solid #e8edf5",
+                  boxShadow: "0 12px 25px -8px rgba(0,0,0,0.06)",
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateZ(0) rotateX(0)" : "translateZ(-30px) rotateX(12deg)",
+                  transition: `all 0.7s cubic-bezier(0.16,1,0.3,1) ${0.2 + i * 0.2}s`,
+                  transformStyle: "preserve-3d",
+                }}>
+                <step.icon className="w-8 h-8 text-[var(--accent-blue)]" strokeWidth={1.5} />
               </div>
               <div style={{ opacity: visible ? 1 : 0, transition: `opacity 0.5s ease ${0.4 + i * 0.2}s` }}>
-                <h3 className="text-base font-black text-[var(--text-primary)] mb-1">{step.title}</h3>
-                <p className="text-xs text-[var(--text-secondary)]">{step.desc}</p>
+                <h3 className="text-base font-black text-[#37374e] mb-1">{step.title}</h3>
+                <p className="text-xs text-[#6b6b80]">{step.desc}</p>
               </div>
             </div>
           ))}
