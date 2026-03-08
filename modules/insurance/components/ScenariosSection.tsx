@@ -4,31 +4,11 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { ScenarioVisual } from "./ScenarioVisuals";
 
 const scenarios = [
-  {
-    title: "פליטת כדור",
-    subtitle: "מה קורה עכשיו?",
-    desc: "הנפגע תובע. אתה משלם עד 3,000,000₪.",
-  },
-  {
-    title: "עצירת פיגוע כמו שצריך",
-    subtitle: "מה קורה עכשיו?",
-    desc: "פעלת נכון — עדיין חשוף לתביעה אזרחית.",
-  },
-  {
-    title: "עצירת פיגוע לא כמו שצריך",
-    subtitle: "מה קורה עכשיו?",
-    desc: "תביעה אזרחית + חקירה פלילית. מ-50K₪.",
-  },
-  {
-    title: "גניבת נשק",
-    subtitle: "מה קורה עכשיו?",
-    desc: "תיק פלילי נפתח. הפסדת את האקדח.",
-  },
-  {
-    title: "תביעת נזיקין",
-    subtitle: "מה קורה עכשיו?",
-    desc: "כתב הגנה בלבד: 65,000–100,000₪.",
-  },
+  { title: "פליטת כדור", subtitle: "מה קורה עכשיו?", desc: "הנפגע תובע. אתה משלם עד 3,000,000₪." },
+  { title: "עצירת פיגוע כמו שצריך", subtitle: "מה קורה עכשיו?", desc: "פעלת נכון — עדיין חשוף לתביעה אזרחית." },
+  { title: "עצירת פיגוע לא כמו שצריך", subtitle: "מה קורה עכשיו?", desc: "תביעה אזרחית + חקירה פלילית. מ-50K₪." },
+  { title: "גניבת נשק", subtitle: "מה קורה עכשיו?", desc: "תיק פלילי נפתח. הפסדת את האקדח." },
+  { title: "תביעת נזיקין", subtitle: "מה קורה עכשיו?", desc: "כתב הגנה בלבד: 65,000–100,000₪." },
 ];
 
 export const ScenariosSection = () => {
@@ -80,18 +60,25 @@ export const ScenariosSection = () => {
 
         <div className="relative mx-auto" style={{ maxWidth: 650, perspective: "1200px", opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 0.3s" }}
           onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <div className="relative" style={{ height: 340 }}>
-            {scenarios.map((_, i) => {
+          <div className="relative" style={{ height: 420 }}>
+            {scenarios.map((s, i) => {
               const style = getSlideStyle(i);
               return (
                 <div key={i} className="absolute inset-0 flex items-center justify-center"
                   style={{ ...style, transition: "all 0.6s cubic-bezier(0.16,1,0.3,1)", pointerEvents: style.zIndex === 10 ? "auto" : "none", transformStyle: "preserve-3d" }}>
-                  <div className="w-full max-w-md h-full overflow-hidden"
+                  <div className="w-full max-w-md h-full overflow-hidden flex flex-col"
                     style={{
                       borderRadius: "24px", background: "#f8faff", border: "1px solid #e8edf5",
                       boxShadow: style.zIndex === 10 ? "0 25px 50px -12px rgba(0,0,0,0.1)" : "0 10px 20px -5px rgba(0,0,0,0.05)",
                     }}>
-                    <ScenarioVisual index={i} isActive={i === active} />
+                    <div className="flex-1 min-h-0">
+                      <ScenarioVisual index={i} isActive={i === active} />
+                    </div>
+                    <div className="p-4 pb-5 text-center" style={{ borderTop: "1px solid #e8edf5", background: "white", borderRadius: "0 0 24px 24px" }}>
+                      <h3 className="text-base font-black text-[#37374e] mb-0.5">{s.title}</h3>
+                      <p className="text-xs font-bold text-[var(--accent-red)] mb-1">{s.subtitle}</p>
+                      <p className="text-xs text-[#6b6b80]">{s.desc}</p>
+                    </div>
                   </div>
                 </div>
               );
@@ -105,18 +92,6 @@ export const ScenariosSection = () => {
               <span className="text-[#6b6b80] text-lg">{arrow}</span>
             </button>
           ))}
-        </div>
-
-        <div className="max-w-md mx-auto text-center mt-8 min-h-[100px]">
-          <h3 key={`t-${active}`} className="text-xl font-black text-[#37374e] mb-1 animate-[fadeInUp_0.4s_ease-out]">
-            {scenarios[active].title}
-          </h3>
-          <p key={`s-${active}`} className="text-sm font-bold text-[var(--accent-red)] mb-2 animate-[fadeInUp_0.4s_ease-out]">
-            {scenarios[active].subtitle}
-          </p>
-          <p key={`d-${active}`} className="text-sm text-[#6b6b80] leading-relaxed animate-[fadeInUp_0.4s_ease-out]">
-            {scenarios[active].desc}
-          </p>
         </div>
 
         <div className="flex justify-center gap-2.5 mt-6">

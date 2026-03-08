@@ -1,27 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { PainDiagram } from "./PainDiagrams";
 
 const steps = [
-  {
-    title: "אירוע ירי",
-    desc: "חייב לתת עדות מיד. כל מילה קובעת.",
-  },
-  {
-    title: "הסנגוריה הציבורית",
-    desc: "עו״ד של המדינה. לא מומחה לנשק.",
-  },
-  {
-    title: "כתב הגנה",
-    desc: "רק כתב הגנה. עוד לפני המשפט.",
-    highlight: "100,000₪",
-  },
-  {
-    title: "תביעת מיליונים",
-    desc: "תביעה מצד שלישי. הכל מהכיס שלך.",
-    highlight: "3,000,000₪",
-  },
+  { title: "אירוע ירי", desc: "חייב לתת עדות מיד. כל מילה קובעת." },
+  { title: "הסנגוריה הציבורית", desc: "עו״ד של המדינה. לא מומחה לנשק." },
+  { title: "כתב הגנה", desc: "רק כתב הגנה. עוד לפני המשפט.", highlight: "100,000₪" },
+  { title: "תביעת מיליונים", desc: "תביעה מצד שלישי. הכל מהכיס שלך.", highlight: "3,000,000₪" },
 ];
 
 export const PainSection = () => {
@@ -58,7 +43,7 @@ export const PainSection = () => {
       {/* Desktop: sticky layout */}
       <div className="hidden md:block">
         <div className="max-w-5xl mx-auto px-6" style={{ display: "flex", direction: "ltr" }}>
-          {/* Sticky visual */}
+          {/* Sticky visual — typography-driven */}
           <div style={{ width: "45%", position: "relative" }}>
             <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <div className="text-center p-10 flex flex-col items-center"
@@ -67,16 +52,38 @@ export const PainSection = () => {
                   boxShadow: "0 30px 60px -15px rgba(0,0,0,0.1)",
                   border: "1px solid #e8edf5", minWidth: "280px",
                 }}>
-                <div key={activeIdx} style={{ animation: "fadeIn 0.3s ease" }}>
-                  <PainDiagram step={activeIdx} />
+                {/* Progress bar */}
+                <div className="flex gap-2 mb-8 justify-center w-full">
+                  {steps.map((_, i) => (
+                    <div key={i} className="h-1.5 rounded-full transition-all duration-500"
+                      style={{
+                        flex: i <= activeIdx ? 2 : 1,
+                        background: i <= activeIdx ? "var(--accent-red)" : "#e8edf5",
+                      }} />
+                  ))}
                 </div>
+
+                {/* Big step number watermark */}
+                <span key={`n-${activeIdx}`} className="text-8xl font-black leading-none block"
+                  style={{ color: "var(--accent-red)", opacity: 0.08, animation: "fadeIn 0.4s ease" }}>
+                  {String(activeIdx + 1).padStart(2, "0")}
+                </span>
+
+                {/* Step title */}
+                <h3 key={`t-${activeIdx}`} className="text-xl font-black text-[#37374e] mt-3"
+                  style={{ animation: "fadeIn 0.4s ease" }}>
+                  {steps[activeIdx].title}
+                </h3>
+
+                {/* Highlight amount */}
                 {steps[activeIdx].highlight && (
                   <span key={`h-${activeIdx}`} className="text-4xl font-black text-[var(--accent-red)] mt-4 block"
-                    style={{ animation: "fadeIn 0.3s ease" }}>
+                    style={{ animation: "fadeIn 0.3s ease 0.1s", animationFillMode: "backwards" }}>
                     {steps[activeIdx].highlight}
                   </span>
                 )}
-                <p className="text-sm text-[#a0a0b0] mt-4">שלב {activeIdx + 1} מתוך {steps.length}</p>
+
+                <p className="text-sm text-[#a0a0b0] mt-6">שלב {activeIdx + 1} מתוך {steps.length}</p>
               </div>
             </div>
           </div>
@@ -102,19 +109,13 @@ export const PainSection = () => {
       <div className="md:hidden space-y-4 px-6 pb-16">
         {steps.map((step, i) => (
           <div key={step.title} className="p-5"
-            style={{
-              borderRadius: "24px", background: "white",
-              border: "1px solid #e8edf5",
-              boxShadow: "0 10px 25px -8px rgba(0,0,0,0.06)",
-            }}>
+            style={{ borderRadius: "24px", background: "white", border: "1px solid #e8edf5", boxShadow: "0 10px 25px -8px rgba(0,0,0,0.06)" }}>
             <div className="flex items-center gap-3 mb-2">
               <span className="text-sm font-bold tracking-widest text-[var(--accent-red)]">{String(i + 1).padStart(2, "0")}</span>
               <h3 className="text-lg font-black text-[#37374e]">{step.title}</h3>
             </div>
             <p className="text-sm text-[#6b6b80]">{step.desc}</p>
-            {step.highlight && (
-              <p className="text-2xl font-black text-[var(--accent-red)] mt-3">{step.highlight}</p>
-            )}
+            {step.highlight && <p className="text-2xl font-black text-[var(--accent-red)] mt-3">{step.highlight}</p>}
           </div>
         ))}
       </div>
