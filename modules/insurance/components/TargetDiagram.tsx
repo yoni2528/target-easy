@@ -18,10 +18,10 @@ const rings = [
 
 const CX = 480, CY = 255;
 const anns = [
-  { rr: 210, a: 38, right: true, ey: 70 },
-  { rr: 154, a: 145, right: false, ey: 125 },
-  { rr: 98, a: -35, right: true, ey: 400 },
-  { rr: 42, a: -145, right: false, ey: 445 },
+  { rr: 210, a: 38, right: true, ey: 60 },
+  { rr: 154, a: 145, right: false, ey: 140 },
+  { rr: 98, a: -35, right: true, ey: 390 },
+  { rr: 42, a: -145, right: false, ey: 450 },
 ];
 
 export const TargetDiagram = () => {
@@ -77,15 +77,15 @@ export const TargetDiagram = () => {
                 return (
                   <g key={i} style={{ opacity: v ? 1 : 0, transition: `opacity 0.5s ease ${0.8 + i * 0.15}s` }}>
                     <path d={`M${sx},${sy} L${elbX},${an.ey} L${dx},${an.ey}`}
-                      fill="none" stroke="#1a6fcc" strokeWidth="1.2" strokeDasharray="5 4" opacity="0.45" />
-                    <circle cx={sx} cy={sy} r="4" fill="#1a6fcc" opacity="0.7" />
-                    <circle cx={dx} cy={an.ey} r="3" fill="#1a6fcc" />
-                    <foreignObject x={tx} y={an.ey - 20} width={tw} height="46">
+                      fill="none" stroke="#1a6fcc" strokeWidth="2" strokeDasharray="6 4" opacity="0.7" />
+                    <circle cx={sx} cy={sy} r="6" fill="#1a6fcc" opacity="0.85" />
+                    <circle cx={dx} cy={an.ey} r="5" fill="#1a6fcc" />
+                    <foreignObject x={tx} y={an.ey - 24} width={tw} height="56">
                       <div style={{ direction: "rtl", textAlign: an.right ? "left" : "right" }}>
-                        <p style={{ fontSize: 14, fontWeight: 800, color: "#1d1d1f", margin: 0, lineHeight: 1.3 }}>
-                          <span style={{ color: "#1a6fcc", marginLeft: 4 }}>{i + 1}.</span> {steps[i].label}
+                        <p style={{ fontSize: 16, fontWeight: 800, color: "#1d1d1f", margin: 0, lineHeight: 1.3 }}>
+                          <span style={{ color: "#1a6fcc", marginLeft: 5, fontSize: 18 }}>{i + 1}.</span> {steps[i].label}
                         </p>
-                        <p style={{ fontSize: 11.5, color: "#86868b", margin: "2px 0 0", lineHeight: 1.3 }}>{steps[i].sub}</p>
+                        <p style={{ fontSize: 13, color: "#6b6b80", margin: "3px 0 0", lineHeight: 1.3 }}>{steps[i].sub}</p>
                       </div>
                     </foreignObject>
                   </g>

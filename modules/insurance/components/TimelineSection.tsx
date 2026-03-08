@@ -2,29 +2,35 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const Phone = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative mx-auto" style={{ width: 200, height: 380, transformStyle: "preserve-3d" }}>
+const Phone = ({ children, tiltY = 0 }: { children: React.ReactNode; tiltY?: number }) => (
+  <div className="relative mx-auto" style={{ width: 200, height: 380, transformStyle: "preserve-3d", transform: `rotateY(${tiltY}deg)` }}>
     {/* Right edge */}
     <div style={{
-      position: "absolute", top: 24, right: 0, width: 8, height: 332,
-      background: "linear-gradient(180deg, #2a2a2e, #1a1a1f, #2a2a2e)",
-      borderRadius: "0 3px 3px 0", transformOrigin: "left center", transform: "rotateY(-90deg)",
+      position: "absolute", top: 20, right: -1, width: 14, height: 340,
+      background: "linear-gradient(180deg, #3a3a3e 0%, #1d1d22 40%, #2a2a2e 60%, #3a3a3e 100%)",
+      borderRadius: "0 4px 4px 0", transformOrigin: "left center", transform: "rotateY(-90deg) translateZ(0px)",
     }} />
     {/* Left edge */}
     <div style={{
-      position: "absolute", top: 24, left: 0, width: 8, height: 332,
-      background: "linear-gradient(180deg, #2a2a2e, #1a1a1f, #2a2a2e)",
-      borderRadius: "3px 0 0 3px", transformOrigin: "right center", transform: "rotateY(90deg)",
+      position: "absolute", top: 20, left: -1, width: 14, height: 340,
+      background: "linear-gradient(180deg, #3a3a3e 0%, #1d1d22 40%, #2a2a2e 60%, #3a3a3e 100%)",
+      borderRadius: "4px 0 0 4px", transformOrigin: "right center", transform: "rotateY(90deg) translateZ(0px)",
     }} />
     {/* Bottom edge */}
     <div style={{
-      position: "absolute", bottom: 0, left: 24, width: 152, height: 8,
-      background: "#1a1a1f", borderRadius: "0 0 3px 3px",
-      transformOrigin: "center top", transform: "rotateX(90deg)",
+      position: "absolute", bottom: -1, left: 20, width: 160, height: 14,
+      background: "linear-gradient(90deg, #3a3a3e, #1d1d22, #3a3a3e)",
+      borderRadius: "0 0 4px 4px", transformOrigin: "center top", transform: "rotateX(90deg)",
+    }} />
+    {/* Top edge */}
+    <div style={{
+      position: "absolute", top: -1, left: 20, width: 160, height: 14,
+      background: "linear-gradient(90deg, #3a3a3e, #2a2a2e, #3a3a3e)",
+      borderRadius: "4px 4px 0 0", transformOrigin: "center bottom", transform: "rotateX(-90deg)",
     }} />
     {/* Front face */}
     <div className="absolute inset-0 rounded-[32px] overflow-hidden"
-      style={{ background: "white", border: "6px solid #1d1d1f", boxShadow: "0 30px 60px rgba(0,0,0,0.18), 0 10px 20px rgba(0,0,0,0.08)", transform: "translateZ(4px)" }}>
+      style={{ background: "white", border: "6px solid #1d1d1f", boxShadow: "0 30px 60px rgba(0,0,0,0.22), 0 10px 20px rgba(0,0,0,0.1)", transform: "translateZ(7px)" }}>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#1d1d1f] rounded-b-xl z-10" />
       <div className="flex justify-between items-center px-5 pt-6 pb-1 text-[8px] font-bold text-[#1d1d1f]">
         <span>9:41</span>
@@ -54,7 +60,7 @@ const Bubble = ({ text, bot, delay }: { text: string; bot?: boolean; delay: numb
 
 export const TimelineSection = () => {
   const [vis, setVis] = useState(false);
-  const [rot, setRot] = useState({ x: 8, y: 0 });
+  const [rot, setRot] = useState({ x: 12, y: -8 });
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,7 +73,7 @@ export const TimelineSection = () => {
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
-    setRot({ x: ((e.clientY - r.top) / r.height - 0.5) * -12 + 8, y: ((e.clientX - r.left) / r.width - 0.5) * 16 });
+    setRot({ x: ((e.clientY - r.top) / r.height - 0.5) * -18 + 12, y: ((e.clientX - r.left) / r.width - 0.5) * 24 - 8 });
   };
 
   return (
@@ -81,14 +87,14 @@ export const TimelineSection = () => {
           משאירים פרטים — מקבלים שיחה — מוגנים
         </p>
 
-        <div onMouseMove={onMove} onMouseLeave={() => setRot({ x: 8, y: 0 })}
+        <div onMouseMove={onMove} onMouseLeave={() => setRot({ x: 12, y: -8 })}
           style={{ opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1) 0.3s" }}>
           <div style={{ transform: `perspective(1000px) rotateX(${rot.x}deg) rotateY(${rot.y}deg)`, transition: "transform 0.12s ease-out", transformStyle: "preserve-3d" }}>
             <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16"
               style={{ transformStyle: "preserve-3d" }}>
 
-              <div className="text-center" style={{ animation: vis ? "fadeInUp 0.8s cubic-bezier(0.32,0.72,0,1) 0.4s both" : "none" }}>
-                <Phone>
+              <div className="text-center" style={{ animation: vis ? "fadeInUp 0.8s cubic-bezier(0.32,0.72,0,1) 0.4s both" : "none", transformStyle: "preserve-3d" }}>
+                <Phone tiltY={8}>
                   <div className="flex flex-col gap-2 mt-1">
                     <Bubble bot text="היי! רוצה להצטרף לביטוח נשק?" delay={0.8} />
                     <Bubble text="כן, בטח" delay={1.2} />
@@ -108,8 +114,8 @@ export const TimelineSection = () => {
               <div className="md:hidden text-3xl text-[#d2d2d7]"
                 style={{ animation: vis ? "float-up 2s ease-in-out infinite" : "none" }}>↓</div>
 
-              <div className="text-center" style={{ animation: vis ? "fadeInUp 0.8s cubic-bezier(0.32,0.72,0,1) 0.7s both" : "none" }}>
-                <Phone>
+              <div className="text-center" style={{ animation: vis ? "fadeInUp 0.8s cubic-bezier(0.32,0.72,0,1) 0.7s both" : "none", transformStyle: "preserve-3d" }}>
+                <Phone tiltY={-8}>
                   <div className="flex flex-col items-center justify-center h-full gap-3 -mt-4">
                     <div className="w-16 h-16 rounded-full flex items-center justify-center"
                       style={{ background: "linear-gradient(135deg, var(--accent-blue), #4da6ff)", animation: `step-pop 0.5s cubic-bezier(0.32,0.72,0,1) 3.5s both` }}>
