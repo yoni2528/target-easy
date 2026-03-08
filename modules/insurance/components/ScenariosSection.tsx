@@ -71,7 +71,7 @@ export const ScenariosSection = () => {
           onTouchEnd={onTouchEnd}
         >
           {/* Visual slides — icon dominant */}
-          <div className="relative" style={{ height: 320 }}>
+          <div className="relative" style={{ height: 290 }}>
             {scenarios.map((s, i) => {
               const style = getSlideStyle(i);
               return (
