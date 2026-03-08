@@ -80,29 +80,39 @@ export const PainSection = () => {
             </p>
           </div>
 
+          {/* Selector hint */}
+          <p className="text-center text-[11px] text-[#5a6a80] mb-3 animate-[fadeInUp_0.5s_ease_0.5s_both]">
+            בחר תרחיש ↓
+          </p>
+
           {/* Selector row */}
           <div className="flex justify-center gap-3 md:gap-4">
             {stats.map((item, i) => (
               <button
                 key={item.label}
                 onClick={() => setActiveIdx(i)}
-                className="flex flex-col items-center gap-2 px-3 py-3 rounded-xl transition-all duration-300"
+                className="group flex flex-col items-center gap-2 px-3 py-3 rounded-xl transition-all duration-300 cursor-pointer hover:scale-105"
                 style={{
-                  background: i === activeIdx ? "rgba(204,51,51,0.15)" : "transparent",
+                  background: i === activeIdx ? "rgba(204,51,51,0.15)" : "rgba(204,51,51,0.04)",
                   borderWidth: 1,
                   borderStyle: "solid",
-                  borderColor: i === activeIdx ? "rgba(204,51,51,0.4)" : "rgba(204,51,51,0.1)",
+                  borderColor: i === activeIdx ? "rgba(204,51,51,0.4)" : "rgba(204,51,51,0.12)",
                   transform: i === activeIdx ? "scale(1.05)" : "scale(1)",
                   animation: visible ? `step-pop 0.5s ease ${0.6 + i * 0.1}s both` : "none",
                 }}
               >
-                <item.icon
-                  className="w-6 h-6 transition-colors duration-300"
-                  style={{ color: i === activeIdx ? "#cc3333" : "#5a6a80" }}
-                  strokeWidth={1.5}
-                />
+                <div className="relative">
+                  <item.icon
+                    className="w-6 h-6 transition-colors duration-300 group-hover:text-[#cc3333]"
+                    style={{ color: i === activeIdx ? "#cc3333" : "#5a6a80" }}
+                    strokeWidth={1.5}
+                  />
+                  {i !== activeIdx && (
+                    <div className="absolute -inset-1 rounded-full border border-[#cc3333]/0 group-hover:border-[#cc3333]/25 transition-all duration-300" />
+                  )}
+                </div>
                 <span
-                  className="text-xs font-bold transition-colors duration-300"
+                  className="text-xs font-bold transition-colors duration-300 group-hover:text-[#cc3333]"
                   style={{ color: i === activeIdx ? "#cc3333" : "#5a6a80" }}
                 >
                   {item.label}

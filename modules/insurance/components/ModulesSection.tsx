@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { Scale, Gavel, Gift, Phone, ChevronDown } from "lucide-react";
 import type { InsuranceModule } from "./ModuleMobileCard";
 import { MobileCard } from "./ModuleMobileCard";
+import { ModuleVisual } from "./ModuleVisuals";
 
 const modules: InsuranceModule[] = [
   {
@@ -32,72 +33,19 @@ const modules: InsuranceModule[] = [
   },
 ];
 
-const VisualCard = ({ module, isActive }: { module: InsuranceModule; isActive: boolean }) => {
-  const Icon = module.icon;
-  return (
-    <div
-      className="absolute inset-0 flex items-center justify-center"
-      style={{
-        opacity: isActive ? 1 : 0,
-        transform: isActive ? "scale(1) translateY(0)" : "scale(0.92) translateY(30px)",
-        transition: "opacity 0.6s ease, transform 0.6s ease",
-        pointerEvents: isActive ? "auto" : "none",
-      }}
-    >
-      <div className="flex flex-col items-center">
-        {/* Decorative rings + icon */}
-        <div className="relative w-44 h-44 flex items-center justify-center mb-8">
-          <div
-            className="absolute inset-0 rounded-full border-2 animate-[pulse_3s_ease-in-out_infinite]"
-            style={{ borderColor: `color-mix(in srgb, ${module.accent} 20%, transparent)` }}
-          />
-          <div
-            className="absolute inset-5 rounded-full border"
-            style={{ borderColor: `color-mix(in srgb, ${module.accent} 12%, transparent)` }}
-          />
-          <div
-            className="w-20 h-20 rounded-2xl flex items-center justify-center"
-            style={{ background: `color-mix(in srgb, ${module.accent} 10%, transparent)` }}
-          >
-            <Icon className="w-10 h-10" style={{
-              color: module.accent,
-              transform: isActive ? "scale(1) rotate(0deg)" : "scale(0.5) rotate(-10deg)",
-              transition: "transform 0.5s ease",
-            }} strokeWidth={1.5} />
-          </div>
-        </div>
-        {/* Key stat with delayed entrance */}
-        <span className="text-5xl font-black mb-1" style={{
-          color: module.accent,
-          transform: isActive ? "scale(1) translateY(0)" : "scale(0.7) translateY(10px)",
-          transition: "transform 0.5s ease 0.15s",
-        }}>{module.stat}</span>
-        <span className="text-sm text-[var(--text-secondary)] mb-6" style={{
-          transform: isActive ? "translateY(0)" : "translateY(8px)",
-          transition: "transform 0.4s ease 0.25s",
-        }}>{module.statLabel}</span>
-        {/* Feature pills */}
-        <div className="flex flex-wrap justify-center gap-2 max-w-[380px]">
-          {module.features.map((f, i) => (
-            <span
-              key={f}
-              className="px-3 py-1.5 rounded-full text-xs font-medium bg-[var(--bg-card)] border shadow-sm"
-              style={{
-                borderColor: `color-mix(in srgb, ${module.accent} 25%, transparent)`,
-                color: module.accent,
-                opacity: isActive ? 1 : 0,
-                transform: isActive ? "translateY(0)" : "translateY(8px)",
-                transition: `opacity 0.4s ease ${i * 70}ms, transform 0.4s ease ${i * 70}ms`,
-              }}
-            >
-              {f}
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
+const VisualCard = ({ index, isActive }: { index: number; isActive: boolean }) => (
+  <div
+    className="absolute inset-0"
+    style={{
+      opacity: isActive ? 1 : 0,
+      transform: isActive ? "scale(1) translateY(0)" : "scale(0.92) translateY(30px)",
+      transition: "opacity 0.6s ease, transform 0.6s ease",
+      pointerEvents: isActive ? "auto" : "none",
+    }}
+  >
+    <ModuleVisual index={index} isActive={isActive} />
+  </div>
+);
 
 export const InsuranceModules = () => {
   const [activeIdx, setActiveIdx] = useState(0);
@@ -163,7 +111,7 @@ export const InsuranceModules = () => {
             <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <div className="relative" style={{ width: 400, height: 420 }}>
                 {modules.map((m, i) => (
-                  <VisualCard key={m.number} module={m} isActive={i === activeIdx} />
+                  <VisualCard key={m.number} index={i} isActive={i === activeIdx} />
                 ))}
               </div>
             </div>
