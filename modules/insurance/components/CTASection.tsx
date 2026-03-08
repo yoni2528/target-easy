@@ -21,12 +21,12 @@ export const InsuranceCTA = () => {
   return (
     <section id="contact" className="py-24 px-6 relative">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full bg-[var(--accent-blue)]/5 blur-[100px]" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full bg-[var(--accent-green)]/5 blur-[100px]" />
       </div>
 
       <div className="max-w-lg mx-auto text-center relative z-10">
         <h2 className="text-3xl md:text-4xl font-black mb-4">
-          רוצה <span className="text-[var(--accent-blue)]">להתחיל</span>?
+          רוצה <span className="text-[var(--accent-green)]">להתחיל</span>?
         </h2>
         <p className="text-[var(--text-secondary)] mb-8">
           השאירו פרטים ונחזור אליכם עם כל המידע על הביטוח
@@ -50,7 +50,7 @@ export const InsuranceCTA = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-default)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-blue)] transition-colors"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-default)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-green)] transition-colors"
             />
             <input
               type="tel"
@@ -58,12 +58,12 @@ export const InsuranceCTA = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-default)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-blue)] transition-colors"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-default)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-green)] transition-colors"
             />
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-4 bg-[var(--accent-blue)] text-[var(--bg-primary)] font-bold text-lg rounded-2xl hover:brightness-110 transition-all shadow-xl shadow-[var(--accent-blue)]/20 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 py-4 bg-[var(--accent-green)] text-[var(--bg-primary)] font-bold text-lg rounded-2xl hover:brightness-110 transition-all shadow-xl shadow-[var(--accent-green)]/20 disabled:opacity-50"
             >
               {loading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />

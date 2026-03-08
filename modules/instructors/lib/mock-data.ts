@@ -927,6 +927,37 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
     rangeType: ["מטווח סגור", "מטווח פתוח"],
     countsAsRefresh: true,
   },
+  {
+    id: "36", name: "שאול וולפסון",
+    photo: "https://images.pexels.com/photos/7092613/pexels-photo-7092613.jpeg?w=300&h=300&fit=crop",
+    verified: true, eloShooting: 1980, eloInstruction: 1950, stars: 5.0,
+    metrics: { service: 5.0, professionalism: 5.0, quality: 5.0 },
+    trainees: 3200, trainingTypes: ["מתחמש חדש", "רענון", "חידוש", "ירי מקצועי", "סדנת ירי", "אימוני קבוצות", "ערכות הסבה", "אימון לילה", "מטרות נעות"],
+    ranges: ["מטווח אשדוד", "מטווח הרצליה", "מטווח YSY"], city: "אשדוד",
+    available: true, nextSlot: "היום, 10:00", priceFrom: 190,
+    bio: "מדריך בכיר. מדריך ירי ולחימה מקצועי עם ניסיון רב בהדרכות ירי ולחימה. מתמחה בפיתוח ביטחון, שיטה ומיומנות לכל הרמות - ממתחמשים חדשים ועד לוחמים מנוסים. מעניק הדרכות באווירה בטוחה וממוקדת.",
+    experience: 20,
+    availableDays: ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי"],
+    reviews: [
+      { id: "r59", name: "אבי כהן", date: "לפני יומיים", text: "המדריך הכי טוב שנתקלתי בו. מקצועי, סבלני ויודע להעביר את החומר בצורה מושלמת.", rating: 5, verified: true },
+      { id: "r60", name: "רון דניאל", date: "לפני שבוע", text: "שאול הוא מדריך ברמה אחרת לגמרי. אחרי אימון אחד שיפרתי את הדיוק שלי ב-40%.", rating: 5, verified: true },
+      { id: "r61", name: "נועה ברקוביץ", date: "לפני חודש", text: "הגעתי בלי שום ניסיון ויצאתי עם ביטחון מלא. שאול יוצר אווירה מדהימה.", rating: 5, verified: true },
+      { id: "r62", name: "גדי עמרם", date: "לפני חודשיים", text: "עשיתי חידוש רישיון אצל שאול. תהליך חלק, מקצועי ומהיר. ממליץ בחום!", rating: 5, verified: true },
+    ],
+    gallery: [
+      "https://images.pexels.com/photos/3839524/pexels-photo-3839524.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+      "https://images.pexels.com/photos/8348457/pexels-photo-8348457.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+      "https://images.pexels.com/photos/8348461/pexels-photo-8348461.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+    ],
+    videos: [
+      { id: "v-36a", title: "הדרכת ירי מקצועית - טכניקות מתקדמות", thumbnail: "https://images.pexels.com/photos/3839523/pexels-photo-3839523.jpeg?auto=compress&cs=tinysrgb&w=400&h=225&fit=crop", platform: "youtube" },
+      { id: "v-36b", title: "סדנת לחימה והגנה עצמית", thumbnail: "https://images.pexels.com/photos/8348457/pexels-photo-8348457.jpeg?auto=compress&cs=tinysrgb&w=400&h=225&fit=crop", platform: "instagram" },
+    ],
+    socialLinks: { instagram: "https://instagram.com", youtube: "https://youtube.com", facebook: "https://facebook.com" },
+    rangeType: ["מטווח סגור", "מטווח פתוח"],
+    countsAsRefresh: true,
+    deals: ["כוחות ביטחון", "סטודנטים", "גמלאים"],
+  },
 ];
 
 export const AVAILABLE_DATES = [

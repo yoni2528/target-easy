@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   HeroSection,
   VideoShowcase,
@@ -23,7 +24,13 @@ export default function LandingPage() {
       <FeaturesSection />
       <CTASection />
       {/* Footer */}
-      <footer className="py-8 px-6 border-t border-[var(--border-subtle)] text-center">
+      <footer className="py-8 px-6 border-t border-[var(--border-subtle)] text-center space-y-3">
+        <Link
+          href="/insurance"
+          className="text-sm text-[var(--accent-blue)] hover:underline"
+        >
+          ביטוח למחזיקי נשק — מנורה ביטוח &larr;
+        </Link>
         <p className="text-xs text-[var(--text-muted)]">
           © 2026 מטרה — מערכת ניהול מטווח חכמה
         </p>
