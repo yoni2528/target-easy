@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Scale, Gavel, Gift, Phone, ChevronDown } from "lucide-react";
+import { Scale, Gavel, Gift, Phone } from "lucide-react";
 import type { InsuranceModule } from "./ModuleMobileCard";
 import { MobileCard } from "./ModuleMobileCard";
 import { ModuleVisual } from "./ModuleVisuals";
@@ -17,13 +17,13 @@ const modules: InsuranceModule[] = [
     icon: Gavel, number: "02", title: "הגנה פלילית ומנהלית",
     desc: "כיסוי מלא להגנה משפטית, ייצוג וערעורים.",
     features: ["כיסוי עד 400,000 ש״ח", "עורך דין פלילי", "הגנה בהליכים מנהליים", "ערעורים וייצוג מלא"],
-    accent: "var(--accent-amber)", stat: "400,000₪", statLabel: "הגנה משפטית",
+    accent: "var(--accent-blue)", stat: "400,000₪", statLabel: "הגנה משפטית",
   },
   {
     icon: Gift, number: "03", title: "החזרים והטבות",
     desc: "החזרים על אימונים, חידוש רישיון וציוד.",
     features: ["אימוני ירי — עד 600 ש״ח", "חידוש רישיון — עד 300 ש״ח", "ציוד במטווח — עד 450 ש״ח", "סה״כ: עד 1,350 ש״ח בשנה"],
-    accent: "var(--accent-amber)", stat: "1,350₪", statLabel: "החזרים בשנה",
+    accent: "var(--accent-blue)", stat: "1,350₪", statLabel: "החזרים בשנה",
   },
   {
     icon: Phone, number: "04", title: "קו חם וסיוע מורחב",
@@ -83,17 +83,13 @@ export const InsuranceModules = () => {
 
   return (
     <section id="modules" className="relative">
-      <div className="pt-20 pb-8 px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-black mb-3">
+      <div className="pt-16 pb-6 px-6 text-center">
+        <h2 className="text-3xl md:text-4xl font-black mb-2">
           מה אתה <span className="text-[var(--accent-blue)]">מקבל</span>?
         </h2>
-        <p className="text-[var(--text-secondary)] max-w-lg mx-auto mb-4">
+        <p className="text-[var(--text-secondary)] max-w-lg mx-auto">
           ביטוח אחריות — המעטפת השלמה למחזיקי נשק ברישיון
         </p>
-        <div className="hidden md:flex items-center justify-center gap-2 text-xs text-[var(--text-muted)]">
-          <span>גלול למטה לצפייה בכל המודולים</span>
-          <ChevronDown className="w-3 h-3 animate-bounce" />
-        </div>
       </div>
 
       {/* Progress dots */}
@@ -102,9 +98,8 @@ export const InsuranceModules = () => {
           <button key={m.number} onClick={() => scrollTo(i)}
             className="w-2.5 h-2.5 rounded-full transition-all duration-300"
             style={{
-              background: i === activeIdx ? m.accent : "var(--border-default)",
-              transform: i === activeIdx ? "scale(1.5)" : "scale(1)",
-              boxShadow: i === activeIdx ? `0 0 8px ${m.accent}` : "none",
+              background: i === activeIdx ? "var(--accent-blue)" : "var(--border-default)",
+              transform: i === activeIdx ? "scale(1.4)" : "scale(1)",
             }}
             title={m.title} />
         ))}

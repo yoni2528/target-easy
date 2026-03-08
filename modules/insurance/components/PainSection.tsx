@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AlertTriangle, Scale, Gavel, UserX, ShieldOff } from "lucide-react";
+import { Scale, Gavel, UserX, ShieldOff } from "lucide-react";
 
 const stats = [
   { icon: Scale, num: "3M₪", label: "תביעה אפשרית", desc: "תביעת צד ג׳ על נזקי גוף יכולה להגיע לשלושה מיליון שקל." },
@@ -27,70 +27,51 @@ export const PainSection = () => {
   }, []);
 
   return (
-    <section ref={ref} className="py-24 px-6 relative overflow-hidden"
-      style={{ background: "linear-gradient(180deg, var(--bg-primary) 0%, color-mix(in srgb, var(--accent-red) 6%, var(--bg-primary)) 50%, var(--bg-primary) 100%)" }}>
-      {/* Subtle background rings */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[400px] h-[400px] rounded-full border border-[var(--accent-red)]/8 animate-[pulse_4s_ease-in-out_infinite]" />
-        <div className="absolute w-[250px] h-[250px] rounded-full border border-[var(--accent-red)]/12 animate-[pulse_4s_ease-in-out_infinite_0.5s]" />
-      </div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[250px] rounded-full blur-[100px] pointer-events-none"
-        style={{ background: "color-mix(in srgb, var(--accent-red) 6%, transparent)" }} />
-
+    <section ref={ref} className="py-16 px-6 relative overflow-hidden">
       <div className="max-w-3xl mx-auto text-center relative z-10">
         <div style={{
           opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(20px)",
-          transition: "opacity 0.8s ease, transform 0.8s ease",
+          transform: visible ? "translateY(0)" : "translateY(15px)",
+          transition: "all 0.6s ease",
         }}>
-          <AlertTriangle className="w-12 h-12 mx-auto mb-5" style={{ color: "var(--accent-red)" }} strokeWidth={1.5} />
-          <h2 className="text-4xl md:text-5xl font-black mb-3 leading-tight"
-            style={{ color: "var(--text-primary)" }}>
+          <h2 className="text-3xl md:text-4xl font-black mb-2 leading-tight text-[var(--text-primary)]">
             נשק בלי ביטוח?
           </h2>
-          <p className="text-lg md:text-xl font-bold mb-2"
-            style={{ color: "var(--accent-red)" }}>
+          <p className="text-base font-bold text-[var(--accent-red)] mb-8">
             כמו רכב בלי ביטוח חובה.
           </p>
         </div>
 
         {/* Interactive stat display */}
-        <div className="mt-10" style={{ opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.3s" }}>
-          <div className="min-h-[130px] flex flex-col items-center justify-center mb-8">
+        <div style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 0.2s" }}>
+          <div className="min-h-[110px] flex flex-col items-center justify-center mb-6">
             <span key={activeIdx}
-              className="text-6xl md:text-8xl font-black block animate-[step-pop_0.4s_ease_both]"
+              className="text-5xl md:text-7xl font-black block animate-[step-pop_0.4s_ease_both]"
               style={{ color: "var(--accent-red)" }}>
               {stats[activeIdx].num}
             </span>
             <p key={`d-${activeIdx}`}
-              className="text-sm mt-3 max-w-sm mx-auto animate-[fadeInUp_0.4s_ease-out]"
-              style={{ color: "var(--text-secondary)" }}>
+              className="text-sm mt-2 max-w-sm mx-auto text-[var(--text-secondary)]">
               {stats[activeIdx].desc}
             </p>
           </div>
 
-          <p className="text-[11px] mb-3" style={{ color: "var(--text-muted)" }}>
-            בחר תרחיש ↓
-          </p>
-
           <div className="flex justify-center gap-3 md:gap-4">
             {stats.map((item, i) => (
               <button key={item.label} onClick={() => setActiveIdx(i)}
-                className="group flex flex-col items-center gap-2 px-3 py-3 rounded-xl transition-all duration-300 cursor-pointer hover:scale-105"
+                className="group flex flex-col items-center gap-1.5 px-3 py-2.5 rounded-xl transition-all duration-300 cursor-pointer"
                 style={{
                   background: i === activeIdx
-                    ? "color-mix(in srgb, var(--accent-red) 12%, transparent)"
-                    : "color-mix(in srgb, var(--accent-red) 3%, var(--bg-card))",
+                    ? "color-mix(in srgb, var(--accent-red) 10%, transparent)"
+                    : "transparent",
                   border: `1px solid ${i === activeIdx
-                    ? "color-mix(in srgb, var(--accent-red) 35%, transparent)"
-                    : "color-mix(in srgb, var(--accent-red) 10%, transparent)"}`,
-                  transform: i === activeIdx ? "scale(1.05)" : "scale(1)",
-                  animation: visible ? `step-pop 0.5s ease ${0.6 + i * 0.1}s both` : "none",
+                    ? "color-mix(in srgb, var(--accent-red) 30%, transparent)"
+                    : "var(--border-subtle)"}`,
                 }}>
-                <item.icon className="w-6 h-6 transition-colors duration-300 group-hover:text-[var(--accent-red)]"
+                <item.icon className="w-5 h-5 transition-colors duration-300"
                   style={{ color: i === activeIdx ? "var(--accent-red)" : "var(--text-muted)" }}
                   strokeWidth={1.5} />
-                <span className="text-xs font-bold transition-colors duration-300 group-hover:text-[var(--accent-red)]"
+                <span className="text-[11px] font-bold transition-colors duration-300"
                   style={{ color: i === activeIdx ? "var(--accent-red)" : "var(--text-muted)" }}>
                   {item.label}
                 </span>
