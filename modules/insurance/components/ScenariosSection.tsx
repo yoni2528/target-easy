@@ -71,7 +71,7 @@ export const ScenariosSection = () => {
           onTouchEnd={onTouchEnd}
         >
           {/* Visual slides — icon dominant */}
-          <div className="relative" style={{ height: 260 }}>
+          <div className="relative" style={{ height: 320 }}>
             {scenarios.map((s, i) => {
               const style = getSlideStyle(i);
               return (
@@ -80,14 +80,8 @@ export const ScenariosSection = () => {
                   className="absolute inset-0 flex items-center justify-center"
                   style={{ ...style, transition: "transform 0.5s ease, opacity 0.5s ease", pointerEvents: style.zIndex === 10 ? "auto" : "none" }}
                 >
-                  <div className="w-full max-w-sm rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-lg p-6 pt-8 flex flex-col items-center">
-                    {/* Visual scene */}
-                    <ScenarioVisual index={i} isActive={i === active} />
-                    {/* Number + Title */}
-                    <span className="text-xs font-bold tracking-widest text-[var(--accent-red)] mt-3 mb-1">
-                      תרחיש {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="text-2xl font-black text-[var(--text-primary)]">{s.title}</h3>
+                  <div className="w-full max-w-sm">
+                    <ScenarioVisual index={i} />
                   </div>
                 </div>
               );
