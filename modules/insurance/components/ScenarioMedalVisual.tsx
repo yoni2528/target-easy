@@ -1,120 +1,89 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useCallback } from "react";
 
-/** 3: עצירת פיגוע נכונה — 3D trophy with parallax + cracking */
+const CX = 80, CY = 72;
+const rings = [
+  { r: 38, fill: "#c89820" }, { r: 33, fill: "#f5ecd0" },
+  { r: 28, fill: "#d4a830" }, { r: 23, fill: "#faf3e0" },
+  { r: 18, fill: "#b8860b" }, { r: 13, fill: "#f5ecd0" },
+  { r: 8, fill: "#c89820" },
+];
+
+/* Single laurel leaf — mirrored for right side via scale(-1,1) */
+const Leaf = ({ x, y, angle }: { x: number; y: number; angle: number }) => (
+  <path d={`M${x},${y} Q${x - 5},${y - 10} ${x},${y - 18} Q${x + 5},${y - 10} ${x},${y}`}
+    fill="#d4a830" stroke="#b8860b" strokeWidth="0.5"
+    transform={`rotate(${angle}, ${x}, ${y})`} />
+);
+
+/** 3: עצירת פיגוע נכונה — Golden trophy with parallax (target-diagram style) */
 export const CrackingMedalVisual = ({ isActive }: { isActive: boolean }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [rot, setRot] = useState({ x: 0, y: 0 });
-  const [crackLevel, setCrackLevel] = useState(0);
 
   const onMove = useCallback((e: React.MouseEvent) => {
     if (!isActive || !ref.current) return;
     const r = ref.current.getBoundingClientRect();
-    const x = ((e.clientY - r.top) / r.height - 0.5) * -20;
-    const y = ((e.clientX - r.left) / r.width - 0.5) * 20;
-    setRot({ x, y });
+    setRot({
+      x: ((e.clientY - r.top) / r.height - 0.5) * -16,
+      y: ((e.clientX - r.left) / r.width - 0.5) * 20,
+    });
   }, [isActive]);
-
-  useEffect(() => {
-    if (!isActive) { setRot({ x: 0, y: 0 }); setCrackLevel(0); return; }
-    const t1 = setTimeout(() => setCrackLevel(1), 700);
-    const t2 = setTimeout(() => setCrackLevel(2), 1400);
-    const t3 = setTimeout(() => setCrackLevel(3), 2100);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, [isActive]);
-
-  const cf = (level: number) => ({
-    opacity: crackLevel >= level ? 1 : 0,
-    transition: "opacity 0.6s ease",
-  });
 
   return (
     <div ref={ref} className="w-full h-full flex items-center justify-center p-1 cursor-default"
       onMouseMove={onMove} onMouseLeave={() => setRot({ x: 0, y: 0 })}>
       <div style={{
-        transform: `rotateX(${rot.x}deg) rotateY(${rot.y}deg)`,
+        transform: `perspective(900px) rotateX(${rot.x}deg) rotateY(${rot.y}deg)`,
         transition: rot.x === 0 && rot.y === 0 ? "transform 0.4s ease-out" : "transform 0.08s linear",
         willChange: "transform",
+        opacity: isActive ? 1 : 0,
+        transitionProperty: "transform, opacity",
       }}>
-        <svg viewBox="0 0 160 190" width="145" height="175" fill="none">
-          <defs>
-            <linearGradient id="trophyGold" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#f5de6c" />
-              <stop offset="40%" stopColor="#e8c84e" />
-              <stop offset="100%" stopColor="#c8a030" />
-            </linearGradient>
-            <linearGradient id="trophyDark" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#d4a830" />
-              <stop offset="100%" stopColor="#a07820" />
-            </linearGradient>
-            <radialGradient id="trophyShine" cx="0.35" cy="0.3" r="0.6">
-              <stop offset="0%" stopColor="white" stopOpacity={0.4} />
-              <stop offset="100%" stopColor="white" stopOpacity={0} />
-            </radialGradient>
-          </defs>
+        <svg viewBox="0 0 160 175" width="150" height="168" fill="none"
+          style={{ filter: "drop-shadow(0 12px 28px rgba(180,130,20,0.2)) drop-shadow(0 4px 8px rgba(0,0,0,0.08))" }}>
 
-          {/* Base — bottom cylinder */}
-          <ellipse cx="80" cy="162" rx="38" ry="8" fill="url(#trophyDark)" />
-          <rect x="42" y="152" width="76" height="10" fill="url(#trophyGold)" />
-          <ellipse cx="80" cy="152" rx="38" ry="8" fill="url(#trophyGold)" />
-          <ellipse cx="80" cy="152" rx="38" ry="8" fill="url(#trophyShine)" />
+          {/* Base — pedestal */}
+          <ellipse cx={CX} cy="156" rx="34" ry="7" fill="#a07820" opacity={0.4} />
+          <ellipse cx={CX} cy="150" rx="32" ry="6.5" fill="#c89820" />
+          <rect x={CX - 32} y="144" width="64" height="6" fill="#d4a830" />
+          <ellipse cx={CX} cy="144" rx="32" ry="6.5" fill="#e8c84e" />
+          <line x1={CX - 32} y1="144" x2={CX + 32} y2="144" stroke="white" strokeWidth="0.5" opacity={0.15} />
 
           {/* Stem */}
-          <rect x="72" y="118" width="16" height="36" rx="3" fill="url(#trophyGold)" />
-          <rect x="72" y="118" width="16" height="36" rx="3" fill="url(#trophyShine)" />
-          {/* Stem flare top */}
-          <path d="M68 118 Q80 124 92 118 L88 112 Q80 116 72 112 Z" fill="url(#trophyGold)" />
+          <path d={`M${CX - 7},144 L${CX - 5},120 L${CX + 5},120 L${CX + 7},144`} fill="#d4a830" />
+          <path d={`M${CX - 12},120 Q${CX},126 ${CX + 12},120 L${CX + 5},114 Q${CX},116 ${CX - 5},114 Z`} fill="#e8c84e" />
 
-          {/* Left laurel wreath */}
-          {[0, 1, 2, 3, 4, 5].map(i => (
-            <ellipse key={`ll${i}`} cx={46 - i * 1.5} cy={55 + i * 14} rx="7" ry="12"
-              fill="url(#trophyGold)" stroke="#c8a030" strokeWidth="0.5"
-              transform={`rotate(${30 + i * 8}, ${46 - i * 1.5}, ${55 + i * 14})`} />
+          {/* Left laurel */}
+          <Leaf x={42} y={56} angle={35} />
+          <Leaf x={38} y={72} angle={25} />
+          <Leaf x={36} y={88} angle={15} />
+          <Leaf x={37} y={104} angle={5} />
+          <Leaf x={42} y={118} angle={-8} />
+
+          {/* Right laurel */}
+          <Leaf x={118} y={56} angle={-35} />
+          <Leaf x={122} y={72} angle={-25} />
+          <Leaf x={124} y={88} angle={-15} />
+          <Leaf x={123} y={104} angle={-5} />
+          <Leaf x={118} y={118} angle={8} />
+
+          {/* Center disc — concentric rings like target diagram */}
+          <circle cx={CX} cy={CY} r="42" fill="#a07820" opacity={0.15} />
+          {rings.map((ring, i) => (
+            <circle key={i} cx={CX} cy={CY} r={ring.r} fill={ring.fill}
+              stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
           ))}
-          {/* Right laurel wreath */}
-          {[0, 1, 2, 3, 4, 5].map(i => (
-            <ellipse key={`rl${i}`} cx={114 + i * 1.5} cy={55 + i * 14} rx="7" ry="12"
-              fill="url(#trophyGold)" stroke="#c8a030" strokeWidth="0.5"
-              transform={`rotate(${-30 - i * 8}, ${114 + i * 1.5}, ${55 + i * 14})`} />
-          ))}
+          <circle cx={CX} cy={CY} r="3" fill="white" opacity={0.2} />
 
-          {/* Main disc */}
-          <circle cx="80" cy="68" r="40" fill="url(#trophyGold)" stroke="#b8942d" strokeWidth="2.5" />
-          <circle cx="80" cy="68" r="40" fill="url(#trophyShine)" />
-          <circle cx="80" cy="68" r="33" fill="none" stroke="#d4b44a" strokeWidth="1.5" opacity={0.6} />
-          <circle cx="80" cy="68" r="30" fill="none" stroke="#d4b44a" strokeWidth="0.5" opacity={0.3} />
+          {/* Crosshair lines on disc */}
+          <line x1={CX - 40} y1={CY} x2={CX + 40} y2={CY} stroke="white" opacity={0.08} strokeWidth="0.6" />
+          <line x1={CX} y1={CY - 40} x2={CX} y2={CY + 40} stroke="white" opacity={0.08} strokeWidth="0.6" />
 
-          {/* Star in center */}
-          <path d="M80 42 L87 58 L104 58 L90 68 L95 85 L80 75 L65 85 L70 68 L56 58 L73 58 Z"
-            fill="#e8c84e" stroke="#d4a830" strokeWidth="1" />
-
-          {/* Crack 1 — upper left of disc */}
-          <g style={cf(1)}>
-            <line x1="58" y1="50" x2="42" y2="34" stroke="var(--accent-red)" strokeWidth="2" strokeLinecap="round" />
-            <line x1="42" y1="34" x2="34" y2="28" stroke="var(--accent-red)" strokeWidth="1.2" strokeLinecap="round" />
-            <line x1="42" y1="34" x2="36" y2="40" stroke="var(--accent-red)" strokeWidth="0.8" strokeLinecap="round" />
-          </g>
-
-          {/* Crack 2 — right side of disc */}
-          <g style={cf(2)}>
-            <line x1="106" y1="58" x2="124" y2="44" stroke="var(--accent-red)" strokeWidth="2" strokeLinecap="round" />
-            <line x1="124" y1="44" x2="132" y2="38" stroke="var(--accent-red)" strokeWidth="1.2" strokeLinecap="round" />
-            <line x1="124" y1="44" x2="130" y2="52" stroke="var(--accent-red)" strokeWidth="0.8" strokeLinecap="round" />
-          </g>
-
-          {/* Crack 3 — bottom of disc */}
-          <g style={cf(3)}>
-            <line x1="72" y1="92" x2="60" y2="108" stroke="var(--accent-red)" strokeWidth="2" strokeLinecap="round" />
-            <line x1="60" y1="108" x2="52" y2="116" stroke="var(--accent-red)" strokeWidth="1.2" strokeLinecap="round" />
-            <line x1="60" y1="108" x2="68" y2="114" stroke="var(--accent-red)" strokeWidth="0.8" strokeLinecap="round" />
-          </g>
-
-          {/* Price tag */}
-          <g style={{ ...cf(3), transform: crackLevel >= 3 ? "translateY(0)" : "translateY(-4px)", transition: "all 0.6s ease" }}>
-            <rect x="96" y="164" width="58" height="22" rx="11" fill="var(--accent-red)" opacity={0.1} stroke="var(--accent-red)" strokeWidth="1" />
-            <text x="125" y="179" textAnchor="middle" fontSize="10" fontWeight="900" fill="var(--accent-red)">₪65K+</text>
-          </g>
+          {/* Star overlay */}
+          <path d={`M${CX},${CY - 16} L${CX + 5},${CY - 4} L${CX + 17},${CY - 4} L${CX + 8},${CY + 4} L${CX + 11},${CY + 16} L${CX},${CY + 9} L${CX - 11},${CY + 16} L${CX - 8},${CY + 4} L${CX - 17},${CY - 4} L${CX - 5},${CY - 4} Z`}
+            fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
         </svg>
       </div>
     </div>
