@@ -57,10 +57,10 @@ export const ScenariosSection = () => {
       <div className="max-w-5xl mx-auto px-6">
         <h2 className="text-3xl md:text-5xl font-black text-center mb-2"
           style={{ color: "#1d1d1f", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1)", letterSpacing: "-0.02em" }}>
-          מקרים שקורים <span className="text-[var(--accent-red)]">כל שנה</span>
+          מתי צריך <span className="text-[var(--accent-red)]">ביטוח לאקדח?</span>
         </h2>
         <p className="text-center mb-14 text-lg" style={{ color: "#86868b", opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.2s" }}>
-          6 תרחישים אמיתיים למחזיקי נשק
+          6 סכנות אמיתיות למחזיקי נשק
         </p>
       </div>
 
