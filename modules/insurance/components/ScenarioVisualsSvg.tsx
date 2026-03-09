@@ -100,11 +100,11 @@ export const DualGaugeVisual = ({ isActive }: { isActive: boolean }) => (
   </div>
 );
 
-/** 6: תביעת נזיקין — Horizontal cost bars */
+/** 6: פגיעה בצד ג׳ — Horizontal cost bars */
 const costs = [
-  { label: "כתב הגנה", amount: "₪25,000", pct: 35 },
-  { label: "ייצוג בבית משפט", amount: "₪40,000", pct: 55 },
-  { label: "ערעורים", amount: "₪30,000", pct: 42 },
+  { label: "ייצוג משפטי", amount: "₪40,000", pct: 40 },
+  { label: "פיצוי לנפגע", amount: "₪500,000+", pct: 80 },
+  { label: "הוצאות רפואיות", amount: "₪200,000", pct: 55 },
 ];
 
 export const CostBarsVisual = ({ isActive }: { isActive: boolean }) => (
@@ -127,7 +127,7 @@ export const CostBarsVisual = ({ isActive }: { isActive: boolean }) => (
     </div>
     <div className="flex items-center justify-between w-full max-w-[200px] pt-2" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", opacity: isActive ? 1 : 0, transition: "all 0.5s ease 1s" }}>
       <span className="text-[10px] font-bold text-[#1e2a42]">סה״כ</span>
-      <span className="text-[13px] font-black text-[var(--accent-red)]">₪65,000–100,000</span>
+      <span className="text-[13px] font-black text-[var(--accent-red)]">עד ₪2,000,000</span>
     </div>
   </div>
 );
