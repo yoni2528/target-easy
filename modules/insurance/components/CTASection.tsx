@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Shield, Clock, Phone } from "lucide-react";
 
 export const InsuranceCTA = () => (
   <section id="contact" className="py-32 px-6 text-center bg-[#fafbfe]">
@@ -21,6 +21,19 @@ export const InsuranceCTA = () => (
         <ArrowLeft className="w-5 h-5" />
       </a>
       <p className="text-xs text-[#a0a0b0] mt-4">ללא התחייבות · נחזור אליכם בהקדם</p>
+
+      <div className="flex items-center justify-center gap-6 mt-10 flex-wrap">
+        {[
+          { icon: Shield, text: "כיסוי עד ₪3,000,000" },
+          { icon: Clock, text: "מענה תוך דקות" },
+          { icon: Phone, text: "קו חם 24/7" },
+        ].map(({ icon: Icon, text }) => (
+          <div key={text} className="flex items-center gap-2 text-xs text-[#6b6b80]">
+            <Icon className="w-4 h-4 text-[var(--accent-blue)]" />
+            <span>{text}</span>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 );

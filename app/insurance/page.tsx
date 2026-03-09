@@ -12,6 +12,15 @@ import {
 } from "@/modules/insurance";
 import { Phone, Mail } from "lucide-react";
 
+const Wave = ({ from, to, flip }: { from: string; to: string; flip?: boolean }) => (
+  <div className="relative -my-px" style={{ background: from }}>
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px]"
+      style={flip ? { transform: "scaleX(-1)" } : undefined}>
+      <path d="M0,0 C360,50 720,50 1080,25 C1260,12 1380,0 1440,0 L1440,60 L0,60 Z" fill={to} />
+    </svg>
+  </div>
+);
+
 export const metadata: Metadata = {
   title: "מטרה | ביטוח למחזיקי נשק — כיסוי צד ג׳ מקיף | מנורה ביטוח",
   description:
@@ -25,10 +34,14 @@ export default function InsurancePage() {
       <InsuranceHero />
       <ReturnsSection />
       <ScenariosSection />
+      <Wave from="white" to="#f5f5f7" />
       <TargetDiagram />
+      <Wave from="#f5f5f7" to="#fafbfe" flip />
       <SolutionSection />
       <TimelineSection />
+      <Wave from="#fafbfe" to="white" />
       <FAQSection />
+      <Wave from="white" to="#fafbfe" flip />
       <InsuranceCTA />
 
       {/* WhatsApp floating button */}

@@ -19,6 +19,34 @@ export const InsuranceHero = () => {
         style={{ filter: "brightness(0.35)" }}
       />
 
+      {/* Animated crosshair */}
+      <div className="absolute z-[5] pointer-events-none"
+        style={{
+          width: 320, height: 320,
+          opacity: loaded ? 0.08 : 0,
+          transition: "opacity 1.5s ease 0.8s",
+          animation: loaded ? "hero-spin 40s linear infinite" : "none",
+        }}>
+        <svg viewBox="0 0 200 200" fill="none" stroke="white" strokeWidth="1.5">
+          <circle cx="100" cy="100" r="90" opacity="0.5" />
+          <circle cx="100" cy="100" r="60" opacity="0.4" />
+          <circle cx="100" cy="100" r="30" opacity="0.3" />
+          <line x1="100" y1="0" x2="100" y2="200" opacity="0.3" />
+          <line x1="0" y1="100" x2="200" y2="100" opacity="0.3" />
+        </svg>
+      </div>
+
+      {/* Pulsing glow ring */}
+      <div className="absolute z-[5] pointer-events-none"
+        style={{
+          width: 400, height: 400,
+          borderRadius: "50%",
+          border: "1px solid rgba(26,111,204,0.15)",
+          opacity: loaded ? 1 : 0,
+          transition: "opacity 1.5s ease 1s",
+          animation: loaded ? "hero-pulse 4s ease-in-out infinite" : "none",
+        }} />
+
       {/* Content */}
       <h1 className="relative z-10 text-4xl md:text-6xl font-black text-white tracking-tight text-center"
         style={{

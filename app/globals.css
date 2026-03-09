@@ -288,3 +288,13 @@ body:has(.insurance-theme)::after {
   0% { transform: translateX(0); }
   100% { transform: translateX(calc(-100% - 20px)); }
 }
+
+@keyframes hero-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes hero-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.15; }
+  50% { transform: scale(1.15); opacity: 0.05; }
+}
