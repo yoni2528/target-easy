@@ -97,8 +97,9 @@ export const ScenariosSection = () => {
                 transition: "all 0.7s cubic-bezier(0.32, 0.72, 0, 1)",
                 pointerEvents: isAct ? "auto" : "none",
               }}
-                onMouseEnter={() => isAct && setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
+                onClick={() => isAct && isMobile && setHovered(!hovered)}
+                onMouseEnter={() => isAct && !isMobile && setHovered(true)}
+                onMouseLeave={() => !isMobile && setHovered(false)}
               >
                 <div className="h-full flex flex-col items-center justify-center px-4 md:px-6"
                   style={{ borderRadius: 28, background: "linear-gradient(180deg, #f5f5f7, #fbfbfd)", boxShadow: isAct ? "0 25px 50px -12px rgba(0,0,0,0.12)" : "none", cursor: isAct ? "pointer" : "default" }}>
@@ -108,6 +109,11 @@ export const ScenariosSection = () => {
                   <div className="text-center mt-2 md:mt-3" style={{ maxWidth: 260 }}>
                     <h3 className="text-base md:text-xl font-black mb-1" style={{ color: "#1d1d1f" }}>{s.title}</h3>
                     <p className="text-xs md:text-sm" style={{ color: "#86868b" }}>{s.brief}</p>
+                    {isAct && !isHov && (
+                      <p className="text-[10px] mt-2 font-bold" style={{ color: "var(--accent-blue)", opacity: 0.7, animation: "fadeIn 0.5s ease" }}>
+                        {isMobile ? "לחצו לקרוא עוד" : "העבירו עכבר לקרוא עוד"}
+                      </p>
+                    )}
                     <div style={{
                       maxHeight: isHov ? 120 : 0, opacity: isHov ? 1 : 0,
                       overflow: "hidden", transition: "all 0.5s cubic-bezier(0.32,0.72,0,1)",
