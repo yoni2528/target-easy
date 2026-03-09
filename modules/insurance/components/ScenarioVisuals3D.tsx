@@ -26,7 +26,7 @@ export const DefenderCardVisual = ({ isActive }: { isActive: boolean }) => {
         <div className="absolute inset-0 rounded-xl overflow-hidden"
           style={{
             backfaceVisibility: "hidden",
-            background: "linear-gradient(160deg, #1e2a44 0%, #142038 40%, #0e182c 100%)",
+            background: "linear-gradient(160deg, #1e2a42 0%, #142038 40%, #0e1828 100%)",
             boxShadow: "0 12px 32px -6px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)",
           }}>
           {/* Embossed large letters background */}
