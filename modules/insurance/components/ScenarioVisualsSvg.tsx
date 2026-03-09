@@ -33,16 +33,16 @@ export const BulletTargetVisual = ({ isActive }: { isActive: boolean }) => (
 
       {/* Bullet hole 1 — outer white ring */}
       <g style={fade(isActive, 0.2)}>
-        <circle cx="68" cy="60" r="4.5" fill="#1a1a2a" />
-        <circle cx="68" cy="60" r="7.5" fill="none" stroke="#1a1a2a" strokeWidth="0.5" opacity={0.3} />
-        <line x1="64" y1="56" x2="55" y2="47" stroke="#1a1a2a" strokeWidth="0.8" opacity={0.3} />
-        <line x1="72" y1="56" x2="78" y2="48" stroke="#1a1a2a" strokeWidth="0.6" opacity={0.2} />
-        <line x1="64" y1="64" x2="56" y2="72" stroke="#1a1a2a" strokeWidth="0.6" opacity={0.2} />
+        <circle cx="68" cy="60" r="4.5" fill="#1e2a42" />
+        <circle cx="68" cy="60" r="7.5" fill="none" stroke="#1e2a42" strokeWidth="0.5" opacity={0.3} />
+        <line x1="64" y1="56" x2="55" y2="47" stroke="#1e2a42" strokeWidth="0.8" opacity={0.3} />
+        <line x1="72" y1="56" x2="78" y2="48" stroke="#1e2a42" strokeWidth="0.6" opacity={0.2} />
+        <line x1="64" y1="64" x2="56" y2="72" stroke="#1e2a42" strokeWidth="0.6" opacity={0.2} />
       </g>
 
       {/* Bullet hole 2 — middle blue ring */}
       <g style={fade(isActive, 0.45)}>
-        <circle cx="130" cy="102" r="3.5" fill="#0a0a18" />
+        <circle cx="130" cy="102" r="3.5" fill="#0e1828" />
         <circle cx="130" cy="102" r="6" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="0.5" />
         <line x1="133" y1="105" x2="142" y2="114" stroke="rgba(255,255,255,0.2)" strokeWidth="0.7" />
         <line x1="126" y1="105" x2="120" y2="112" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
@@ -58,11 +58,6 @@ export const BulletTargetVisual = ({ isActive }: { isActive: boolean }) => (
         <line x1="98" y1="88" x2="112" y2="95" stroke="var(--accent-red)" strokeWidth="0.7" opacity={0.25} />
       </g>
 
-      {/* Damage pill */}
-      <g style={fade(isActive, 1)}>
-        <rect x="45" y="182" width="110" height="16" rx="8" fill="var(--accent-red)" opacity={0.08} stroke="var(--accent-red)" strokeWidth="0.8" />
-        <text x="100" y="193" textAnchor="middle" fontSize="10" fontWeight="900" fill="var(--accent-red)">₪3,000,000</text>
-      </g>
     </svg>
   </div>
 );
@@ -86,7 +81,7 @@ const Gauge = ({ label, isActive, delay }: { label: string; isActive: boolean; d
           style={{ transformOrigin: "50px 55px", transform: `rotate(${angle}deg)`, transition: `transform 1.2s cubic-bezier(0.34,1.56,0.64,1) ${delay}s` }} />
         <circle cx="50" cy="55" r="4" fill="#1e2a42" />
       </svg>
-      <span className="text-[9px] font-bold text-center leading-tight" style={{ color: isActive ? "var(--accent-red)" : "#a0a0b0", transition: `color 0.5s ease ${delay + 0.5}s` }}>
+      <span className="text-[9px] font-bold text-center leading-tight" style={{ color: isActive ? "var(--accent-red)" : "#8a9fc0", transition: `color 0.5s ease ${delay + 0.5}s` }}>
         {label}
       </span>
     </div>
@@ -116,7 +111,7 @@ export const CostBarsVisual = ({ isActive }: { isActive: boolean }) => (
       {costs.map((c, i) => (
         <div key={c.label}>
           <div className="flex items-center justify-between mb-1">
-            <span className="text-[9px] text-[#6b6b80]">{c.label}</span>
+            <span className="text-[9px] text-[#5a6a88]">{c.label}</span>
             <span className="text-[9px] font-bold" style={{ color: "var(--accent-red)", opacity: isActive ? 1 : 0, transition: `opacity 0.4s ease ${0.5 + i * 0.2}s` }}>{c.amount}</span>
           </div>
           <div className="h-[6px] rounded-full" style={{ background: "rgba(0,0,0,0.04)" }}>

@@ -12,25 +12,25 @@ const Wheel = ({ angle, speed }: { angle: number; speed: number }) => (
   }}>
     <defs>
       <radialGradient id="safe-hub" cx="50%" cy="40%">
-        <stop offset="0%" stopColor="#4a4a60" />
-        <stop offset="100%" stopColor="#2a2a3e" />
+        <stop offset="0%" stopColor="#3a4a65" />
+        <stop offset="100%" stopColor="#1e2a42" />
       </radialGradient>
     </defs>
-    <circle cx="35" cy="35" r="32" fill="none" stroke="#3a3a50" strokeWidth="3" />
-    <circle cx="35" cy="35" r="30.5" fill="none" stroke="#1e1e2e" strokeWidth="1" />
+    <circle cx="35" cy="35" r="32" fill="none" stroke="#2a3a55" strokeWidth="3" />
+    <circle cx="35" cy="35" r="30.5" fill="none" stroke="#162038" strokeWidth="1" />
     {[0, 60, 120, 180, 240, 300].map(a => {
       const r = a * Math.PI / 180;
       const ex = 35 + 27 * Math.cos(r), ey = 35 + 27 * Math.sin(r);
       return (
         <g key={a}>
-          <line x1="35" y1="35" x2={ex} y2={ey} stroke="#3a3a50" strokeWidth="5" strokeLinecap="round" />
-          <line x1="35" y1="35" x2={ex} y2={ey} stroke="#4a4a65" strokeWidth="3" strokeLinecap="round" />
-          <circle cx={ex} cy={ey} r="2.5" fill="#3a3a50" stroke="#2a2a3e" strokeWidth="0.5" />
+          <line x1="35" y1="35" x2={ex} y2={ey} stroke="#2a3a55" strokeWidth="5" strokeLinecap="round" />
+          <line x1="35" y1="35" x2={ex} y2={ey} stroke="#3a4a68" strokeWidth="3" strokeLinecap="round" />
+          <circle cx={ex} cy={ey} r="2.5" fill="#2a3a55" stroke="#1e2a42" strokeWidth="0.5" />
         </g>
       );
     })}
-    <circle cx="35" cy="35" r="11" fill="url(#safe-hub)" stroke="#1e1e2e" strokeWidth="1.5" />
-    <circle cx="35" cy="35" r="4.5" fill="#3a3a4e" stroke="#2a2a3e" strokeWidth="1" />
+    <circle cx="35" cy="35" r="11" fill="url(#safe-hub)" stroke="#162038" strokeWidth="1.5" />
+    <circle cx="35" cy="35" r="4.5" fill="#2a3a50" stroke="#1e2a42" strokeWidth="1" />
     <circle cx="33" cy="33" r="1.5" fill="rgba(255,255,255,0.08)" />
   </svg>
 );
@@ -121,7 +121,7 @@ export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
           {[25, 75, 125].map((y, i) => (
             <div key={i} className="absolute" style={{
               right: 4, top: y - 6, width: 8, height: 12,
-              background: "linear-gradient(90deg, #3a3a50, #4a4a60, #3a3a50)",
+              background: "linear-gradient(90deg, #2a3a55, #3a4a65, #2a3a55)",
               borderRadius: 2, boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1)",
             }} />
           ))}
@@ -146,7 +146,7 @@ export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
           {[30, 75, 120].map((y, i) => (
             <div key={i} className="absolute" style={{
               left: 4, top: y - 3, width: 12, height: 6,
-              background: "linear-gradient(180deg, #4a4a60, #3a3a50)",
+              background: "linear-gradient(180deg, #3a4a65, #2a3a55)",
               borderRadius: 1, boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
             }} />
           ))}

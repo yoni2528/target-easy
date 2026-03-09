@@ -4,8 +4,7 @@
 export const CrackingMedalVisual = ({ isActive }: { isActive: boolean }) => (
   <div className="w-full h-full flex items-center justify-center p-1">
     <div style={{
-      opacity: isActive ? 1 : 0, transition: "opacity 0.5s ease",
-      animation: isActive ? "shield-spin 4s linear infinite" : "none",
+      animation: "shield-spin 4s linear infinite",
     }}>
       <svg viewBox="0 0 120 150" width="135" height="168" fill="none"
         style={{ filter: "drop-shadow(0 10px 24px rgba(20,60,140,0.3)) drop-shadow(0 3px 6px rgba(0,0,0,0.15))" }}>
