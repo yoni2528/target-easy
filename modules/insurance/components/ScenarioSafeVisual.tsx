@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 
 const D = 14;
 
-const Wheel = ({ open }: { open: boolean }) => (
+const Wheel = ({ angle, speed }: { angle: number; speed: number }) => (
   <svg viewBox="0 0 70 70" className="w-16 h-16" style={{
-    transform: open ? "rotate(45deg)" : "rotate(0deg)",
-    transition: "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+    transform: `rotate(${angle}deg)`,
+    transition: `transform ${speed}s cubic-bezier(0.4, 0, 0.2, 1)`,
     filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
   }}>
     <defs>
@@ -40,13 +40,24 @@ const edgeGrad = "linear-gradient(180deg, #3a3a4e 0%, #25253a 40%, #2a2a3e 60%, 
 
 /** 5: גניבת נשק — 3D safe with depth edges, hinges, bolts */
 export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
+  const [wheelAngle, setWheelAngle] = useState(0);
+  const [wheelSpeed, setWheelSpeed] = useState(0);
   const [doorOpen, setDoorOpen] = useState(false);
 
   useEffect(() => {
     if (isActive) {
-      const t = setTimeout(() => setDoorOpen(true), 500);
-      return () => clearTimeout(t);
+      // Wheel: full turn forward (1.5s)
+      const t1 = setTimeout(() => { setWheelSpeed(1.5); setWheelAngle(360); }, 400);
+      // Wheel: half turn back (1s)
+      const t2 = setTimeout(() => { setWheelSpeed(1); setWheelAngle(180); }, 2000);
+      // Wheel: half turn forward (1s)
+      const t3 = setTimeout(() => { setWheelSpeed(1); setWheelAngle(360); }, 3100);
+      // Door opens (slow 2.4s transition)
+      const t4 = setTimeout(() => setDoorOpen(true), 4200);
+      return () => { [t1, t2, t3, t4].forEach(clearTimeout); };
     }
+    setWheelAngle(0);
+    setWheelSpeed(0);
     setDoorOpen(false);
   }, [isActive]);
 
@@ -79,7 +90,7 @@ export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
           {/* Interior — SVG shadow-box with perspective trapezoids */}
           <svg viewBox="0 0 124 134" className="absolute rounded-lg"
             style={{ top: 8, left: 8, width: 124, height: 134,
-              opacity: doorOpen ? 1 : 0, transition: "opacity 0.5s ease 0.3s" }}>
+              opacity: doorOpen ? 1 : 0, transition: "opacity 0.8s ease 0.5s" }}>
             <defs>
               <radialGradient id="safe-glow" cx="50%" cy="55%">
                 <stop offset="0%" stopColor="rgba(200,150,40,0.22)" />
@@ -124,7 +135,7 @@ export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
           transform: doorOpen
             ? `perspective(700px) rotateY(-65deg) translateZ(${D / 2}px)`
             : `translateZ(${D / 2 + 1}px)`,
-          transition: "transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
+          transition: "transform 2.4s cubic-bezier(0.4, 0, 0.2, 1)",
           boxShadow: doorOpen
             ? "8px 0 25px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)"
             : "0 4px 12px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05)",
@@ -140,7 +151,7 @@ export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
             }} />
           ))}
           <div className="w-full h-full flex items-center justify-center">
-            <Wheel open={doorOpen} />
+            <Wheel angle={wheelAngle} speed={wheelSpeed} />
           </div>
         </div>
 
