@@ -16,13 +16,7 @@ const rings = [
   { r: 42, fill: "#0e4e9e" },
 ];
 
-const CX = 480, CY = 255;
-const anns = [
-  { rr: 210, a: 38, right: true, ey: 60 },
-  { rr: 154, a: 145, right: false, ey: 140 },
-  { rr: 98, a: -35, right: true, ey: 390 },
-  { rr: 42, a: -145, right: false, ey: 450 },
-];
+const CX = 250, CY = 250;
 
 export const TargetDiagram = () => {
   const [v, setV] = useState(false);
@@ -63,11 +57,11 @@ export const TargetDiagram = () => {
           4 שכבות הגנה — מהאירוע ועד הכיסוי המלא
         </p>
 
-        {/* Desktop — target with annotation lines */}
-        <div className="hidden md:block" onMouseMove={onMove} onMouseLeave={() => setRot({ x: 14, y: -6 })}
+        {/* Target graphic */}
+        <div onMouseMove={onMove} onMouseLeave={() => setRot({ x: 14, y: -6 })}
           style={{ opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1) 0.3s" }}>
           <div style={{ transform: `perspective(900px) rotateX(${rot.x}deg) rotateY(${rot.y}deg)`, transition: "transform 0.12s ease-out", transformStyle: "preserve-3d" }}>
-            <svg viewBox="0 0 960 510" className="w-full max-w-[880px] mx-auto"
+            <svg viewBox="0 0 500 500" className="w-full max-w-[280px] md:max-w-[420px] mx-auto"
               style={{ filter: "drop-shadow(0 25px 50px rgba(26,111,204,0.14)) drop-shadow(0 8px 16px rgba(0,0,0,0.06))" }}>
               <ellipse cx={CX} cy={CY + 8} rx="214" ry="214" fill="#1254a0" opacity="0.2" />
               {rings.map((ring, i) => (
@@ -76,78 +70,20 @@ export const TargetDiagram = () => {
               <circle cx={CX} cy={CY} r="12" fill="#fff" opacity="0.15" />
               <line x1={CX - 215} y1={CY} x2={CX + 215} y2={CY} stroke="white" opacity="0.06" strokeWidth="0.8" />
               <line x1={CX} y1={CY - 215} x2={CX} y2={CY + 215} stroke="white" opacity="0.06" strokeWidth="0.8" />
-
-              {anns.map((an, i) => {
-                const rad = an.a * Math.PI / 180;
-                const sx = CX + an.rr * Math.cos(rad), sy = CY - an.rr * Math.sin(rad);
-                const dx = an.right ? 720 : 240;
-                const elbX = an.right ? dx - 25 : dx + 25;
-                const tx = an.right ? dx + 18 : 12;
-                const tw = an.right ? 218 : dx - 30;
-                return (
-                  <g key={i} style={{ opacity: v ? 1 : 0, transition: `opacity 0.5s ease ${0.8 + i * 0.15}s` }}>
-                    <path d={`M${sx},${sy} L${elbX},${an.ey} L${dx},${an.ey}`}
-                      fill="none" stroke="#1a6fcc" strokeWidth="2" strokeDasharray="6 4" opacity="0.7" />
-                    <circle cx={sx} cy={sy} r="6" fill="#1a6fcc" opacity="0.85" />
-                    <circle cx={dx} cy={an.ey} r="5" fill="#1a6fcc" />
-                    <foreignObject x={tx} y={an.ey - 24} width={tw} height="56">
-                      <div style={{ direction: "rtl", textAlign: an.right ? "left" : "right" }}>
-                        <p style={{ fontSize: 16, fontWeight: 800, color: "#1d1d1f", margin: 0, lineHeight: 1.3 }}>
-                          <span style={{ color: "#1a6fcc", marginLeft: 5, fontSize: 18 }}>{i + 1}.</span> {steps[i].label}
-                        </p>
-                        <p style={{ fontSize: 13, color: "#6b6b80", margin: "3px 0 0", lineHeight: 1.3 }}>{steps[i].sub}</p>
-                      </div>
-                    </foreignObject>
-                  </g>
-                );
-              })}
             </svg>
           </div>
         </div>
 
-        {/* Mobile — target with annotation lines + gyro tilt */}
-        <div className="md:hidden" style={{ opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1) 0.3s" }}>
-          <div style={{ transform: `perspective(800px) rotateX(${rot.x}deg) rotateY(${rot.y}deg)`, transition: "transform 0.15s ease-out", transformStyle: "preserve-3d" }}>
-            <svg viewBox="0 0 360 560" className="w-full max-w-[320px] mx-auto"
-              style={{ filter: "drop-shadow(0 15px 30px rgba(26,111,204,0.12))" }}>
-              {/* Target at top center */}
-              <ellipse cx="180" cy="138" rx="130" ry="130" fill="#1254a0" opacity="0.15" />
-              {rings.map((ring, i) => (
-                <circle key={i} cx="180" cy="130" r={ring.r * 0.6} fill={ring.fill} stroke="rgba(255,255,255,0.12)" strokeWidth="0.5" />
-              ))}
-              <circle cx="180" cy="130" r="8" fill="#fff" opacity="0.15" />
-              <line x1="50" y1="130" x2="310" y2="130" stroke="white" opacity="0.06" strokeWidth="0.8" />
-              <line x1="180" y1="0" x2="180" y2="260" stroke="white" opacity="0.06" strokeWidth="0.8" />
-
-              {/* Annotation lines from ring layers to step items */}
-              {[
-                { rr: 126, a: 50, ey: 310 },
-                { rr: 92, a: 140, ey: 370 },
-                { rr: 59, a: -40, ey: 430 },
-                { rr: 25, a: -130, ey: 490 },
-              ].map((an, i) => {
-                const rad = an.a * Math.PI / 180;
-                const sx = 180 + an.rr * 0.6 * Math.cos(rad);
-                const sy = 130 - an.rr * 0.6 * Math.sin(rad);
-                return (
-                  <g key={i} style={{ opacity: v ? 1 : 0, transition: `opacity 0.5s ease ${0.8 + i * 0.2}s` }}>
-                    <path d={`M${sx},${sy} Q${sx},${an.ey - 20} 50,${an.ey}`}
-                      fill="none" stroke="#1a6fcc" strokeWidth="1.5" strokeDasharray="4 3" opacity="0.5" />
-                    <circle cx={sx} cy={sy} r="4" fill="#1a6fcc" opacity="0.7" />
-                    <circle cx="50" cy={an.ey} r="3.5" fill="#1a6fcc" />
-                    <foreignObject x="60" y={an.ey - 18} width="280" height="46">
-                      <div style={{ direction: "rtl", textAlign: "right" }}>
-                        <p style={{ fontSize: 14, fontWeight: 800, color: "#1d1d1f", margin: 0, lineHeight: 1.3 }}>
-                          <span style={{ color: "#1a6fcc", marginLeft: 4, fontSize: 15 }}>{i + 1}.</span> {steps[i].label}
-                        </p>
-                        <p style={{ fontSize: 11, color: "#6b6b80", margin: "2px 0 0", lineHeight: 1.3 }}>{steps[i].sub}</p>
-                      </div>
-                    </foreignObject>
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
+        {/* Steps below target */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 mt-8 md:mt-12 max-w-3xl mx-auto" dir="rtl">
+          {steps.map((s, i) => (
+            <div key={i} className="text-center p-3 md:p-4 rounded-2xl"
+              style={{ background: "#fff", border: "1px solid #e8edf5", boxShadow: "0 4px 12px rgba(0,0,0,0.04)", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(16px)", transition: `all 0.5s ease ${0.8 + i * 0.12}s` }}>
+              <span className="text-lg md:text-xl font-black text-[#1a6fcc]">{i + 1}.</span>
+              <h3 className="text-sm md:text-base font-black text-[#1d1d1f] mt-1">{s.label}</h3>
+              <p className="text-[11px] md:text-xs text-[#6b6b80] mt-1 leading-relaxed">{s.sub}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
