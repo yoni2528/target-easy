@@ -43,9 +43,12 @@ export default function InsurancePage() {
       <footer className="py-10 px-6 bg-white" style={{ borderTop: "1px solid #e8edf5" }}>
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-4">
-            <div className="text-center md:text-right">
-              <h4 className="font-bold text-sm text-[#37374e]">מטרה — ביטוח נשק</h4>
-              <p className="text-xs text-[#6b6b80]">הפוליסה מונפקת ע״י מנורה ביטוח</p>
+            <div className="flex items-center gap-3">
+              <div className="text-center md:text-right">
+                <h4 className="font-bold text-sm text-[#37374e]">מטרה — ביטוח נשק</h4>
+                <p className="text-xs text-[#6b6b80]">הפוליסה מונפקת ע״י מנורה ביטוח</p>
+              </div>
+              <img src="/menora-logo.png" alt="מנורה מבטחים" className="h-8 opacity-60" />
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2 text-sm text-[#6b6b80]">
@@ -58,8 +61,12 @@ export default function InsurancePage() {
               </div>
             </div>
           </div>
-          <div className="pt-4 text-center" style={{ borderTop: "1px solid #e8edf5" }}>
+          <div className="flex items-center justify-between pt-4" style={{ borderTop: "1px solid #e8edf5" }}>
             <p className="text-xs text-[#a0a0b0]">© 2026 מטרה</p>
+            <div className="flex gap-4">
+              <a href="/terms" className="text-xs text-[#a0a0b0] hover:text-[var(--accent-blue)] transition-colors">תנאי שימוש</a>
+              <a href="/privacy" className="text-xs text-[#a0a0b0] hover:text-[var(--accent-blue)] transition-colors">מדיניות פרטיות</a>
+            </div>
           </div>
         </div>
       </footer>

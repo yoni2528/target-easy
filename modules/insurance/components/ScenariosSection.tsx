@@ -37,6 +37,13 @@ export const ScenariosSection = () => {
 
   useEffect(() => setHovered(false), [active]);
 
+  // Auto-play: advance every 5s, pause on hover
+  useEffect(() => {
+    if (hovered || !visible) return;
+    const id = setInterval(() => setActive((p) => (p + 1) % N), 5000);
+    return () => clearInterval(id);
+  }, [hovered, visible]);
+
   const go = useCallback((dir: number) => setActive((p) => (p + dir + N) % N), []);
   const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX; };
   const onTouchEnd = (e: React.TouchEvent) => {
@@ -125,6 +132,7 @@ export const ScenariosSection = () => {
             style={{ width: i === active ? 28 : 8, height: 8, borderRadius: 4, background: i === active ? "#1d1d1f" : "#d2d2d7" }} />
         ))}
       </div>
+      <p className="md:hidden text-center text-xs text-[#a0a0b0] mt-3">← החליקו →</p>
     </section>
   );
 };
