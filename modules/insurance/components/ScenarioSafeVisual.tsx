@@ -76,48 +76,36 @@ export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
           transform: `translateZ(${D / 2}px)`,
         }}>
           <div className="absolute inset-0 rounded-xl" style={{ background: brushed }} />
-          {/* Interior — deep box with visible walls */}
-          <div className="absolute inset-[6px] rounded-lg overflow-hidden" style={{
-            background: "#0e0e18",
-            boxShadow: "inset 0 4px 16px rgba(0,0,0,0.8)",
-            opacity: doorOpen ? 1 : 0, transition: "opacity 0.5s ease 0.3s",
-          }}>
+          {/* Interior — SVG shadow-box with perspective trapezoids */}
+          <svg viewBox="0 0 124 134" className="absolute rounded-lg"
+            style={{ top: 8, left: 8, width: 124, height: 134,
+              opacity: doorOpen ? 1 : 0, transition: "opacity 0.5s ease 0.3s" }}>
+            <defs>
+              <radialGradient id="safe-glow" cx="50%" cy="55%">
+                <stop offset="0%" stopColor="rgba(200,150,40,0.22)" />
+                <stop offset="50%" stopColor="rgba(200,150,40,0.05)" />
+                <stop offset="100%" stopColor="transparent" />
+              </radialGradient>
+            </defs>
             {/* Back wall */}
-            <div className="absolute inset-[8px] rounded" style={{
-              background: "linear-gradient(180deg, #12121e 0%, #16162a 50%, #14141f 100%)",
-              boxShadow: "inset 0 0 12px rgba(0,0,0,0.5)",
-            }} />
-            {/* Top inner wall — dark ceiling */}
-            <div className="absolute top-0 left-0 right-0 h-[8px]" style={{
-              background: "linear-gradient(180deg, #0a0a14, #10101c)",
-            }} />
-            {/* Bottom inner wall — floor with subtle reflection */}
-            <div className="absolute bottom-0 left-0 right-0 h-[8px]" style={{
-              background: "linear-gradient(0deg, #0c0c16, #10101c)",
-            }}>
-              <div className="w-full h-full" style={{
-                background: "linear-gradient(0deg, rgba(200,150,40,0.08), transparent)",
-              }} />
-            </div>
-            {/* Left inner wall */}
-            <div className="absolute top-0 bottom-0 left-0 w-[8px]" style={{
-              background: "linear-gradient(90deg, #0a0a14, #10101c)",
-            }} />
-            {/* Right inner wall */}
-            <div className="absolute top-0 bottom-0 right-0 w-[8px]" style={{
-              background: "linear-gradient(-90deg, #0a0a14, #10101c)",
-            }} />
-            {/* Golden ambient glow */}
-            <div className="absolute inset-0" style={{
-              background: "radial-gradient(ellipse at 50% 60%, rgba(200,150,40,0.2) 0%, rgba(200,150,40,0.04) 45%, transparent 75%)",
-              opacity: doorOpen ? 1 : 0, transition: "opacity 0.8s ease 0.6s",
-            }} />
-            {/* Corner shadow lines */}
-            <div className="absolute top-[7px] left-[7px] right-[7px] h-[1px]" style={{ background: "rgba(0,0,0,0.4)" }} />
-            <div className="absolute bottom-[7px] left-[7px] right-[7px] h-[1px]" style={{ background: "rgba(0,0,0,0.3)" }} />
-            <div className="absolute top-[7px] bottom-[7px] left-[7px] w-[1px]" style={{ background: "rgba(0,0,0,0.4)" }} />
-            <div className="absolute top-[7px] bottom-[7px] right-[7px] w-[1px]" style={{ background: "rgba(0,0,0,0.3)" }} />
-          </div>
+            <rect x="20" y="20" width="84" height="94" rx="2" fill="#16162a" />
+            {/* Ceiling */}
+            <polygon points="0,0 124,0 104,20 20,20" fill="#08080f" />
+            {/* Floor */}
+            <polygon points="20,114 104,114 124,134 0,134" fill="#0c0c18" />
+            {/* Left wall */}
+            <polygon points="0,0 20,20 20,114 0,134" fill="#0a0a15" />
+            {/* Right wall */}
+            <polygon points="124,0 124,134 104,114 104,20" fill="#0e0e1a" />
+            {/* Edge highlights */}
+            <line x1="20" y1="20" x2="104" y2="20" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+            <line x1="20" y1="20" x2="20" y2="114" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+            <line x1="104" y1="20" x2="104" y2="114" stroke="rgba(255,255,255,0.02)" strokeWidth="0.5" />
+            {/* Golden glow on back wall */}
+            <rect x="20" y="20" width="84" height="94" fill="url(#safe-glow)" />
+            {/* Floor reflection */}
+            <polygon points="20,114 104,114 124,134 0,134" fill="rgba(200,150,40,0.04)" />
+          </svg>
           {/* Hinges on right side */}
           {[25, 75, 125].map((y, i) => (
             <div key={i} className="absolute" style={{
