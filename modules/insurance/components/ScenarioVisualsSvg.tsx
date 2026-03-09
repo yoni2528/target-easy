@@ -6,48 +6,62 @@ const fade = (active: boolean, delay: number) => ({
   transition: `all 0.5s ease ${delay}s`,
 });
 
-/** 1: פליטת כדור — SVG target with bullet holes + cracks */
+const targetRings = [
+  { r: 84, fill: "#1a6fcc" }, { r: 73, fill: "#dce9f7" },
+  { r: 62, fill: "#2580d8" }, { r: 50, fill: "#e6eff8" },
+  { r: 39, fill: "#1560b8" }, { r: 28, fill: "#edf3fa" },
+  { r: 17, fill: "#0e4e9e" },
+];
+const TX = 100, TY = 88;
+
+/** 1: פליטת כדור — Blue target (matching TargetDiagram) with bullet holes */
 export const BulletTargetVisual = ({ isActive }: { isActive: boolean }) => (
   <div className="w-full h-full flex items-center justify-center p-1">
-    <svg viewBox="0 0 200 200" className="w-full h-full max-w-[190px]" fill="none">
-      {/* Target rings */}
-      <circle cx="100" cy="85" r="68" fill="#fafbfe" stroke="#dde0e6" strokeWidth="1.5" />
-      <circle cx="100" cy="85" r="52" fill="#f0f1f5" stroke="#dde0e6" strokeWidth="1" />
-      <circle cx="100" cy="85" r="36" fill="#e8eaef" stroke="#d5d8df" strokeWidth="1" />
-      <circle cx="100" cy="85" r="20" fill="var(--accent-red)" opacity={0.1} stroke="var(--accent-red)" strokeWidth="1" strokeOpacity={0.3} />
-      <circle cx="100" cy="85" r="5" fill="var(--accent-red)" opacity={0.5} />
+    <svg viewBox="0 0 200 200" className="w-full h-full max-w-[190px]" fill="none"
+      style={{ filter: "drop-shadow(0 12px 28px rgba(26,111,204,0.14)) drop-shadow(0 4px 8px rgba(0,0,0,0.06))" }}>
+      {/* Shadow */}
+      <ellipse cx={TX} cy={TY + 4} rx="88" ry="88" fill="#1254a0" opacity="0.15" />
+      {/* Concentric rings — same as TargetDiagram */}
+      {targetRings.map((ring, i) => (
+        <circle key={i} cx={TX} cy={TY} r={ring.r} fill={ring.fill}
+          stroke="rgba(255,255,255,0.12)" strokeWidth="0.5" />
+      ))}
+      <circle cx={TX} cy={TY} r="5" fill="#fff" opacity={0.15} />
+      {/* Crosshair */}
+      <line x1={TX - 88} y1={TY} x2={TX + 88} y2={TY} stroke="white" opacity="0.06" strokeWidth="0.8" />
+      <line x1={TX} y1={TY - 88} x2={TX} y2={TY + 88} stroke="white" opacity="0.06" strokeWidth="0.8" />
 
-      {/* Bullet hole 1 — outer ring */}
+      {/* Bullet hole 1 — outer white ring */}
       <g style={fade(isActive, 0.2)}>
-        <circle cx="72" cy="68" r="4.5" fill="#2a2a3a" />
-        <circle cx="72" cy="68" r="7" fill="none" stroke="#2a2a3a" strokeWidth="0.5" opacity={0.25} />
-        <line x1="68" y1="64" x2="59" y2="55" stroke="#2a2a3a" strokeWidth="0.8" opacity={0.3} />
-        <line x1="75" y1="63" x2="80" y2="54" stroke="#2a2a3a" strokeWidth="0.6" opacity={0.2} />
-        <line x1="68" y1="72" x2="60" y2="78" stroke="#2a2a3a" strokeWidth="0.6" opacity={0.2} />
+        <circle cx="68" cy="60" r="4.5" fill="#1a1a2a" />
+        <circle cx="68" cy="60" r="7.5" fill="none" stroke="#1a1a2a" strokeWidth="0.5" opacity={0.3} />
+        <line x1="64" y1="56" x2="55" y2="47" stroke="#1a1a2a" strokeWidth="0.8" opacity={0.3} />
+        <line x1="72" y1="56" x2="78" y2="48" stroke="#1a1a2a" strokeWidth="0.6" opacity={0.2} />
+        <line x1="64" y1="64" x2="56" y2="72" stroke="#1a1a2a" strokeWidth="0.6" opacity={0.2} />
       </g>
 
-      {/* Bullet hole 2 — middle ring */}
+      {/* Bullet hole 2 — middle blue ring */}
       <g style={fade(isActive, 0.45)}>
-        <circle cx="118" cy="98" r="3.5" fill="#2a2a3a" />
-        <circle cx="118" cy="98" r="6" fill="none" stroke="#2a2a3a" strokeWidth="0.5" opacity={0.25} />
-        <line x1="121" y1="101" x2="130" y2="110" stroke="#2a2a3a" strokeWidth="0.7" opacity={0.25} />
-        <line x1="114" y1="101" x2="108" y2="108" stroke="#2a2a3a" strokeWidth="0.5" opacity={0.2} />
+        <circle cx="130" cy="102" r="3.5" fill="#0a0a18" />
+        <circle cx="130" cy="102" r="6" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="0.5" />
+        <line x1="133" y1="105" x2="142" y2="114" stroke="rgba(255,255,255,0.2)" strokeWidth="0.7" />
+        <line x1="126" y1="105" x2="120" y2="112" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
       </g>
 
-      {/* Bullet hole 3 — near center, big cracks */}
+      {/* Bullet hole 3 — near center, red accent */}
       <g style={fade(isActive, 0.7)}>
-        <circle cx="96" cy="82" r="3.5" fill="var(--accent-red)" opacity={0.9} />
-        <circle cx="96" cy="82" r="6" fill="none" stroke="var(--accent-red)" strokeWidth="0.6" opacity={0.35} />
-        <line x1="93" y1="79" x2="83" y2="68" stroke="var(--accent-red)" strokeWidth="1" opacity={0.4} />
-        <line x1="99" y1="79" x2="108" y2="68" stroke="var(--accent-red)" strokeWidth="0.8" opacity={0.3} />
-        <line x1="93" y1="85" x2="82" y2="96" stroke="var(--accent-red)" strokeWidth="0.8" opacity={0.3} />
-        <line x1="99" y1="86" x2="112" y2="92" stroke="var(--accent-red)" strokeWidth="0.7" opacity={0.25} />
+        <circle cx="95" cy="84" r="3.5" fill="var(--accent-red)" opacity={0.9} />
+        <circle cx="95" cy="84" r="6" fill="none" stroke="var(--accent-red)" strokeWidth="0.6" opacity={0.4} />
+        <line x1="92" y1="81" x2="82" y2="70" stroke="var(--accent-red)" strokeWidth="1" opacity={0.4} />
+        <line x1="98" y1="80" x2="108" y2="70" stroke="var(--accent-red)" strokeWidth="0.8" opacity={0.3} />
+        <line x1="92" y1="87" x2="80" y2="98" stroke="var(--accent-red)" strokeWidth="0.8" opacity={0.3} />
+        <line x1="98" y1="88" x2="112" y2="95" stroke="var(--accent-red)" strokeWidth="0.7" opacity={0.25} />
       </g>
 
       {/* Damage pill */}
       <g style={fade(isActive, 1)}>
-        <rect x="45" y="166" width="110" height="26" rx="13" fill="var(--accent-red)" opacity={0.08} stroke="var(--accent-red)" strokeWidth="1" />
-        <text x="100" y="183" textAnchor="middle" fontSize="12" fontWeight="900" fill="var(--accent-red)">₪3,000,000</text>
+        <rect x="45" y="182" width="110" height="16" rx="8" fill="var(--accent-red)" opacity={0.08} stroke="var(--accent-red)" strokeWidth="0.8" />
+        <text x="100" y="193" textAnchor="middle" fontSize="10" fontWeight="900" fill="var(--accent-red)">₪3,000,000</text>
       </g>
     </svg>
   </div>
