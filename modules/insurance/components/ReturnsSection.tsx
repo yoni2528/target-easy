@@ -44,19 +44,19 @@ export const ReturnsSection = () => {
   const total = returns.reduce((s, r) => s + r.amount, 0);
 
   return (
-    <section ref={ref} className="py-28 px-6 bg-white">
+    <section ref={ref} className="py-16 md:py-28 px-4 md:px-6 bg-white">
       <div className="max-w-3xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-center text-[#37374e] mb-12"
+        <h2 className="text-2xl md:text-4xl font-black text-center text-[#37374e] mb-8 md:mb-12"
           style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
           מביא לי <span className="text-[var(--accent-blue)]">1,350₪</span> בשנה?
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10" style={{ perspective: "1200px" }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-10" style={{ perspective: "1200px" }}>
           {returns.map((r, i) => {
             const Icon = r.icon;
             return (
               <div key={r.title}
-                className="p-6 text-center hover:scale-[1.03] transition-transform cursor-default"
+                className="p-5 md:p-6 text-center hover:scale-[1.03] transition-transform cursor-default"
                 style={{
                   borderRadius: "24px",
                   background: "#f8faff",
@@ -75,7 +75,7 @@ export const ReturnsSection = () => {
                 </div>
                 <h3 className="text-lg font-black text-[#37374e] mb-1">{r.title}</h3>
                 <p className="text-sm text-[#6b6b80] mb-3">{r.desc}</p>
-                <span className="text-4xl font-black text-[var(--accent-blue)]">
+                <span className="text-3xl md:text-4xl font-black text-[var(--accent-blue)]">
                   <CountUp target={r.amount} started={visible} />
                   <span className="text-lg font-normal text-[#a0a0b0] mr-1">₪</span>
                 </span>
@@ -85,7 +85,7 @@ export const ReturnsSection = () => {
         </div>
 
         {/* Total — elevated card with glow */}
-        <div className="p-8 text-center"
+        <div className="p-6 md:p-8 text-center"
           style={{
             borderRadius: "30px",
             background: "linear-gradient(135deg, #f0f6ff, #f8faff)",
@@ -97,7 +97,7 @@ export const ReturnsSection = () => {
           }}>
           <p className="text-sm text-[#6b6b80] mb-2">סה״כ החזרים בשנה</p>
           <div className="flex items-baseline justify-center gap-1">
-            <span className="text-5xl font-black text-[var(--accent-blue)]">
+            <span className="text-4xl md:text-5xl font-black text-[var(--accent-blue)]">
               <CountUp target={total} started={visible} />
             </span>
             <span className="text-xl text-[#a0a0b0]">₪</span>

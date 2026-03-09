@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const Phone = ({ children, tiltY = 0 }: { children: React.ReactNode; tiltY?: number }) => (
-  <div className="relative mx-auto" style={{ width: 200, height: 380, transformStyle: "preserve-3d", transform: `rotateY(${tiltY}deg)` }}>
+  <div className="relative mx-auto scale-[0.8] md:scale-100 origin-top" style={{ width: 200, height: 380, transformStyle: "preserve-3d", transform: `rotateY(${tiltY}deg)` }}>
     {/* Right edge */}
     <div style={{
       position: "absolute", top: 20, right: -1, width: 14, height: 340,
@@ -84,9 +84,9 @@ export const TimelineSection = () => {
   const rot2 = { x: (mouse.y - 0.5) * -14 + 14, y: (mouse.x - 0.5) * 18 - 6 };
 
   return (
-    <section ref={ref} className="py-28 px-6 bg-[#fafbfe]">
+    <section ref={ref} className="py-16 md:py-28 px-6 bg-[#fafbfe]">
       <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-black text-[#1d1d1f] mb-3"
+        <h2 className="text-2xl md:text-4xl font-black text-[#1d1d1f] mb-3"
           style={{ opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease", letterSpacing: "-0.02em" }}>
           <span className="text-[var(--accent-blue)]">30 שניות</span> וזה הכל
         </h2>
@@ -96,7 +96,7 @@ export const TimelineSection = () => {
 
         <div onMouseMove={onMove} onMouseLeave={resetMouse}
           style={{ opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1) 0.3s" }}>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-16">
 
               <div className="text-center" style={{ animation: vis ? "fadeInUp 0.8s cubic-bezier(0.32,0.72,0,1) 0.4s both" : "none" }}>
                 <div style={{ transform: `perspective(1000px) rotateX(${rot1.x}deg) rotateY(${rot1.y}deg)`, transition: "transform 0.12s ease-out", transformStyle: "preserve-3d" }}>

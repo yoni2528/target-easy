@@ -15,7 +15,7 @@ const faqs = [
 
 const FAQItem = ({ q, a, isOpen, onClick }: { q: string; a: string; isOpen: boolean; onClick: () => void }) => (
   <div style={{ borderBottom: "1px solid #e8edf5" }} className="last:border-b-0">
-    <button onClick={onClick} className="w-full flex items-center justify-between py-5 px-2 text-right gap-3 group">
+    <button onClick={onClick} className="w-full flex items-center justify-between py-4 md:py-5 px-2 text-right gap-3 group min-h-[48px]">
       <span className={`text-sm md:text-base font-bold transition-colors ${isOpen ? "text-[var(--accent-blue)]" : "text-[#37374e] group-hover:text-[var(--accent-blue)]"}`}>
         {q}
       </span>
@@ -45,9 +45,9 @@ export const FAQSection = () => {
   }, []);
 
   return (
-    <section ref={ref} id="faq" className="py-28 px-6 bg-white">
+    <section ref={ref} id="faq" className="py-16 md:py-28 px-4 md:px-6 bg-white">
       <div className="max-w-2xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-center text-[#37374e] mb-3"
+        <h2 className="text-2xl md:text-4xl font-black text-center text-[#37374e] mb-3"
           style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
           שאלות <span className="text-[var(--accent-blue)]">נפוצות</span>
         </h2>

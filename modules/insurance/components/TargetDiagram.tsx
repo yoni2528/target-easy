@@ -43,13 +43,13 @@ export const TargetDiagram = () => {
   };
 
   return (
-    <section ref={ref} className="py-28 px-6" style={{ background: "#f5f5f7" }}>
+    <section ref={ref} className="py-16 md:py-28 px-4 md:px-6" style={{ background: "#f5f5f7" }}>
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-black text-[#1d1d1f] mb-3"
+        <h2 className="text-2xl md:text-4xl font-black text-[#1d1d1f] mb-3"
           style={{ opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease", letterSpacing: "-0.02em" }}>
           איך <span className="text-[var(--accent-blue)]">הביטוח</span> עובד?
         </h2>
-        <p className="text-[#86868b] mb-16" style={{ opacity: v ? 1 : 0, transition: "opacity 0.6s ease 0.2s" }}>
+        <p className="text-sm md:text-base text-[#86868b] mb-10 md:mb-16" style={{ opacity: v ? 1 : 0, transition: "opacity 0.6s ease 0.2s" }}>
           4 שכבות הגנה — מהאירוע ועד הכיסוי המלא
         </p>
 
@@ -97,7 +97,7 @@ export const TargetDiagram = () => {
 
         {/* Mobile — target + list */}
         <div className="md:hidden" style={{ opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1) 0.3s" }}>
-          <svg viewBox="0 0 460 460" className="w-64 mx-auto mb-10"
+          <svg viewBox="0 0 460 460" className="w-48 mx-auto mb-8"
             style={{ filter: "drop-shadow(0 20px 40px rgba(26,111,204,0.15))" }}>
             <ellipse cx="230" cy="238" rx="214" ry="214" fill="#1254a0" opacity="0.2" />
             {rings.map((ring, i) => (

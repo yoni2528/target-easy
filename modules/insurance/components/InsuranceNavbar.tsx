@@ -80,18 +80,18 @@ export const InsuranceNavbar = () => {
           backdropFilter: scrolled ? "blur(12px)" : "none",
           borderBottom: scrolled ? "1px solid #e8edf5" : "1px solid transparent",
         }}>
-        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-          <a href="#" className="text-xl font-black transition-colors" style={{ color: scrolled ? "#37374e" : "white" }}>
+        <div className="max-w-5xl mx-auto px-4 md:px-6 h-14 flex items-center justify-between">
+          <a href="#" className="text-lg md:text-xl font-black transition-colors" style={{ color: scrolled ? "#37374e" : "white" }}>
             מטרה
           </a>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-3 md:gap-5">
             <button onClick={() => setOpen(true)}
-              className="text-sm font-bold cursor-pointer transition-colors"
+              className="text-sm font-bold cursor-pointer transition-colors py-2"
               style={{ color: scrolled ? "#37374e" : "white" }}>
               מחירים
             </button>
             <a href="#contact"
-              className="text-sm font-bold px-5 py-2 hover:scale-105 transition-transform"
+              className="text-xs md:text-sm font-bold px-4 md:px-5 py-2 hover:scale-105 transition-transform"
               style={{ borderRadius: "20px", background: "var(--accent-blue)", color: "white" }}>
               צור קשר
             </a>
@@ -101,19 +101,19 @@ export const InsuranceNavbar = () => {
 
       {/* Pricing Modal */}
       {open && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={() => setOpen(false)}>
+        <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center md:p-4" onClick={() => setOpen(false)}>
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" style={{ animation: "fadeIn 0.2s ease" }} />
-          <div className="relative bg-white w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6 md:p-10"
+          <div className="relative bg-white w-full max-w-3xl max-h-[92vh] overflow-y-auto p-5 pt-12 md:p-10 rounded-t-3xl md:rounded-[30px]"
             onClick={(e) => e.stopPropagation()}
-            style={{ borderRadius: "30px", boxShadow: "0 30px 60px -15px rgba(0,0,0,0.2)", animation: "fadeInUp 0.3s ease" }}>
+            style={{ boxShadow: "0 30px 60px -15px rgba(0,0,0,0.2)", animation: "fadeInUp 0.3s ease" }}>
             <button onClick={() => setOpen(false)}
-              className="absolute top-4 left-4 w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#f0f2f5] transition-colors">
+              className="absolute top-3 left-3 md:top-4 md:left-4 w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#f0f2f5] transition-colors">
               <X className="w-5 h-5 text-[#6b6b80]" />
             </button>
-            <h2 className="text-2xl md:text-3xl font-black text-[#37374e] text-center mb-2">
+            <h2 className="text-xl md:text-3xl font-black text-[#37374e] text-center mb-2">
               בחר את <span className="text-[var(--accent-blue)]">המסלול שלך</span>
             </h2>
-            <p className="text-[#6b6b80] text-center mb-8 text-sm">ביטוח צד ג׳ מנורה + כתב שירות בריאות פלוס</p>
+            <p className="text-[#6b6b80] text-center mb-6 md:mb-8 text-xs md:text-sm">ביטוח צד ג׳ מנורה + כתב שירות בריאות פלוס</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {plans.map((plan) => (
                 <PlanCard key={plan.name} plan={plan} onClose={() => setOpen(false)} />

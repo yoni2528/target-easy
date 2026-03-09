@@ -30,25 +30,25 @@ export const SolutionSection = () => {
   // creating a seamless infinite loop with no gaps.
   const Card = ({ c }: { c: typeof coverages[0] }) => (
     <div
-      className="flex-shrink-0 p-6 text-center cursor-default hover:scale-[1.03] transition-transform"
+      className="flex-shrink-0 p-4 md:p-6 text-center cursor-default hover:scale-[1.03] transition-transform"
       style={{
-        width: 280,
+        width: 220,
         direction: "rtl",
         borderRadius: "20px",
         background: "white",
         border: "1px solid #e8edf5",
         boxShadow: "0 12px 30px -8px rgba(0,0,0,0.07)",
       }}>
-      <span className="text-3xl font-black text-[var(--accent-blue)] block mb-3">{c.stat}</span>
-      <h3 className="text-base font-black text-[#37374e] mb-1">{c.title}</h3>
+      <span className="text-2xl md:text-3xl font-black text-[var(--accent-blue)] block mb-2 md:mb-3">{c.stat}</span>
+      <h3 className="text-sm md:text-base font-black text-[#37374e] mb-1">{c.title}</h3>
       <p className="text-xs text-[#6b6b80]">{c.desc}</p>
     </div>
   );
 
   return (
-    <section ref={ref} id="modules" className="py-28 bg-[#fafbfe] overflow-hidden">
+    <section ref={ref} id="modules" className="py-16 md:py-28 bg-[#fafbfe] overflow-hidden">
       <div className="max-w-5xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-black text-center text-[#37374e] mb-14"
+        <h2 className="text-2xl md:text-4xl font-black text-center text-[#37374e] mb-10 md:mb-14"
           style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
           מה הביטוח <span className="text-[var(--accent-blue)]">נותן לך</span>?
         </h2>
