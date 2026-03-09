@@ -76,16 +76,47 @@ export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
           transform: `translateZ(${D / 2}px)`,
         }}>
           <div className="absolute inset-0 rounded-xl" style={{ background: brushed }} />
-          {/* Interior with golden glow */}
+          {/* Interior — deep box with visible walls */}
           <div className="absolute inset-[6px] rounded-lg overflow-hidden" style={{
-            background: "linear-gradient(160deg, #1a1a28, #14141f)",
-            boxShadow: "inset 0 4px 16px rgba(0,0,0,0.6)",
+            background: "#0e0e18",
+            boxShadow: "inset 0 4px 16px rgba(0,0,0,0.8)",
             opacity: doorOpen ? 1 : 0, transition: "opacity 0.5s ease 0.3s",
           }}>
+            {/* Back wall */}
+            <div className="absolute inset-[8px] rounded" style={{
+              background: "linear-gradient(180deg, #12121e 0%, #16162a 50%, #14141f 100%)",
+              boxShadow: "inset 0 0 12px rgba(0,0,0,0.5)",
+            }} />
+            {/* Top inner wall — dark ceiling */}
+            <div className="absolute top-0 left-0 right-0 h-[8px]" style={{
+              background: "linear-gradient(180deg, #0a0a14, #10101c)",
+            }} />
+            {/* Bottom inner wall — floor with subtle reflection */}
+            <div className="absolute bottom-0 left-0 right-0 h-[8px]" style={{
+              background: "linear-gradient(0deg, #0c0c16, #10101c)",
+            }}>
+              <div className="w-full h-full" style={{
+                background: "linear-gradient(0deg, rgba(200,150,40,0.08), transparent)",
+              }} />
+            </div>
+            {/* Left inner wall */}
+            <div className="absolute top-0 bottom-0 left-0 w-[8px]" style={{
+              background: "linear-gradient(90deg, #0a0a14, #10101c)",
+            }} />
+            {/* Right inner wall */}
+            <div className="absolute top-0 bottom-0 right-0 w-[8px]" style={{
+              background: "linear-gradient(-90deg, #0a0a14, #10101c)",
+            }} />
+            {/* Golden ambient glow */}
             <div className="absolute inset-0" style={{
-              background: "radial-gradient(circle at 50% 50%, rgba(200,150,40,0.25) 0%, rgba(200,150,40,0.05) 50%, transparent 80%)",
+              background: "radial-gradient(ellipse at 50% 60%, rgba(200,150,40,0.2) 0%, rgba(200,150,40,0.04) 45%, transparent 75%)",
               opacity: doorOpen ? 1 : 0, transition: "opacity 0.8s ease 0.6s",
             }} />
+            {/* Corner shadow lines */}
+            <div className="absolute top-[7px] left-[7px] right-[7px] h-[1px]" style={{ background: "rgba(0,0,0,0.4)" }} />
+            <div className="absolute bottom-[7px] left-[7px] right-[7px] h-[1px]" style={{ background: "rgba(0,0,0,0.3)" }} />
+            <div className="absolute top-[7px] bottom-[7px] left-[7px] w-[1px]" style={{ background: "rgba(0,0,0,0.4)" }} />
+            <div className="absolute top-[7px] bottom-[7px] right-[7px] w-[1px]" style={{ background: "rgba(0,0,0,0.3)" }} />
           </div>
           {/* Hinges on right side */}
           {[25, 75, 125].map((y, i) => (
@@ -125,13 +156,6 @@ export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
           </div>
         </div>
 
-        {/* Criminal case badge */}
-        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full whitespace-nowrap"
-          style={{ background: "var(--accent-red)", opacity: doorOpen ? 0.9 : 0,
-            transform: doorOpen ? "translateY(0)" : "translateY(-8px)",
-            transition: "all 0.5s ease 1.2s" }}>
-          <span className="text-[9px] font-bold text-white">תיק פלילי נפתח</span>
-        </div>
       </div>
     </div>
   );
