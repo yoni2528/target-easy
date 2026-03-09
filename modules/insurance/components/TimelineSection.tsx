@@ -63,7 +63,7 @@ const Bubble = ({ text, bot, delay }: { text: string; bot?: boolean; delay: numb
 
 export const TimelineSection = () => {
   const [vis, setVis] = useState(false);
-  const [rot, setRot] = useState({ x: 12, y: -8 });
+  const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -76,8 +76,12 @@ export const TimelineSection = () => {
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
-    setRot({ x: ((e.clientY - r.top) / r.height - 0.5) * -18 + 12, y: ((e.clientX - r.left) / r.width - 0.5) * 24 - 8 });
+    setMouse({ x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height });
   };
+  const resetMouse = () => setMouse({ x: 0.5, y: 0.5 });
+  // Each phone gets different rotation multipliers for independent movement
+  const rot1 = { x: (mouse.y - 0.5) * -20 + 10, y: (mouse.x - 0.5) * 28 };
+  const rot2 = { x: (mouse.y - 0.5) * -14 + 14, y: (mouse.x - 0.5) * 18 - 6 };
 
   return (
     <section ref={ref} className="py-28 px-6 bg-[#fafbfe]">
@@ -90,13 +94,12 @@ export const TimelineSection = () => {
           משאירים פרטים — מקבלים שיחה — מוגנים
         </p>
 
-        <div onMouseMove={onMove} onMouseLeave={() => setRot({ x: 12, y: -8 })}
+        <div onMouseMove={onMove} onMouseLeave={resetMouse}
           style={{ opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1) 0.3s" }}>
-          <div style={{ transform: `perspective(1000px) rotateX(${rot.x}deg) rotateY(${rot.y}deg)`, transition: "transform 0.12s ease-out", transformStyle: "preserve-3d" }}>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16"
-              style={{ transformStyle: "preserve-3d" }}>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16">
 
-              <div className="text-center" style={{ animation: vis ? "fadeInUp 0.8s cubic-bezier(0.32,0.72,0,1) 0.4s both" : "none", transformStyle: "preserve-3d" }}>
+              <div className="text-center" style={{ animation: vis ? "fadeInUp 0.8s cubic-bezier(0.32,0.72,0,1) 0.4s both" : "none" }}>
+                <div style={{ transform: `perspective(1000px) rotateX(${rot1.x}deg) rotateY(${rot1.y}deg)`, transition: "transform 0.12s ease-out", transformStyle: "preserve-3d" }}>
                 <Phone tiltY={8}>
                   <div className="flex flex-col gap-1.5 mt-1">
                     <Bubble bot text="היי! רוצה להצטרף לביטוח נשק?" delay={0.8} />
@@ -108,6 +111,7 @@ export const TimelineSection = () => {
                     <Bubble bot text="קיבלתי! נציג יחזור אליך תוך דקות ✓" delay={3.2} />
                   </div>
                 </Phone>
+                </div>
                 <p className="mt-5 text-sm font-bold text-[#1d1d1f]">משאירים פרטים</p>
                 <p className="text-xs text-[#86868b]">30 שניות בלבד</p>
               </div>
@@ -117,7 +121,8 @@ export const TimelineSection = () => {
               <div className="md:hidden text-3xl text-[#d2d2d7]"
                 style={{ animation: vis ? "float-up 2s ease-in-out infinite" : "none" }}>↓</div>
 
-              <div className="text-center" style={{ animation: vis ? "fadeInUp 0.8s cubic-bezier(0.32,0.72,0,1) 0.7s both" : "none", transformStyle: "preserve-3d" }}>
+              <div className="text-center" style={{ animation: vis ? "fadeInUp 0.8s cubic-bezier(0.32,0.72,0,1) 0.7s both" : "none" }}>
+                <div style={{ transform: `perspective(1000px) rotateX(${rot2.x}deg) rotateY(${rot2.y}deg)`, transition: "transform 0.12s ease-out", transformStyle: "preserve-3d" }}>
                 <Phone tiltY={-8}>
                   <div className="flex flex-col items-center justify-center h-full gap-3 -mt-4">
                     <div className="w-16 h-16 rounded-full flex items-center justify-center"
@@ -133,11 +138,11 @@ export const TimelineSection = () => {
                     </div>
                   </div>
                 </Phone>
+                </div>
                 <p className="mt-5 text-sm font-bold text-[#1d1d1f]">מוגנים</p>
                 <p className="text-xs text-[#86868b]">שיחה אחת וזהו</p>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </section>
