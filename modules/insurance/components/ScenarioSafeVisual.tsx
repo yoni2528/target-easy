@@ -36,7 +36,7 @@ const Wheel = ({ angle, speed }: { angle: number; speed: number }) => (
 );
 
 const brushed = "repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 3px)";
-const edgeGrad = "linear-gradient(180deg, #3a3a4e 0%, #25253a 40%, #2a2a3e 60%, #3a3a4e 100%)";
+const edgeGrad = "linear-gradient(180deg, #2a3548 0%, #1a2538 40%, #1e2a40 60%, #2a3548 100%)";
 
 /** 5: גניבת נשק — 3D safe with depth edges, hinges, bolts */
 export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
@@ -73,16 +73,16 @@ export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
           background: edgeGrad, borderRadius: "3px 0 0 3px",
           transformOrigin: "right center", transform: "rotateY(90deg)" }} />
         <div style={{ position: "absolute", top: -1, left: 10, width: 120, height: D,
-          background: "linear-gradient(90deg, #3a3a4e, #2a2a3e, #3a3a4e)",
+          background: "linear-gradient(90deg, #2a3548, #1e2a40, #2a3548)",
           borderRadius: "3px 3px 0 0", transformOrigin: "center bottom", transform: "rotateX(-90deg)" }} />
         <div style={{ position: "absolute", bottom: -1, left: 10, width: 120, height: D,
-          background: "linear-gradient(90deg, #3a3a4e, #25253a, #3a3a4e)",
+          background: "linear-gradient(90deg, #2a3548, #1a2538, #2a3548)",
           borderRadius: "0 0 3px 3px", transformOrigin: "center top", transform: "rotateX(90deg)" }} />
 
         {/* Safe body front */}
         <div className="absolute inset-0 rounded-xl" style={{
-          background: "linear-gradient(160deg, #35354a 0%, #25253a 50%, #1e1e30 100%)",
-          border: "2px solid #2a2a40",
+          background: "linear-gradient(160deg, #1e2a42 0%, #162038 50%, #0e1828 100%)",
+          border: "2px solid #1a2a40",
           boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05), 0 16px 40px -8px rgba(0,0,0,0.4)",
           transform: `translateZ(${D / 2}px)`,
         }}>
@@ -129,8 +129,8 @@ export const BrokenSafeVisual = ({ isActive }: { isActive: boolean }) => {
 
         {/* Door */}
         <div className="absolute inset-0 rounded-xl" style={{
-          background: "linear-gradient(160deg, #40405a 0%, #30304a 40%, #28283e 100%)",
-          border: "2px solid #3a3a50",
+          background: "linear-gradient(160deg, #2a3a55 0%, #1e3048 40%, #182840 100%)",
+          border: "2px solid #2a3550",
           transformOrigin: "right center",
           transform: doorOpen
             ? `perspective(700px) rotateY(-65deg) translateZ(${D / 2}px)`

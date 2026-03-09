@@ -4,18 +4,25 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { ScenarioVisual } from "./ScenarioVisuals";
 
 const scenarios = [
-  { title: "פליטת כדור", stat: "₪3,000,000", desc: "הנפגע תובע. אתה משלם." },
-  { title: "הסנגוריה הציבורית", stat: "לא מומחה", desc: "עו״ד של המדינה. לא זמין 24/7." },
-  { title: "עצירת פיגוע נכונה", stat: "₪65,000+", desc: "פעלת נכון — עדיין חשוף לתביעה." },
-  { title: "עצירת פיגוע שגויה", stat: "₪50,000+", desc: "תביעה אזרחית + חקירה פלילית." },
-  { title: "גניבת נשק", stat: "תיק פלילי", desc: "הנשק נגנב. תיק נפתח. הפסדת אקדח." },
-  { title: "תביעת נזיקין", stat: "₪65–100K", desc: "רק כתב הגנה. עוד לפני המשפט." },
+  { title: "פליטת כדור", brief: "ירי לא מכוון שפוגע באדם או ברכוש",
+    full: "כדור נורה בטעות בזמן אימון, ניקוי או שליפה. הנפגע מגיש תביעת נזיקין. עלויות משפטיות: ₪50,000+. פיצויים אפשריים: עד ₪3,000,000." },
+  { title: "הסנגוריה הציבורית", brief: "עו״ד של המדינה — לא שלך",
+    full: "הסנגור הציבורי לא מומחה לנשק, לא זמין 24/7 ולא מכיר את העולם שלך. בשעה קריטית אתה צריך עו״ד שמבין את התחום." },
+  { title: "עצירת פיגוע נכונה", brief: "פעלת נכון — עדיין חשוף לתביעה",
+    full: "ניטרלת מחבל ופעלת כגיבור. אבל המשפחה תובעת. עלות ייצוג: ₪65,000+. בלי ביטוח — אתה לבד מול המערכת." },
+  { title: "עצירת פיגוע שגויה", brief: "טעות בזיהוי — חקירה פלילית",
+    full: "חשבת שזה מחבל, טעית. תביעה אזרחית + חקירה פלילית. עלות ייצוג: ₪50,000+. הקריירה והחירות שלך בסכנה." },
+  { title: "גניבת נשק", brief: "הנשק נגנב — תיק פלילי נפתח",
+    full: "הנשק נגנב מהרכב או מהבית. נפתח תיק פלילי בגין רשלנות. עלות ייצוג: ₪30,000+. רישיון הנשק בסכנה." },
+  { title: "תביעת נזיקין", brief: "תביעה אזרחית על נזק מהנשק",
+    full: "כתב הגנה: ₪25,000. ייצוג בבית משפט: ₪40,000. ערעורים: ₪30,000. סה״כ צפוי: ₪65,000–100,000." },
 ];
 
 const N = scenarios.length;
 
 export const ScenariosSection = () => {
   const [active, setActive] = useState(0);
+  const [hovered, setHovered] = useState(false);
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const touchStart = useRef(0);
@@ -27,6 +34,8 @@ export const ScenariosSection = () => {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
+  useEffect(() => setHovered(false), [active]);
 
   const go = useCallback((dir: number) => setActive((p) => (p + dir + N) % N), []);
   const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX; };
@@ -55,7 +64,6 @@ export const ScenariosSection = () => {
         </p>
       </div>
 
-      {/* 3D Coverflow carousel — full width for overflow */}
       <div className="relative" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
         style={{ perspective: "1200px", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.32,0.72,0,1) 0.3s" }}>
         <div style={{ position: "relative", height: 480, maxWidth: 1000, margin: "0 auto" }}>
@@ -63,26 +71,35 @@ export const ScenariosSection = () => {
             const d = getOff(i);
             const absD = Math.abs(d);
             if (absD > 2) return null;
+            const isAct = i === active;
+            const isHov = isAct && hovered;
             return (
               <div key={i} className="absolute inset-y-0" style={{
                 width: 320,
                 left: "50%",
-                transform: `translateX(-50%) translateX(${d * 280}px) translateZ(${absD === 0 ? 30 : -60}px) rotateY(${d * -40}deg) scale(${absD === 0 ? 1 : 0.85})`,
+                transform: `translateX(-50%) translateX(${d * 280}px) translateZ(${absD === 0 ? 30 : -60}px) rotateY(${d * -40}deg) scale(${isHov ? 1.06 : absD === 0 ? 1 : 0.85})`,
                 opacity: absD === 0 ? 1 : absD === 1 ? 0.5 : 0.15,
                 zIndex: 10 - absD,
                 transition: "all 0.7s cubic-bezier(0.32, 0.72, 0, 1)",
-                pointerEvents: absD === 0 ? "auto" : "none",
-              }}>
+                pointerEvents: isAct ? "auto" : "none",
+              }}
+                onMouseEnter={() => isAct && setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+              >
                 <div className="h-full flex flex-col items-center justify-center px-6"
-                  style={{ borderRadius: 28, background: "linear-gradient(180deg, #f5f5f7, #fbfbfd)", boxShadow: absD === 0 ? "0 25px 50px -12px rgba(0,0,0,0.12)" : "none" }}>
-                  <div style={{ width: "100%", maxWidth: 230, height: 190 }}>
-                    <ScenarioVisual index={i} isActive={i === active} />
+                  style={{ borderRadius: 28, background: "linear-gradient(180deg, #f5f5f7, #fbfbfd)", boxShadow: isAct ? "0 25px 50px -12px rgba(0,0,0,0.12)" : "none", cursor: isAct ? "pointer" : "default" }}>
+                  <div style={{ width: "100%", maxWidth: isHov ? 250 : 230, height: isHov ? 200 : 190, transition: "all 0.4s ease" }}>
+                    <ScenarioVisual index={i} isActive={isAct} />
                   </div>
-                  <div className="text-center mt-3">
-                    <span className="text-3xl md:text-4xl font-black block mb-2"
-                      style={{ color: "var(--accent-red)", letterSpacing: "-0.02em" }}>{s.stat}</span>
+                  <div className="text-center mt-3" style={{ maxWidth: 280 }}>
                     <h3 className="text-lg md:text-xl font-black mb-1" style={{ color: "#1d1d1f" }}>{s.title}</h3>
-                    <p className="text-sm" style={{ color: "#86868b" }}>{s.desc}</p>
+                    <p className="text-sm" style={{ color: "#86868b" }}>{s.brief}</p>
+                    <div style={{
+                      maxHeight: isHov ? 120 : 0, opacity: isHov ? 1 : 0,
+                      overflow: "hidden", transition: "all 0.5s cubic-bezier(0.32,0.72,0,1)",
+                    }}>
+                      <p className="text-xs leading-relaxed mt-3 px-1" style={{ color: "#4a4a5a" }}>{s.full}</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -90,7 +107,6 @@ export const ScenariosSection = () => {
           })}
         </div>
 
-        {/* Arrows — always visible */}
         <button onClick={() => go(-1)}
           className="absolute top-1/2 -translate-y-1/2 right-4 md:right-12 w-10 h-10 flex items-center justify-center rounded-full z-20 cursor-pointer"
           style={{ background: "rgba(255,255,255,0.72)", backdropFilter: "blur(12px)", boxShadow: "0 1px 8px rgba(0,0,0,0.08)" }}>

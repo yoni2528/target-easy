@@ -26,7 +26,7 @@ export const DefenderCardVisual = ({ isActive }: { isActive: boolean }) => {
         <div className="absolute inset-0 rounded-xl overflow-hidden"
           style={{
             backfaceVisibility: "hidden",
-            background: "linear-gradient(160deg, #2a2a3e 0%, #1e1e30 40%, #181828 100%)",
+            background: "linear-gradient(160deg, #1e2a44 0%, #142038 40%, #0e182c 100%)",
             boxShadow: "0 12px 32px -6px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)",
           }}>
           {/* Embossed large letters background */}
@@ -40,8 +40,8 @@ export const DefenderCardVisual = ({ isActive }: { isActive: boolean }) => {
           {/* Content */}
           <div className="relative z-10 p-3.5 flex flex-col justify-between h-full">
             <div className="flex justify-between items-start">
-              <div className="text-[8px] tracking-[0.15em] text-[#6a6a80] uppercase">הסנגוריה הציבורית</div>
-              <div className="text-[9px] font-bold text-[#8888a0]">משרד המשפטים</div>
+              <div className="text-[8px] tracking-[0.15em] text-[#5a6a88] uppercase">הסנגוריה הציבורית</div>
+              <div className="text-[9px] font-bold text-[#7888a8]">משרד המשפטים</div>
             </div>
             <div className="flex justify-between items-end">
               <div className="flex items-center gap-2">
@@ -56,14 +56,14 @@ export const DefenderCardVisual = ({ isActive }: { isActive: boolean }) => {
               <svg viewBox="0 0 20 20" width="14" height="14" fill="none">
                 {[6, 10, 14].map(r => (
                   <path key={r} d={`M${10 + r * 0.4},${10 - r * 0.5} A${r},${r} 0 0 1 ${10 + r * 0.4},${10 + r * 0.5}`}
-                    stroke="#6a6a80" strokeWidth="1.2" strokeLinecap="round" />
+                    stroke="#5a6a88" strokeWidth="1.2" strokeLinecap="round" />
                 ))}
               </svg>
             </div>
           </div>
           <div className="absolute bottom-[30px] right-3.5 z-10">
-            <div className="text-[7px] text-[#4a4a60] tracking-[0.2em] font-mono">6529 0000 0000</div>
-            <div className="text-[7px] text-[#4a4a60] mt-0.5">סנגור ציבורי תורן</div>
+            <div className="text-[7px] text-[#3a4a62] tracking-[0.2em] font-mono">6529 0000 0000</div>
+            <div className="text-[7px] text-[#3a4a62] mt-0.5">סנגור ציבורי תורן</div>
           </div>
         </div>
 

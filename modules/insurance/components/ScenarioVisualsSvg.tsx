@@ -75,16 +75,16 @@ const Gauge = ({ label, isActive, delay }: { label: string; isActive: boolean; d
       <svg viewBox="0 0 100 62" width="95" height="58" fill="none">
         {/* Background arc */}
         <path d="M 10 55 A 40 40 0 0 1 90 55" stroke="#e8edf5" strokeWidth="7" strokeLinecap="round" fill="none" />
-        {/* Green zone */}
-        <path d="M 10 55 A 40 40 0 0 1 30 20" stroke="#22c55e" strokeWidth="7" strokeLinecap="round" fill="none" opacity={0.5} />
-        {/* Yellow zone */}
-        <path d="M 30 20 A 40 40 0 0 1 70 20" stroke="#fbbf24" strokeWidth="7" strokeLinecap="round" fill="none" opacity={0.5} />
+        {/* Safe zone */}
+        <path d="M 10 55 A 40 40 0 0 1 30 20" stroke="#2580d8" strokeWidth="7" strokeLinecap="round" fill="none" opacity={0.5} />
+        {/* Warning zone */}
+        <path d="M 30 20 A 40 40 0 0 1 70 20" stroke="#64b5f6" strokeWidth="7" strokeLinecap="round" fill="none" opacity={0.5} />
         {/* Red zone */}
         <path d="M 70 20 A 40 40 0 0 1 90 55" stroke="var(--accent-red)" strokeWidth="7" strokeLinecap="round" fill="none" opacity={0.7} />
         {/* Needle */}
-        <line x1="50" y1="55" x2="50" y2="20" stroke="#37374e" strokeWidth="2.5" strokeLinecap="round"
+        <line x1="50" y1="55" x2="50" y2="20" stroke="#1e2a42" strokeWidth="2.5" strokeLinecap="round"
           style={{ transformOrigin: "50px 55px", transform: `rotate(${angle}deg)`, transition: `transform 1.2s cubic-bezier(0.34,1.56,0.64,1) ${delay}s` }} />
-        <circle cx="50" cy="55" r="4" fill="#37374e" />
+        <circle cx="50" cy="55" r="4" fill="#1e2a42" />
       </svg>
       <span className="text-[9px] font-bold text-center leading-tight" style={{ color: isActive ? "var(--accent-red)" : "#a0a0b0", transition: `color 0.5s ease ${delay + 0.5}s` }}>
         {label}
@@ -126,7 +126,7 @@ export const CostBarsVisual = ({ isActive }: { isActive: boolean }) => (
       ))}
     </div>
     <div className="flex items-center justify-between w-full max-w-[200px] pt-2" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", opacity: isActive ? 1 : 0, transition: "all 0.5s ease 1s" }}>
-      <span className="text-[10px] font-bold text-[#37374e]">סה״כ</span>
+      <span className="text-[10px] font-bold text-[#1e2a42]">סה״כ</span>
       <span className="text-[13px] font-black text-[var(--accent-red)]">₪65,000–100,000</span>
     </div>
   </div>
