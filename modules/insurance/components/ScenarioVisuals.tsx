@@ -1,7 +1,8 @@
 "use client";
 
 import { BulletTargetVisual, DualGaugeVisual, CostBarsVisual } from "./ScenarioVisualsSvg";
-import { DefenderCardVisual, BrokenSafeVisual } from "./ScenarioVisuals3D";
+import { DefenderCardVisual } from "./ScenarioVisuals3D";
+import { BrokenSafeVisual } from "./ScenarioSafeVisual";
 import { CrackingMedalVisual } from "./ScenarioMedalVisual";
 
 const scenes = [
