@@ -1,92 +1,87 @@
 "use client";
 
-/** 3: עצירת פיגוע נכונה — Spinning military medal of valor */
+/** 3: עצירת פיגוע נכונה — Spinning shield with Star of David */
 export const CrackingMedalVisual = ({ isActive }: { isActive: boolean }) => (
   <div className="w-full h-full flex items-center justify-center p-1">
     <div style={{
       opacity: isActive ? 1 : 0, transition: "opacity 0.5s ease",
-      animation: isActive ? "medal-spin 4s linear infinite" : "none",
+      animation: isActive ? "shield-spin 4s linear infinite" : "none",
     }}>
-      <svg viewBox="0 0 120 142" width="130" height="155" fill="none"
-        style={{ filter: "drop-shadow(0 8px 20px rgba(180,130,20,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.12))" }}>
+      <svg viewBox="0 0 120 150" width="135" height="168" fill="none"
+        style={{ filter: "drop-shadow(0 10px 24px rgba(20,60,140,0.3)) drop-shadow(0 3px 6px rgba(0,0,0,0.15))" }}>
         <defs>
-          <radialGradient id="mbody" cx="35%" cy="30%">
-            <stop offset="0%" stopColor="#e8c84e" /><stop offset="35%" stopColor="#d4a830" />
-            <stop offset="70%" stopColor="#a07820" /><stop offset="100%" stopColor="#8a6518" />
-          </radialGradient>
-          <linearGradient id="mrim" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#d4a830" /><stop offset="50%" stopColor="#7a5810" />
-            <stop offset="100%" stopColor="#c89820" />
+          <linearGradient id="sh-body" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#2a6dd4" /><stop offset="40%" stopColor="#1a4faa" />
+            <stop offset="100%" stopColor="#0e3878" />
           </linearGradient>
-          <linearGradient id="mstar" x1="0.2" y1="0" x2="0.8" y2="1">
-            <stop offset="0%" stopColor="#f5e070" /><stop offset="50%" stopColor="#c89820" />
-            <stop offset="100%" stopColor="#8a6518" />
+          <linearGradient id="sh-rim" x1="0" y1="0" x2="0.8" y2="1">
+            <stop offset="0%" stopColor="#c0cfe8" /><stop offset="50%" stopColor="#8a9fc0" />
+            <stop offset="100%" stopColor="#607898" />
+          </linearGradient>
+          <linearGradient id="sh-star" x1="0.2" y1="0" x2="0.7" y2="1">
+            <stop offset="0%" stopColor="#f0f4ff" /><stop offset="50%" stopColor="#d0ddf0" />
+            <stop offset="100%" stopColor="#8aa0c0" />
+          </linearGradient>
+          <linearGradient id="sh-band" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#e8eef8" /><stop offset="100%" stopColor="#b0c0d8" />
           </linearGradient>
         </defs>
-        {/* Ribbon — Israeli blue-white-blue */}
-        <rect x="40" y="0" width="5.5" height="52" fill="#1a4fcc" rx="0.5" />
-        <rect x="45.5" y="0" width="9" height="52" fill="#eef0f5" />
-        <rect x="54.5" y="0" width="5.5" height="52" fill="#1a4fcc" rx="0.5" />
-        <polygon points="40,48 50,57 60,48 60,52 50,61 40,52" fill="#1a4fcc" />
-        <polygon points="45.5,48 50,54 54.5,48 54.5,52 50,58 45.5,52" fill="#eef0f5" />
-        <rect x="54" y="0" width="7" height="55" fill="rgba(0,0,0,0.08)" />
-        {/* Ring connector */}
-        <circle cx="50" cy="56" r="4.5" fill="none" stroke="#c89820" strokeWidth="2.5" />
-        <circle cx="50" cy="56" r="4.5" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.5" />
-        {/* Outer rim with depth */}
-        <circle cx="50" cy="92" r="37" fill="url(#mrim)" />
-        <circle cx="50" cy="92" r="37" fill="none" stroke="#5a4010" strokeWidth="0.5" />
-        {/* Knurling marks */}
-        {Array.from({ length: 54 }).map((_, i) => {
-          const a = (i * 360 / 54) * Math.PI / 180;
-          return <line key={i} x1={50 + 35 * Math.cos(a)} y1={92 + 35 * Math.sin(a)}
-            x2={50 + 37 * Math.cos(a)} y2={92 + 37 * Math.sin(a)} stroke="#6b4e10" strokeWidth="0.4" opacity={0.5} />;
-        })}
-        {/* Inner medal body */}
-        <circle cx="50" cy="92" r="33" fill="url(#mbody)" />
-        <circle cx="50" cy="92" r="33" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
-        {/* Decorative double ring */}
-        <circle cx="50" cy="92" r="29" fill="none" stroke="#8a6518" strokeWidth="0.7" opacity={0.5} />
-        <circle cx="50" cy="92" r="28.3" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="0.3" />
-        {/* Accent dots */}
-        {Array.from({ length: 10 }).map((_, i) => {
-          const a = (i * 36) * Math.PI / 180;
-          return <circle key={i} cx={50 + 26 * Math.cos(a)} cy={92 + 26 * Math.sin(a)}
-            r="1" fill="#7a5810" opacity={0.35} />;
-        })}
-        {/* Star of David — two triangles with faceted light/shadow */}
-        <path d="M50,76 L64,100 L36,100 Z" fill="url(#mstar)" stroke="#7a5810" strokeWidth="0.5" />
-        <path d="M50,108 L36,84 L64,84 Z" fill="url(#mstar)" stroke="#7a5810" strokeWidth="0.5" />
-        <path d="M50,108 L64,84 L50,92 Z" fill="rgba(0,0,0,0.12)" />
-        <path d="M50,76 L64,100 L57,88 Z" fill="rgba(0,0,0,0.08)" />
-        <path d="M50,76 L36,100 L43,88 Z" fill="rgba(255,255,255,0.14)" />
-        <path d="M36,84 L50,108 L43,96 Z" fill="rgba(255,255,255,0.06)" />
+        {/* Shield shape — outer rim (silver/steel) */}
+        <path d="M60,8 C28,8 10,18 10,18 L10,62 C10,95 35,125 60,142 C85,125 110,95 110,62 L110,18 C110,18 92,8 60,8 Z"
+          fill="url(#sh-rim)" />
+        {/* Inner shield body (blue) */}
+        <path d="M60,15 C32,15 17,23 17,23 L17,62 C17,91 39,118 60,133 C81,118 103,91 103,62 L103,23 C103,23 88,15 60,15 Z"
+          fill="url(#sh-body)" />
+        {/* Blue field highlight — top-left light source */}
+        <path d="M60,15 C32,15 17,23 17,23 L17,62 C17,75 22,88 30,100 L60,50 L45,20 C50,16 55,15 60,15 Z"
+          fill="rgba(255,255,255,0.08)" />
+        {/* Horizontal white band (Israeli flag style) */}
+        <path d="M17,52 L103,52 L103,62 C103,65 102,68 101,71 L19,71 C18,68 17,65 17,62 Z"
+          fill="url(#sh-band)" opacity={0.35} />
+        <path d="M20,82 L100,82 L100,92 C98,96 95,100 92,104 L28,104 C25,100 22,96 20,92 Z"
+          fill="url(#sh-band)" opacity={0.35} />
+        {/* Star of David */}
+        <path d="M60,48 L72,68 L48,68 Z" fill="url(#sh-star)" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5" />
+        <path d="M60,88 L48,68 L72,68 Z" fill="url(#sh-star)" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5" />
+        {/* Star facet shadows */}
+        <path d="M60,88 L72,68 L60,75 Z" fill="rgba(0,0,0,0.15)" />
+        <path d="M72,68 L60,48 L66,58 Z" fill="rgba(0,0,0,0.1)" />
+        {/* Star facet highlights */}
+        <path d="M60,48 L48,68 L54,58 Z" fill="rgba(255,255,255,0.2)" />
+        <path d="M48,68 L60,88 L54,78 Z" fill="rgba(255,255,255,0.08)" />
         {/* Olive branches — left */}
-        <path d="M28,97 Q34,91 37,83" fill="none" stroke="#7a5810" strokeWidth="0.8" />
-        {[{ cx: 30, cy: 90, a: -20 }, { cx: 33, cy: 85, a: -30 }, { cx: 28, cy: 95, a: -8 }].map((l, i) => (
-          <ellipse key={`l${i}`} cx={l.cx} cy={l.cy} rx="2.5" ry="4.5"
-            fill={["#a07820", "#b8860b", "#9a7218"][i]}
-            transform={`rotate(${l.a}, ${l.cx}, ${l.cy})`} opacity={0.55 + i * 0.05} />
+        <path d="M32,78 Q40,72 44,64" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" />
+        {[{ cx: 35, cy: 72, a: -22 }, { cx: 38, cy: 67, a: -32 }, { cx: 33, cy: 77, a: -10 }].map((l, i) => (
+          <ellipse key={`l${i}`} cx={l.cx} cy={l.cy} rx="2.2" ry="4"
+            fill="rgba(255,255,255,0.15)" transform={`rotate(${l.a}, ${l.cx}, ${l.cy})`} />
         ))}
-        <circle cx="28" cy="100" r="1.2" fill="#6b4e10" opacity={0.4} />
         {/* Olive branches — right */}
-        <path d="M72,97 Q66,91 63,83" fill="none" stroke="#7a5810" strokeWidth="0.8" />
-        {[{ cx: 70, cy: 90, a: 20 }, { cx: 67, cy: 85, a: 30 }, { cx: 72, cy: 95, a: 8 }].map((l, i) => (
-          <ellipse key={`r${i}`} cx={l.cx} cy={l.cy} rx="2.5" ry="4.5"
-            fill={["#a07820", "#b8860b", "#9a7218"][i]}
-            transform={`rotate(${l.a}, ${l.cx}, ${l.cy})`} opacity={0.55 + i * 0.05} />
+        <path d="M88,78 Q80,72 76,64" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" />
+        {[{ cx: 85, cy: 72, a: 22 }, { cx: 82, cy: 67, a: 32 }, { cx: 87, cy: 77, a: 10 }].map((l, i) => (
+          <ellipse key={`r${i}`} cx={l.cx} cy={l.cy} rx="2.2" ry="4"
+            fill="rgba(255,255,255,0.15)" transform={`rotate(${l.a}, ${l.cx}, ${l.cy})`} />
         ))}
-        <circle cx="72" cy="100" r="1.2" fill="#6b4e10" opacity={0.4} />
-        {/* Top highlight arc */}
-        <path d="M20,78 A37,37 0 0 1 80,78" fill="none" stroke="rgba(255,255,255,0.18)"
+        {/* Rim highlight — top edge catching light */}
+        <path d="M30,12 C45,9 75,9 90,12" fill="none" stroke="rgba(255,255,255,0.4)"
           strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M25,80 A34,34 0 0 1 75,80" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="2.5" />
-        {/* Center accent */}
-        <circle cx="50" cy="92" r="2" fill="rgba(255,255,255,0.12)" />
+        {/* Inner border line */}
+        <path d="M60,15 C32,15 17,23 17,23 L17,62 C17,91 39,118 60,133 C81,118 103,91 103,62 L103,23 C103,23 88,15 60,15 Z"
+          fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.8" />
+        {/* Bottom point accent */}
+        <circle cx="60" cy="130" r="2" fill="rgba(255,255,255,0.15)" />
+        {/* Rivets on rim */}
+        {[{ x: 18, y: 35 }, { x: 18, y: 55 }, { x: 102, y: 35 }, { x: 102, y: 55 },
+          { x: 35, y: 12 }, { x: 85, y: 12 }].map((r, i) => (
+          <g key={i}>
+            <circle cx={r.x} cy={r.y} r="2" fill="#8a9fc0" />
+            <circle cx={r.x} cy={r.y} r="2" fill="none" stroke="rgba(0,0,0,0.2)" strokeWidth="0.3" />
+            <circle cx={r.x - 0.5} cy={r.y - 0.5} r="0.8" fill="rgba(255,255,255,0.3)" />
+          </g>
+        ))}
       </svg>
     </div>
     <style>{`
-      @keyframes medal-spin {
+      @keyframes shield-spin {
         from { transform: rotateY(0deg); }
         to { transform: rotateY(360deg); }
       }
