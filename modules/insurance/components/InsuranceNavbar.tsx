@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { X, Check, Star } from "lucide-react";
 
 const plans = [
-  { name: "בסיסי", price: "500", features: ["כיסוי צד ג׳ בסיסי", "אחריות למחזיק הנשק", "כיסוי נזקי גוף", "ליווי משפטי ראשוני"] },
-  { name: "מורחב", price: "700", popular: true, features: ["כיסוי צד ג׳ מורחב", "אחריות מלאה למחזיק", "כיסוי נזקי גוף ורכוש", "ליווי משפטי מלא", "כיסוי אירועי ירי במטווח"] },
-  { name: "פרימיום", price: "900", features: ["כיסוי צד ג׳ מקסימלי", "אחריות מלאה + הרחבות", "כיסוי נזקי גוף, רכוש ותוצאתי", "ליווי משפטי מלא + ייצוג", "כיסוי מטווח + נשיאה", "הגנה על בני משפחה"] },
+  { name: "בסיסי", price: "500", features: ["ביטוח צד ג׳ מנורה", "כיסוי נזקי גוף ורכוש", "כיסוי אירועי טרור", "קו חם לעו״ד 24/7"] },
+  { name: "מורחב", price: "700", popular: true, features: ["ביטוח צד ג׳ מנורה", "נשק חלופי בגניבה (עד ₪3,500)", "אימון ירי + ירי למשפחה", "הכנה לחידוש רישיון", "הנחה על מוצרי מטווח"] },
+  { name: "פרימיום", price: "900", features: ["ביטוח צד ג׳ מנורה", "נשק חלופי בגניבה (עד ₪5,000)", "אימון ירי + ירי למשפחה", "הכנה לחידוש רישיון", "הנחה על מוצרי מטווח"] },
 ];
 
 type Plan = (typeof plans)[0];
@@ -105,7 +105,7 @@ export const InsuranceNavbar = () => {
             <h2 className="text-2xl md:text-3xl font-black text-[#37374e] text-center mb-2">
               בחר את <span className="text-[var(--accent-blue)]">המסלול שלך</span>
             </h2>
-            <p className="text-[#6b6b80] text-center mb-8 text-sm">3 מסלולים — מנורה ביטוח</p>
+            <p className="text-[#6b6b80] text-center mb-8 text-sm">ביטוח צד ג׳ מנורה + כתב שירות בריאות פלוס</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {plans.map((plan) => (
                 <PlanCard key={plan.name} plan={plan} onClose={() => setOpen(false)} />
