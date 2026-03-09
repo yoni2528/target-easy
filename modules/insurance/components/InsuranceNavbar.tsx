@@ -4,57 +4,26 @@ import { useState, useEffect } from "react";
 import { X, Check, Star } from "lucide-react";
 
 const plans = [
-  { name: "בסיסי", price: "500", tier: "base" as const, features: ["ביטוח צד ג׳ מנורה", "כיסוי נזקי גוף ורכוש", "כיסוי אירועי טרור", "קו חם לעו״ד 24/7"] },
-  { name: "מורחב", price: "700", tier: "mid" as const, popular: true, features: ["כל מה שבבסיסי +", "נשק חלופי בגניבה (עד ₪3,500)", "אימון ירי + ירי למשפחה", "הכנה לחידוש רישיון", "הנחה על מוצרי מטווח"] },
-  { name: "פרימיום", price: "900", tier: "top" as const, features: ["כל מה שבבסיסי +", "נשק חלופי בגניבה (עד ₪5,000)", "אימון ירי + ירי למשפחה", "הכנה לחידוש רישיון", "הנחה על מוצרי מטווח"] },
+  { name: "בסיסי", price: "42", tier: "base" as const },
+  { name: "מורחב", price: "58", tier: "mid" as const, popular: true },
+  { name: "פרימיום", price: "75", tier: "top" as const },
 ];
 
-type Plan = (typeof plans)[0];
+const features = [
+  { label: "ביטוח צד ג׳ מנורה", base: true, mid: true, top: true },
+  { label: "כיסוי נזקי גוף ורכוש", base: true, mid: true, top: true },
+  { label: "כיסוי אירועי טרור", base: true, mid: true, top: true },
+  { label: "קו חם לעו״ד 24/7", base: true, mid: true, top: true },
+  { label: "נשק חלופי בגניבה", base: false, mid: "עד ₪3,500", top: "עד ₪5,000" },
+  { label: "אימון ירי + ירי למשפחה", base: false, mid: true, top: true },
+  { label: "הכנה לחידוש רישיון", base: false, mid: true, top: true },
+  { label: "הנחה על מוצרי מטווח", base: false, mid: true, top: true },
+];
 
-const tierStyles = {
-  base: { bg: "#f8faff", color: "#37374e", border: "1px solid #e8edf5", check: "var(--accent-blue)", textOp: 0.7, btnBg: "var(--accent-blue)", btnColor: "white" },
-  mid: { bg: "var(--accent-blue)", color: "white", border: "none", check: "white", textOp: 0.95, btnBg: "white", btnColor: "var(--accent-blue)" },
-  top: { bg: "linear-gradient(135deg, #0e1828 0%, #1a2a44 50%, #0e1828 100%)", color: "#f0e6d0", border: "1px solid #c9a84c33", check: "#c9a84c", textOp: 0.9, btnBg: "linear-gradient(135deg, #c9a84c, #e8d48b)", btnColor: "#0e1828" },
-};
-
-const PlanCard = ({ plan, onClose }: { plan: Plan; onClose: () => void }) => {
-  const s = tierStyles[plan.tier];
-  const isTop = plan.tier === "top";
-  return (
-    <div className="relative p-5 text-center"
-      style={{ borderRadius: "20px", background: s.bg, border: s.border, color: s.color,
-        boxShadow: isTop ? "0 8px 32px rgba(201,168,76,0.15)" : undefined }}>
-      {plan.popular && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white text-[var(--accent-blue)] text-xs font-bold rounded-full flex items-center gap-1 shadow-sm">
-          <Star className="w-3 h-3" fill="currentColor" /> הכי פופולרי
-        </div>
-      )}
-      {isTop && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-xs font-bold rounded-full flex items-center gap-1"
-          style={{ background: "linear-gradient(135deg, #c9a84c, #e8d48b)", color: "#0e1828", boxShadow: "0 2px 8px rgba(201,168,76,0.3)" }}>
-          <Star className="w-3 h-3" fill="currentColor" /> כיסוי מקסימלי
-        </div>
-      )}
-      <h3 className="text-lg font-black mb-1">{plan.name}</h3>
-      <div className="flex items-baseline justify-center gap-1 mb-4">
-        <span className="text-3xl font-black" style={{ color: isTop ? "#e8d48b" : undefined }}>{plan.price}</span>
-        <span className="text-sm opacity-70">₪ לשנה</span>
-      </div>
-      <ul className="space-y-2 text-right mb-5">
-        {plan.features.map((f) => (
-          <li key={f} className="flex items-start gap-2 text-sm">
-            <Check className="w-4 h-4 mt-0.5 shrink-0" style={{ color: s.check }} />
-            <span style={{ opacity: s.textOp }}>{f}</span>
-          </li>
-        ))}
-      </ul>
-      <a href="#contact" onClick={onClose}
-        className="block py-2.5 text-sm font-bold transition-all hover:scale-105"
-        style={{ borderRadius: "14px", background: s.btnBg, color: s.btnColor }}>
-        לפרטים נוספים
-      </a>
-    </div>
-  );
+const tierColors = {
+  base: { head: "#f8faff", accent: "var(--accent-blue)" },
+  mid: { head: "var(--accent-blue)", accent: "white" },
+  top: { head: "#0e1828", accent: "#e8d48b" },
 };
 
 export const InsuranceNavbar = () => {
@@ -114,10 +83,60 @@ export const InsuranceNavbar = () => {
               בחר את <span className="text-[var(--accent-blue)]">המסלול שלך</span>
             </h2>
             <p className="text-[#6b6b80] text-center mb-6 md:mb-8 text-xs md:text-sm">ביטוח צד ג׳ מנורה + כתב שירות בריאות פלוס</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {plans.map((plan) => (
-                <PlanCard key={plan.name} plan={plan} onClose={() => setOpen(false)} />
-              ))}
+
+            {/* Comparison table */}
+            <div className="overflow-x-auto" dir="rtl">
+              <table className="w-full text-sm" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+                <thead>
+                  <tr>
+                    <th className="text-right p-3 font-normal text-[#86868b] w-[40%]" />
+                    {plans.map((p) => {
+                      const c = tierColors[p.tier];
+                      return (
+                        <th key={p.name} className="p-3 relative" style={{ width: "20%" }}>
+                          <div className="rounded-2xl p-3 md:p-4" style={{ background: c.head, color: c.accent }}>
+                            {p.popular && <span className="text-[10px] font-bold bg-white text-[var(--accent-blue)] px-2 py-0.5 rounded-full absolute -top-2 left-1/2 -translate-x-1/2 flex items-center gap-0.5 whitespace-nowrap"><Star className="w-2.5 h-2.5" fill="currentColor" />הכי פופולרי</span>}
+                            <div className="font-black text-base">{p.name}</div>
+                            <div className="flex items-baseline justify-center gap-0.5 mt-1">
+                              <span className="text-2xl md:text-3xl font-black">{p.price}</span>
+                              <span className="text-xs opacity-70">₪/חודש</span>
+                            </div>
+                          </div>
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {features.map((f, i) => (
+                    <tr key={f.label} style={{ background: i % 2 === 0 ? "#fafbfe" : "white" }}>
+                      <td className="p-3 font-medium text-[#37374e]">{f.label}</td>
+                      {(["base", "mid", "top"] as const).map((tier) => {
+                        const val = f[tier];
+                        return (
+                          <td key={tier} className="p-3 text-center">
+                            {val === true ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : val === false ? <X className="w-4 h-4 text-[#d2d2d7] mx-auto" /> : <span className="text-xs font-bold text-[var(--accent-blue)]">{val}</span>}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td className="p-3" />
+                    {plans.map((p) => (
+                      <td key={p.name} className="p-3 text-center">
+                        <a href="#contact" onClick={() => setOpen(false)}
+                          className="inline-block px-5 py-2.5 text-sm font-bold rounded-xl hover:scale-105 transition-transform"
+                          style={{ background: p.tier === "top" ? "linear-gradient(135deg, #c9a84c, #e8d48b)" : "var(--accent-blue)", color: p.tier === "top" ? "#0e1828" : "white" }}>
+                          לפרטים
+                        </a>
+                      </td>
+                    ))}
+                  </tr>
+                </tfoot>
+              </table>
             </div>
           </div>
         </div>
