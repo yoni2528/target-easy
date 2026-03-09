@@ -59,9 +59,10 @@ export default function InsurancePage() {
             <div className="flex items-center gap-3">
               <div className="text-center">
                 <h4 className="font-bold text-sm text-[#37374e]">מטרה — ביטוח נשק</h4>
-                <p className="text-xs text-[#6b6b80]">הפוליסה מונפקת ע״י מנורה ביטוח</p>
+                <p className="text-xs text-[#6b6b80]">הפוליסה מונפקת ע״י מנורה ביטוח ובריאות פלוס</p>
               </div>
               <img src="/menora-logo.png" alt="מנורה מבטחים" className="h-7 md:h-8 opacity-60" />
+              <img src="/briut-plus-logo.png" alt="בריאות פלוס" className="h-7 md:h-8 opacity-60" />
             </div>
             <div className="flex items-center gap-4 flex-wrap justify-center">
               <div className="flex items-center gap-2 text-xs md:text-sm text-[#6b6b80]">
