@@ -122,7 +122,7 @@ export const CostBarsVisual = ({ isActive }: { isActive: boolean }) => (
     </div>
     <div className="flex items-center justify-between w-full max-w-[200px] pt-2" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", opacity: isActive ? 1 : 0, transition: "all 0.5s ease 1s" }}>
       <span className="text-[10px] font-bold text-[#1e2a42]">סה״כ</span>
-      <span className="text-[13px] font-black text-[var(--accent-red)]">עד ₪2,000,000</span>
+      <span className="text-[13px] font-black text-[var(--accent-red)]">עד ₪3,000,000</span>
     </div>
   </div>
 );
