@@ -119,10 +119,18 @@ export const InsuranceNavbar = () => {
             {/* Features table */}
             <div className="overflow-x-auto" dir="rtl">
               <table className="w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+                <thead>
+                  <tr>
+                    <th className="p-3 text-right text-xs text-[#86868b] font-normal" style={{ width: "40%" }} />
+                    {plans.map((p) => (
+                      <th key={p.name} className="p-3 text-center text-xs font-bold text-[#86868b]" style={{ width: "20%" }}>{p.name}</th>
+                    ))}
+                  </tr>
+                </thead>
                 <tbody>
                   {features.map((f, i) => (
                     <tr key={f.label} style={{ background: i % 2 === 0 ? "#f8faff" : "white" }}>
-                      <td className="p-3.5 md:p-4 font-semibold text-sm md:text-base text-[#37374e] w-[40%]">{f.label}</td>
+                      <td className="p-3.5 md:p-4 font-semibold text-sm md:text-base text-[#37374e]">{f.label}</td>
                       {(["base", "mid", "top"] as const).map((tier) => {
                         const val = f[tier];
                         return (
