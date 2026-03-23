@@ -84,61 +84,82 @@ export const InsuranceNavbar = () => {
             </h2>
             <p className="text-[#6b6b80] text-center mb-6 md:mb-8 text-xs md:text-sm">ביטוח צד ג׳ מנורה + כתב שירות בריאות פלוס</p>
 
-            {/* Comparison table */}
+            {/* Plan cards */}
+            <div className="grid grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8" dir="rtl">
+              {plans.map((p) => {
+                const c = tierColors[p.tier];
+                const isMid = p.tier === "mid";
+                return (
+                  <div key={p.name} className="relative rounded-2xl overflow-hidden"
+                    style={{
+                      background: c.head,
+                      border: isMid ? "2px solid var(--accent-blue)" : p.tier === "top" ? "2px solid #c9a84c" : "1px solid #e8edf5",
+                      transform: isMid ? "scale(1.04)" : "none",
+                      boxShadow: isMid ? "0 8px 30px -8px rgba(26,111,204,0.25)" : "none",
+                    }}>
+                    {isMid && (
+                      <div className="text-center py-1.5" style={{ background: "var(--accent-blue)" }}>
+                        <span className="text-[11px] md:text-xs font-bold text-white flex items-center justify-center gap-1">
+                          <Star className="w-3 h-3" fill="currentColor" />הכי פופולרי
+                        </span>
+                      </div>
+                    )}
+                    <div className="p-4 md:p-5 text-center" style={{ color: c.accent }}>
+                      <div className="font-black text-base md:text-lg mb-1">{p.name}</div>
+                      <div className="flex items-baseline justify-center gap-0.5">
+                        <span className="text-3xl md:text-4xl font-black">{p.price}</span>
+                        <span className="text-xs opacity-70">₪/חודש</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Features table */}
             <div className="overflow-x-auto" dir="rtl">
-              <table className="w-full text-sm" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
-                <thead>
-                  <tr>
-                    <th className="text-right p-3 font-normal text-[#86868b] w-[40%]" />
-                    {plans.map((p) => {
-                      const c = tierColors[p.tier];
-                      return (
-                        <th key={p.name} className="p-3 relative" style={{ width: "20%" }}>
-                          <div className="rounded-2xl p-3 md:p-4" style={{ background: c.head, color: c.accent }}>
-                            {p.popular && <span className="text-[10px] font-bold bg-white text-[var(--accent-blue)] px-2 py-0.5 rounded-full absolute -top-2 left-1/2 -translate-x-1/2 flex items-center gap-0.5 whitespace-nowrap"><Star className="w-2.5 h-2.5" fill="currentColor" />הכי פופולרי</span>}
-                            <div className="font-black text-base">{p.name}</div>
-                            <div className="flex items-baseline justify-center gap-0.5 mt-1">
-                              <span className="text-2xl md:text-3xl font-black">{p.price}</span>
-                              <span className="text-xs opacity-70">₪/חודש</span>
-                            </div>
-                          </div>
-                        </th>
-                      );
-                    })}
-                  </tr>
-                </thead>
+              <table className="w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
                 <tbody>
                   {features.map((f, i) => (
-                    <tr key={f.label} style={{ background: i % 2 === 0 ? "#fafbfe" : "white" }}>
-                      <td className="p-3 font-medium text-[#37374e]">{f.label}</td>
+                    <tr key={f.label} style={{ background: i % 2 === 0 ? "#f8faff" : "white" }}>
+                      <td className="p-3.5 md:p-4 font-semibold text-sm md:text-base text-[#37374e] w-[40%]">{f.label}</td>
                       {(["base", "mid", "top"] as const).map((tier) => {
                         const val = f[tier];
                         return (
-                          <td key={tier} className="p-3 text-center">
-                            {val === true ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : val === false ? <X className="w-4 h-4 text-[#d2d2d7] mx-auto" /> : <span className="text-xs font-bold text-[var(--accent-blue)]">{val}</span>}
+                          <td key={tier} className="p-3.5 md:p-4 text-center" style={{ width: "20%" }}>
+                            {val === true
+                              ? <div className="w-7 h-7 rounded-full bg-green-50 flex items-center justify-center mx-auto"><Check className="w-4 h-4 text-green-500" /></div>
+                              : val === false
+                              ? <div className="w-7 h-7 rounded-full bg-gray-50 flex items-center justify-center mx-auto"><X className="w-3.5 h-3.5 text-[#ccc]" /></div>
+                              : <span className="text-xs md:text-sm font-bold text-[var(--accent-blue)]">{val}</span>}
                           </td>
                         );
                       })}
                     </tr>
                   ))}
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <td className="p-3" />
-                    {plans.map((p) => (
-                      <td key={p.name} className="p-3 text-center">
-                        <a href="#contact" onClick={() => setOpen(false)}
-                          className="inline-block px-5 py-2.5 text-sm font-bold rounded-xl hover:scale-105 transition-transform"
-                          style={{ background: p.tier === "top" ? "linear-gradient(135deg, #c9a84c, #e8d48b)" : "var(--accent-blue)", color: p.tier === "top" ? "#0e1828" : "white" }}>
-                          לפרטים
-                        </a>
-                      </td>
-                    ))}
-                  </tr>
-                </tfoot>
               </table>
-              <p className="text-center text-[11px] text-[#86868b] mt-5 leading-relaxed">
-                ניתן להגדיל את כיסוי הגניבה, ההוצאות המשפטיות או צד ג׳ — <a href="#contact" onClick={() => setOpen(false)} className="underline hover:text-[var(--accent-blue)]">לפרטים צרו קשר</a>
+            </div>
+
+            {/* CTA buttons */}
+            <div className="grid grid-cols-3 gap-3 md:gap-4 mt-6" dir="rtl">
+              {plans.map((p) => (
+                <a key={p.name} href="#contact" onClick={() => setOpen(false)}
+                  className="block text-center px-3 py-3 text-sm font-bold rounded-xl hover:scale-105 transition-transform"
+                  style={{
+                    background: p.tier === "top" ? "linear-gradient(135deg, #c9a84c, #e8d48b)" : p.tier === "mid" ? "var(--accent-blue)" : "#f0f4fa",
+                    color: p.tier === "top" ? "#0e1828" : p.tier === "mid" ? "white" : "var(--accent-blue)",
+                  }}>
+                  לרכישה
+                </a>
+              ))}
+            </div>
+
+            {/* Upgrade note */}
+            <div className="mt-5 mx-auto max-w-md rounded-xl px-4 py-3" style={{ background: "#f8faff", border: "1px solid #e8edf5" }}>
+              <p className="text-center text-[13px] text-[#6b6b80] leading-relaxed">
+                ניתן להגדיל את כיסוי הגניבה, ההוצאות המשפטיות או צד ג׳ — {" "}
+                <a href="#contact" onClick={() => setOpen(false)} className="font-bold text-[var(--accent-blue)] hover:underline">לפרטים צרו קשר</a>
               </p>
             </div>
           </div>
