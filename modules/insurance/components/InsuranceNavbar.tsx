@@ -149,18 +149,27 @@ export const InsuranceNavbar = () => {
               </table>
             </div>
 
-            {/* CTA buttons */}
-            <div className="grid grid-cols-3 gap-3 md:gap-4 mt-6" dir="rtl">
-              {plans.map((p) => (
-                <a key={p.name} href="#contact" onClick={() => setOpen(false)}
-                  className="block text-center px-3 py-3 text-sm font-bold rounded-xl hover:scale-105 transition-transform"
-                  style={{
-                    background: p.tier === "top" ? "linear-gradient(135deg, #c9a84c, #e8d48b)" : p.tier === "mid" ? "var(--accent-blue)" : "#f0f4fa",
-                    color: p.tier === "top" ? "#0e1828" : p.tier === "mid" ? "white" : "var(--accent-blue)",
-                  }}>
-                  לרכישה
-                </a>
-              ))}
+            {/* CTA buttons as table row */}
+            <div className="overflow-x-auto" dir="rtl">
+              <table className="w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+                <tbody>
+                  <tr>
+                    <td style={{ width: "40%" }} className="p-3.5 md:p-4" />
+                    {plans.map((p) => (
+                      <td key={p.name} style={{ width: "20%" }} className="p-3.5 md:p-4 text-center">
+                        <a href="#contact" onClick={() => setOpen(false)}
+                          className="inline-block px-4 py-2.5 text-sm font-bold rounded-xl hover:scale-105 transition-transform"
+                          style={{
+                            background: p.tier === "top" ? "linear-gradient(135deg, #c9a84c, #e8d48b)" : p.tier === "mid" ? "var(--accent-blue)" : "#f0f4fa",
+                            color: p.tier === "top" ? "#0e1828" : p.tier === "mid" ? "white" : "var(--accent-blue)",
+                          }}>
+                          לרכישה
+                        </a>
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             {/* Upgrade note */}
