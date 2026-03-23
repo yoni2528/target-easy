@@ -4,17 +4,17 @@ import { useState, useEffect } from "react";
 import { X, Check, Star } from "lucide-react";
 
 const plans = [
-  { name: "בסיסי", price: "42", tier: "base" as const },
-  { name: "מורחב", price: "58", tier: "mid" as const, popular: true },
-  { name: "פרימיום", price: "75", tier: "top" as const },
+  { name: "רגיל", price: "42", tier: "base" as const },
+  { name: "מורחב", price: "102", tier: "mid" as const, popular: true },
+  { name: "פרימיום", price: "119", tier: "top" as const },
 ];
 
 const features = [
-  { label: "ביטוח צד ג׳ מנורה", base: true, mid: true, top: true },
+  { label: "ביטוח צד ג׳ מנורה", base: "עד 1M₪", mid: "עד 1M₪", top: "עד 2M₪" },
   { label: "כיסוי נזקי גוף ורכוש", base: true, mid: true, top: true },
   { label: "כיסוי אירועי טרור", base: true, mid: true, top: true },
   { label: "קו חם לעו״ד 24/7", base: true, mid: true, top: true },
-  { label: "נשק חלופי בגניבה", base: false, mid: "עד ₪3,500", top: "עד ₪5,000" },
+  { label: "נשק חלופי בגניבה", base: false, mid: "עד ₪3,500", top: "עד ₪3,500" },
   { label: "אימון ירי + ירי למשפחה", base: false, mid: true, top: true },
   { label: "הכנה לחידוש רישיון", base: false, mid: true, top: true },
   { label: "הנחה על מוצרי מטווח", base: false, mid: true, top: true },
@@ -137,6 +137,9 @@ export const InsuranceNavbar = () => {
                   </tr>
                 </tfoot>
               </table>
+              <p className="text-center text-[11px] text-[#86868b] mt-5 leading-relaxed">
+                ניתן להגדיל את כיסוי הגניבה, ההוצאות המשפטיות או צד ג׳ — <a href="#contact" onClick={() => setOpen(false)} className="underline hover:text-[var(--accent-blue)]">לפרטים צרו קשר</a>
+              </p>
             </div>
           </div>
         </div>
