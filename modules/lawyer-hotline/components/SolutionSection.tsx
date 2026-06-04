@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { PhoneCall, MessageSquare, Repeat } from "lucide-react";
+import { PhoneCall, MessageSquare, ShieldCheck } from "lucide-react";
 
 const steps = [
   {
@@ -18,9 +18,9 @@ const steps = [
   },
   {
     n: "03",
-    icon: Repeat,
-    title: "ייעוץ ממשיך לכל שלב",
-    body: "המוקד נשאר זמין לאורך כל ההמשך: שאלות נוספות, ייעוץ על מסמכים שתקבל, התייעצויות חוזרות. בלי הגבלת זמן.",
+    icon: ShieldCheck,
+    title: "יוצאים מהאירוע מוגנים",
+    body: "אתה ממשיך את היום שלך בידיעה שכל מילה שאמרת, או שבחרת לא להגיד, הייתה הצעד המקצועי הנכון.",
   },
 ];
 
