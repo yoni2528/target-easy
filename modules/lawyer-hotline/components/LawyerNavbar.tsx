@@ -5,8 +5,8 @@ import { useState } from "react";
 
 const links = [
   { href: "#what", label: "מה זה" },
+  { href: "#about", label: "מי אנחנו" },
   { href: "#price", label: "המחיר" },
-  { href: "#timeline", label: "איך זה עובד" },
   { href: "#faq", label: "שאלות נפוצות" },
 ];
 

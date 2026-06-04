@@ -1,0 +1,107 @@
+"use client";
+
+import { Users, Crosshair, ArrowLeft } from "lucide-react";
+
+export const AboutSection = () => (
+  <section
+    id="about"
+    className="py-16 md:py-24 px-4 md:px-6"
+    style={{ background: "var(--bg-primary)" }}
+  >
+    <div className="max-w-5xl mx-auto">
+      <div className="text-center mb-10 md:mb-14">
+        <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[var(--accent-blue)] mb-3">
+          ↓ מי אנחנו
+        </p>
+        <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)] mb-3">
+          לא מוקד טלפוני אקראי. <span className="text-[var(--accent-blue)]">קהילה</span>.
+        </h2>
+        <p className="text-[var(--text-muted)] max-w-2xl mx-auto leading-relaxed">
+          המגן המשפטי נולד מתוך כאב שראינו שוב ושוב בקהילה, וכשהבנו שאף אחד לא פותר אותו, החלטנו
+          לפתור בעצמנו.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-5">
+        {/* Brothers in Arms */}
+        <div
+          className="rounded-2xl p-6 md:p-8 bg-[var(--bg-card)]"
+          style={{ border: "1px solid var(--border-subtle)" }}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center"
+              style={{ background: "rgba(26,111,204,0.10)" }}
+            >
+              <Users className="w-6 h-6 text-[var(--accent-blue)]" />
+            </div>
+            <div>
+              <h3 className="font-black text-lg text-[var(--text-primary)]">
+                אחים עם נשק
+              </h3>
+              <p className="text-xs text-[var(--text-muted)]">
+                Brothers in Arms · IL
+              </p>
+            </div>
+          </div>
+          <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
+            קהילת המתנדבים הגדולה בישראל לחמושים. הקמנו אותה כדי להנגיש את עולם הנשק לכולם:
+            מאגר ידע, קורסים, תמיכה הדדית, ויד שנייה לציוד. הכל בהתנדבות מלאה, חינם, פתוח לכל
+            אחד עם רישיון.
+          </p>
+          <a
+            href="https://bia-il.vercel.app/community"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--accent-blue)] hover:gap-2 transition-all"
+          >
+            הצטרפו לקהילה
+            <ArrowLeft className="w-3.5 h-3.5" />
+          </a>
+        </div>
+
+        {/* Matara */}
+        <div
+          className="rounded-2xl p-6 md:p-8 bg-[var(--bg-card)]"
+          style={{ border: "1px solid var(--border-subtle)" }}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center"
+              style={{ background: "rgba(251,191,36,0.12)" }}
+            >
+              <Crosshair className="w-6 h-6 text-[#c89000]" />
+            </div>
+            <div>
+              <h3 className="font-black text-lg text-[var(--text-primary)]">
+                מטרה
+              </h3>
+              <p className="text-xs text-[var(--text-muted)]">
+                מערכת לניהול מטווח · ופרויקטים נלווים
+              </p>
+            </div>
+          </div>
+          <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
+            פרויקט שיתופי שבונה כלים מקצועיים סביב עולם הנשק: מערכת לניהול מטווחים, זירת יד2
+            לציוד, מוצרי ביטוח, ועכשיו גם המגן המשפטי. כל מוצר נולד מצורך אמיתי שזיהינו אצלנו
+            ואצל החברים.
+          </p>
+          <a
+            href="https://www.yad2mtra.co.il"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--accent-blue)] hover:gap-2 transition-all"
+          >
+            לאתר מטרה יד 2
+            <ArrowLeft className="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </div>
+
+      {/* Closing line */}
+      <p className="text-center text-sm text-[var(--text-muted)] mt-8 max-w-2xl mx-auto leading-relaxed">
+        אנחנו לא מוכרים לך מוצר. אנחנו פותרים בעיה שגם אנחנו רצינו לפתור לעצמנו.
+      </p>
+    </div>
+  </section>
+);

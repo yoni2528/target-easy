@@ -4,6 +4,7 @@ import {
   LawyerHero,
   ScenariosSection,
   SolutionSection,
+  AboutSection,
   PriceSection,
   TimelineSection,
   FAQSection,
@@ -51,6 +52,7 @@ export default function LawyerHotlinePage() {
       <ScenariosSection />
       <Wave from="white" to="var(--bg-primary)" />
       <SolutionSection />
+      <AboutSection />
       <PriceSection />
       <Wave from="#122643" to="#fafbfe" flip />
       <TimelineSection />

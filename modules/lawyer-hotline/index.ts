@@ -2,6 +2,7 @@ export { LawyerNavbar } from "./components/LawyerNavbar";
 export { LawyerHero } from "./components/HeroSection";
 export { ScenariosSection } from "./components/ScenariosSection";
 export { SolutionSection } from "./components/SolutionSection";
+export { AboutSection } from "./components/AboutSection";
 export { PriceSection } from "./components/PriceSection";
 export { TimelineSection } from "./components/TimelineSection";
 export { FAQSection } from "./components/FAQSection";
