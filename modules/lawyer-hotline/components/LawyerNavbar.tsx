@@ -39,12 +39,15 @@ export const LawyerNavbar = () => {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a
-            href="#price"
+          <button
+            type="button"
+            onClick={() =>
+              window.dispatchEvent(new CustomEvent("open-contact-modal"))
+            }
             className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--accent-blue)] text-white text-sm font-bold hover:scale-105 transition-transform"
           >
             הצטרפו ל-14.90
-          </a>
+          </button>
           <a
             href="tel:0552281168"
             className="md:hidden p-2 rounded-full bg-[var(--accent-blue)] text-white"

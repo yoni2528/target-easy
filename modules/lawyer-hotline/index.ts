@@ -6,3 +6,4 @@ export { PriceSection } from "./components/PriceSection";
 export { TimelineSection } from "./components/TimelineSection";
 export { FAQSection } from "./components/FAQSection";
 export { LawyerCTA } from "./components/CTASection";
+export { ContactModal } from "./components/ContactModal";

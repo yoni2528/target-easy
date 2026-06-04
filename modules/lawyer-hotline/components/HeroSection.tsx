@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowLeft, Phone, Scale } from "lucide-react";
+import { ArrowLeft, Scale } from "lucide-react";
 
 export const LawyerHero = () => {
   const [loaded, setLoaded] = useState(false);
@@ -18,7 +18,6 @@ export const LawyerHero = () => {
           "radial-gradient(ellipse at 50% 20%, #1a2c4e 0%, #0a1628 60%), #0a1628",
       }}
     >
-      {/* Decorative scales icon glow */}
       <div
         className="absolute z-[5] pointer-events-none"
         style={{
@@ -58,43 +57,38 @@ export const LawyerHero = () => {
             color: "#93c5fd",
           }}
         >
-          ✦ קבוצת רכישה פתוחה — מאות חמושים יחד
+          ✦ קבוצת רכישה — מאות חמושים בפנים
         </div>
 
         <h1 className="text-3xl md:text-6xl font-black text-white mb-4 md:mb-6 leading-[1.05]">
-          הדבר שיכול להפוך אותך
+          המגן המשפטי
           <br />
-          <span className="text-[#fbbf24]">מגיבור לחשוד</span>
+          <span className="text-[#fbbf24]">שכל חמוש צריך</span>
         </h1>
 
         <p className="text-base md:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed mb-8 md:mb-10">
-          לא הירייה. <strong className="text-white">החקירה אחריה.</strong>
+          עו״ד פלילי בקו ישיר, 24/7 — ברגעים שבהם
           <br />
-          כל מילה שתגיד למשטרה לבד — תיכנס לפרוטוקול.
+          חשוב לדעת בדיוק מה לעשות.
           <br />
-          אז עשינו לך עו״ד פלילי בקו ישיר 24/7.
+          שקט נפשי במחיר של כוס קפה.
         </p>
 
-        <div className="flex items-center justify-center gap-3 flex-wrap">
-          <a
-            href="#price"
-            className="inline-flex items-center gap-2 px-7 py-3.5 md:px-9 md:py-4 bg-[#fbbf24] text-[#0a1628] font-black text-base md:text-lg hover:scale-105 transition-transform"
+        <div className="flex items-center justify-center">
+          <button
+            type="button"
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent("open-contact-modal"));
+            }}
+            className="inline-flex items-center gap-2 px-8 py-4 md:px-10 md:py-5 bg-[#fbbf24] text-[#0a1628] font-black text-base md:text-xl hover:scale-105 transition-transform"
             style={{
               borderRadius: "35px",
-              boxShadow: "0 12px 40px -5px rgba(251,191,36,0.45)",
+              boxShadow: "0 16px 50px -5px rgba(251,191,36,0.45)",
             }}
           >
-            אני בפנים — 14.90 ₪
+            אני רוצה להצטרף
             <ArrowLeft className="w-5 h-5" />
-          </a>
-          <a
-            href="tel:0552281168"
-            className="inline-flex items-center gap-2 px-6 py-3.5 md:px-7 md:py-4 border border-white/25 text-white font-bold text-base md:text-lg hover:bg-white/5 transition-colors"
-            style={{ borderRadius: "35px" }}
-          >
-            <Phone className="w-4 h-4" />
-            דברו איתי
-          </a>
+          </button>
         </div>
 
         <p className="mt-6 text-xs md:text-sm text-white/45">

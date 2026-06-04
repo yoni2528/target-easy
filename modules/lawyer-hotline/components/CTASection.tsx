@@ -2,6 +2,12 @@
 
 import { ArrowLeft, Shield, Clock, Phone } from "lucide-react";
 
+function openContactModal() {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("open-contact-modal"));
+  }
+}
+
 export const LawyerCTA = () => (
   <section
     id="contact"
@@ -14,8 +20,9 @@ export const LawyerCTA = () => (
       <p className="text-[#6b6b80] mb-8">
         השאר פרטים — נחזיר לך טלפון תוך 60 דקות. ללא התחייבות.
       </p>
-      <a
-        href="tel:0552281168"
+      <button
+        type="button"
+        onClick={openContactModal}
         className="inline-flex items-center gap-2 px-8 py-3.5 md:px-10 md:py-4 bg-[var(--accent-blue)] text-white font-bold text-base md:text-lg hover:scale-105 transition-transform"
         style={{
           borderRadius: "35px",
@@ -25,7 +32,7 @@ export const LawyerCTA = () => (
       >
         אני בפנים
         <ArrowLeft className="w-5 h-5" />
-      </a>
+      </button>
       <p className="text-xs text-[#a0a0b0] mt-4">
         14.90 ₪/חודש · ניתן לבטל בכל עת · ללא דמי הצטרפות
       </p>

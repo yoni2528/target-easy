@@ -5,21 +5,18 @@ import { Siren, FileWarning, Users } from "lucide-react";
 const scenarios = [
   {
     icon: Siren,
-    title: "אירוע הגנה עצמית",
-    body: "שלפת. הצלת. עכשיו החוקרים שואלים שאלות סבוכות שכל תשובה לא נכונה הופכת אותך מקורבן לחשוד.",
-    quote: "״מה הרגשת באותו רגע?״",
+    title: "אחרי אירוע הגנה עצמית",
+    body: "מתקשרים — מקבלים הוראות מקצועיות איך לתאר את האירוע, על מה לוותר ועל מה לעמוד.",
   },
   {
     icon: FileWarning,
-    title: "חיפוש בבית",
-    body: "מגיעים אליך הביתה לבדוק כשירות אחסון. החוק מורכב, כל הצהרה לא מדויקת = עבירה פלילית.",
-    quote: "״לאן אתה נוסע עם הנשק בדרך כלל?״",
+    title: "בדיקת כשירות אחסון",
+    body: "המשטרה הגיעה לבדיקת רישוי או אחסון? הצוות מסביר בזמן אמת איך לעבור את הבדיקה בלי בעיות.",
   },
   {
     icon: Users,
-    title: "סכסוך שהסלים",
-    body: "ויכוח שכנים או תאונת דרכים שבה הזכרת שיש לך נשק. עכשיו פתאום אתה מעורב בתיק שאתה לא הבנת איך נכנסת אליו.",
-    quote: "״אמרת ש'אם יצטרכו תוציא אותו'?״",
+    title: "אירועים יומיומיים שמסלים",
+    body: "ויכוח שכנים, תאונת דרכים, סכסוך עבודה — אם הוזכר נשק, מקבלים ליווי משפטי מקצועי.",
   },
 ];
 
@@ -32,14 +29,14 @@ export const ScenariosSection = () => (
     <div className="max-w-5xl mx-auto">
       <div className="text-center mb-10 md:mb-16">
         <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[var(--accent-blue)] mb-3">
-          ↓ הרגעים שבהם זה קורה
+          ↓ מתי זה שימושי
         </p>
         <h2 className="text-2xl md:text-4xl font-black text-[#37374e] mb-3">
-          מתי <span className="text-[var(--accent-blue)]">תצטרך</span> את העו״ד שלנו?
+          המגן <span className="text-[var(--accent-blue)]">המשפטי</span> שלך — בכל מצב
         </h2>
         <p className="text-[#6b6b80] max-w-2xl mx-auto">
-          לא כל אזרח שומר חוק מבין כמה דק קו הגבול בין "פעולה לגיטימית" ל"הפרת חוק". זה הקריטי
-          באמת — להבין מתי לדבר ומתי לשתוק.
+          כל אזרח חמוש פוגש מצבים שבהם ייעוץ משפטי בזמן אמת יכול לעשות את כל ההבדל.
+          זה בדיוק מה שאנחנו מספקים — ייעוץ מקצועי, ברגע שצריך, ללא בירוקרטיה.
         </p>
       </div>
 
@@ -53,16 +50,7 @@ export const ScenariosSection = () => (
               <s.icon className="w-6 h-6 text-[var(--accent-blue)]" />
             </div>
             <h3 className="font-bold text-lg text-[#37374e] mb-2">{s.title}</h3>
-            <p className="text-sm text-[#6b6b80] leading-relaxed mb-4">{s.body}</p>
-            <div
-              className="text-sm text-[#37374e] italic px-3 py-2 rounded-lg"
-              style={{
-                background: "rgba(204,51,51,0.06)",
-                borderRight: "3px solid #cc3333",
-              }}
-            >
-              {s.quote}
-            </div>
+            <p className="text-sm text-[#6b6b80] leading-relaxed">{s.body}</p>
           </div>
         ))}
       </div>

@@ -8,6 +8,7 @@ import {
   TimelineSection,
   FAQSection,
   LawyerCTA,
+  ContactModal,
 } from "@/modules/lawyer-hotline";
 import { Phone, Mail } from "lucide-react";
 
@@ -57,6 +58,8 @@ export default function LawyerHotlinePage() {
       <FAQSection />
       <Wave from="white" to="#fafbfe" flip />
       <LawyerCTA />
+
+      <ContactModal />
 
       {/* WhatsApp floating button */}
       <a

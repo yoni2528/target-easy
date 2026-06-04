@@ -2,6 +2,12 @@
 
 import { Users, Check, ArrowLeft } from "lucide-react";
 
+function openContactModal() {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("open-contact-modal"));
+  }
+}
+
 const includes = [
   "עו״ד פלילי בקו ישיר 24/7",
   "ייעוץ טלפוני בלתי מוגבל",
@@ -99,8 +105,9 @@ export const PriceSection = () => (
       </div>
 
       {/* CTA */}
-      <a
-        href="tel:0552281168"
+      <button
+        type="button"
+        onClick={openContactModal}
         className="inline-flex items-center gap-2 px-8 py-4 md:px-10 md:py-5 bg-[#fbbf24] text-[#0a1628] font-black text-base md:text-xl hover:scale-105 transition-transform"
         style={{
           borderRadius: "35px",
@@ -109,7 +116,7 @@ export const PriceSection = () => (
       >
         אני בפנים — 14.90 ₪
         <ArrowLeft className="w-5 h-5" />
-      </a>
+      </button>
       <p className="text-xs text-white/45 mt-5">
         ביטול בקליק · ללא דמי הצטרפות · ללא התחייבות
       </p>
