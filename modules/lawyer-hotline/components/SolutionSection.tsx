@@ -1,6 +1,6 @@
 "use client";
 
-import { PhoneCall, MessageSquare, UserCheck } from "lucide-react";
+import { PhoneCall, MessageSquare, Repeat } from "lucide-react";
 
 const steps = [
   {
@@ -17,9 +17,9 @@ const steps = [
   },
   {
     n: "03",
-    icon: UserCheck,
-    title: "ליווי פיזי במחיר חבר",
-    body: "אם תרצה נציג פיזי במקום או ליווי לחקירה — תוספת מסובסדת רק לחברי הקבוצה, באישור מראש.",
+    icon: Repeat,
+    title: "ייעוץ ממשיך — לכל שלב",
+    body: "המוקד נשאר זמין לאורך כל ההמשך: שאלות נוספות, ייעוץ על מסמכים שתקבל, התייעצויות חוזרות. בלי הגבלת זמן.",
   },
 ];
 
