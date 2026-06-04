@@ -22,8 +22,12 @@ export const LawyerNavbar = () => {
       }}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6 h-14 md:h-16 flex items-center justify-between">
-        <a href="#hero" className="font-black text-base md:text-lg text-[var(--text-primary)]">
-          המגן <span className="text-[var(--accent-blue)]">המשפטי</span>
+        <a href="#hero" className="flex items-center shrink-0">
+          <img
+            src="/bia-logo.png"
+            alt="Brothers in Arms"
+            className="h-6 md:h-8 w-auto"
+          />
         </a>
 
         <nav className="hidden md:flex items-center gap-7">

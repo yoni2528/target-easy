@@ -85,9 +85,14 @@ export default function LawyerHotlinePage() {
       >
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col items-center gap-4 mb-4">
+            <img
+              src="/bia-logo.png"
+              alt="Brothers in Arms"
+              className="h-8 w-auto opacity-70"
+            />
             <div className="text-center">
               <h4 className="font-bold text-sm text-[#37374e]">
-                המגן המשפטי · שירות של מטרה
+                המגן המשפטי · שירות של אחים עם נשק
               </h4>
               <p className="text-xs text-[#6b6b80]">
                 השירות המשפטי ניתן על ידי צוות עורכי דין פליליים שותפים

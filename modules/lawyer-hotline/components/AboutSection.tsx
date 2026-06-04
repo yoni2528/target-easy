@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Users, Crosshair, ArrowLeft } from "lucide-react";
+import { Crosshair, ArrowLeft } from "lucide-react";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -41,21 +41,15 @@ export const AboutSection = () => (
           className="rounded-2xl p-6 md:p-8 bg-[var(--bg-card)]"
           style={{ border: "1px solid var(--border-subtle)" }}
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center"
-              style={{ background: "rgba(26,111,204,0.10)" }}
-            >
-              <Users className="w-6 h-6 text-[var(--accent-blue)]" />
-            </div>
-            <div>
-              <h3 className="font-black text-lg text-[var(--text-primary)]">
-                אחים עם נשק
-              </h3>
-              <p className="text-xs text-[var(--text-muted)]">
-                Brothers in Arms · IL
-              </p>
-            </div>
+          <div className="mb-4">
+            <img
+              src="/bia-logo.png"
+              alt="Brothers in Arms"
+              className="h-9 md:h-11 w-auto mb-3"
+            />
+            <h3 className="font-black text-lg text-[var(--text-primary)]">
+              אחים עם נשק
+            </h3>
           </div>
           <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
             קהילת המתנדבים הגדולה בישראל לחמושים. הקמנו אותה כדי להנגיש את עולם הנשק לכולם:
