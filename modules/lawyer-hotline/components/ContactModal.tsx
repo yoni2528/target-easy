@@ -57,6 +57,11 @@ export const ContactModal = () => {
       setStatus("success");
       setName("");
       setPhone("");
+      // Navigate to the dedicated thank-you page so the Facebook Pixel
+      // can fire 'Lead' as a clean page-load conversion event.
+      if (typeof window !== "undefined") {
+        window.location.href = "/lawyer-hotline/thank-you";
+      }
     } catch {
       setStatus("error");
       setErrMsg("בעיית חיבור. נסו שוב או חייגו 055-228-1168.");

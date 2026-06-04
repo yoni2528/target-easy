@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Crosshair, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -74,21 +74,18 @@ export const AboutSection = () => (
           className="rounded-2xl p-6 md:p-8 bg-[var(--bg-card)]"
           style={{ border: "1px solid var(--border-subtle)" }}
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center"
-              style={{ background: "rgba(251,191,36,0.12)" }}
-            >
-              <Crosshair className="w-6 h-6 text-[#c89000]" />
-            </div>
-            <div>
-              <h3 className="font-black text-lg text-[var(--text-primary)]">
-                מטרה
-              </h3>
-              <p className="text-xs text-[var(--text-muted)]">
-                מערכת לניהול מטווח · ופרויקטים נלווים
-              </p>
-            </div>
+          <div className="mb-4">
+            <img
+              src="/matara-logo.jpg"
+              alt="מטרה"
+              className="h-11 md:h-12 w-auto mb-3 rounded-md"
+            />
+            <h3 className="font-black text-lg text-[var(--text-primary)]">
+              מטרה
+            </h3>
+            <p className="text-xs text-[var(--text-muted)]">
+              מערכת לניהול מטווח · ופרויקטים נלווים
+            </p>
           </div>
           <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
             פרויקט שיתופי שבונה כלים מקצועיים סביב עולם הנשק: מערכת לניהול מטווחים, זירת יד2
