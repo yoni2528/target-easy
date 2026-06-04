@@ -38,9 +38,9 @@ const Wave = ({
 
 export const metadata: Metadata = {
   title:
-    "המגן המשפטי | מנוי לעו״ד פלילי 24/7 לחמושים — 14.90 ₪ | מטרה",
+    "המגן המשפטי | מנוי לעו״ד פלילי 24/7 לחמושים | 14.90 ₪ | מטרה",
   description:
-    "מנוי חודשי לעורך דין פלילי בקו ישיר 24/7 — לחמושים. ייעוץ מיידי בחקירה, הוראות מה לומר ומה לא, נציג למקום. 14.90 ₪/חודש בקבוצת רכישה. ביטול בקליק.",
+    "מנוי חודשי לעורך דין פלילי בקו ישיר 24/7 לחמושים. ייעוץ מיידי בחקירה, הוראות מה לומר ומה לא, ייעוץ נמשך לכל התפתחות. 14.90 ₪/חודש. ביטול בקליק.",
 };
 
 export default function LawyerHotlinePage() {
@@ -85,7 +85,7 @@ export default function LawyerHotlinePage() {
           <div className="flex flex-col items-center gap-4 mb-4">
             <div className="text-center">
               <h4 className="font-bold text-sm text-[#37374e]">
-                המגן המשפטי — שירות של מטרה
+                המגן המשפטי · שירות של מטרה
               </h4>
               <p className="text-xs text-[#6b6b80]">
                 השירות המשפטי ניתן על ידי צוות עורכי דין פליליים שותפים

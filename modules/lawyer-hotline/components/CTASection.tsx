@@ -18,7 +18,7 @@ export const LawyerCTA = () => (
         רוצה <span className="text-[var(--accent-blue)]">גיבוי משפטי</span>?
       </h2>
       <p className="text-[#6b6b80] mb-8">
-        השאר פרטים — נחזיר לך טלפון תוך 60 דקות. ללא התחייבות.
+        השאר פרטים. נחזיר לך טלפון תוך 60 דקות. ללא התחייבות.
       </p>
       <button
         type="button"

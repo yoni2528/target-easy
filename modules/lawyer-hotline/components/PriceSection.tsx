@@ -63,9 +63,7 @@ export const PriceSection = () => (
         <span className="text-xl md:text-2xl font-bold text-white/70">₪/חודש</span>
       </div>
 
-      <p className="text-sm md:text-base text-white/55 mb-10 md:mb-12">
-        פחות מקפה ב-Aroma. כל יום.
-      </p>
+      <div className="mb-10 md:mb-12" />
 
       {/* What's included */}
       <div
@@ -100,8 +98,8 @@ export const PriceSection = () => (
           ✦ למה זה כל כך קריטי?
         </p>
         <p className="text-sm text-white/80 leading-relaxed text-center md:text-right">
-          הדקות הראשונות של חקירה — <strong>הכי קריטיות</strong>. כל מילה נכנסת לפרוטוקול ותלווה
-          אותך לאורך כל התיק. לכן הסכמנו רק עם עו״ד פלילי <strong>שמתחייב להיות זמין 24/7</strong> —
+          הדקות הראשונות של חקירה הן <strong>הכי קריטיות</strong>. כל מילה נכנסת לפרוטוקול ותלווה
+          אותך לאורך כל התיק. לכן הסכמנו רק עם עו״ד פלילי <strong>שמתחייב להיות זמין 24/7</strong>.
           לא מענה אוטומטי, לא "תחזור אלינו מחר", לא ימי חופש. כשאתה צריך אותו, הוא בקו. נקודה.
         </p>
       </div>
@@ -116,7 +114,7 @@ export const PriceSection = () => (
           boxShadow: "0 16px 50px -5px rgba(251,191,36,0.45)",
         }}
       >
-        אני בפנים — 14.90 ₪
+        אני בפנים ב-14.90 ₪
         <ArrowLeft className="w-5 h-5" />
       </button>
       <p className="text-xs text-white/45 mt-5">

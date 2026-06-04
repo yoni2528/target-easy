@@ -57,7 +57,7 @@ export const LawyerHero = () => {
             color: "#93c5fd",
           }}
         >
-          ✦ קבוצת רכישה — מאות חמושים בפנים
+          ✦ קבוצת רכישה · מאות חמושים בפנים
         </div>
 
         <h1 className="text-3xl md:text-6xl font-black text-white mb-4 md:mb-6 leading-[1.05]">
@@ -67,11 +67,9 @@ export const LawyerHero = () => {
         </h1>
 
         <p className="text-base md:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed mb-8 md:mb-10">
-          עו״ד פלילי בקו ישיר, 24/7 — ברגעים שבהם
+          עו״ד פלילי בקו ישיר, 24/7.
           <br />
-          חשוב לדעת בדיוק מה לעשות.
-          <br />
-          שקט נפשי במחיר של כוס קפה.
+          ברגעים שבהם חשוב לדעת בדיוק מה לעשות.
         </p>
 
         <div className="flex items-center justify-center">
