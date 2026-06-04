@@ -1,18 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Siren, FileWarning, Users } from "lucide-react";
+import { Siren, Users } from "lucide-react";
 
 const scenarios = [
   {
     icon: Siren,
     title: "אחרי אירוע הגנה עצמית",
     body: "מתקשרים ומקבלים הוראות מקצועיות איך לתאר את האירוע, על מה לוותר ועל מה לעמוד.",
-  },
-  {
-    icon: FileWarning,
-    title: "בדיקת כשירות אחסון",
-    body: "המשטרה הגיעה לבדיקת רישוי או אחסון? הצוות מסביר בזמן אמת איך לעבור את הבדיקה בלי בעיות.",
   },
   {
     icon: Users,
@@ -51,7 +46,7 @@ export const ScenariosSection = () => (
         </p>
       </motion.div>
 
-      <div className="grid md:grid-cols-3 gap-5">
+      <div className="grid md:grid-cols-2 gap-5 max-w-3xl mx-auto">
         {scenarios.map((s, i) => (
           <motion.div
             key={s.title}
