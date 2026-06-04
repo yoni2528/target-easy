@@ -12,9 +12,13 @@ const includes = [
   "עו״ד פלילי בקו ישיר 24/7",
   "ייעוץ טלפוני בלתי מוגבל",
   "הוראות מיידיות מה לומר / לא לומר",
-  "נציג פיזי במקום במקרה הצורך",
-  "ליווי לחקירה ראשונה",
   "ייעוץ ראשוני לתיק אזרחי הקשור לנשק",
+];
+
+const subsidized = [
+  "נציג פיזי במקום האירוע",
+  "ליווי לחקירה במשטרה",
+  "ייצוג מלא בכתב אישום",
 ];
 
 export const PriceSection = () => (
@@ -70,18 +74,44 @@ export const PriceSection = () => (
 
       {/* What's included */}
       <div
-        className="text-right rounded-2xl p-6 md:p-8 mb-8 md:mb-10 max-w-xl mx-auto"
+        className="text-right rounded-2xl p-6 md:p-8 mb-5 max-w-xl mx-auto"
         style={{
           background: "rgba(255,255,255,0.04)",
           border: "1px solid rgba(255,255,255,0.10)",
         }}
       >
-        <p className="font-bold text-white mb-4 text-center md:text-right">מה כלול:</p>
+        <p className="font-bold text-white mb-4 text-center md:text-right">
+          ✓ כלול במנוי החודשי
+        </p>
         <ul className="space-y-2.5">
           {includes.map((item) => (
             <li key={item} className="flex items-start gap-3 text-sm md:text-base">
               <Check className="w-4 h-4 md:w-5 md:h-5 text-[#fbbf24] mt-0.5 flex-shrink-0" />
               <span className="text-white/85">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Subsidized add-ons */}
+      <div
+        className="text-right rounded-2xl p-6 md:p-8 mb-8 md:mb-10 max-w-xl mx-auto"
+        style={{
+          background: "rgba(96,165,250,0.05)",
+          border: "1px dashed rgba(96,165,250,0.30)",
+        }}
+      >
+        <p className="font-bold text-[#93c5fd] mb-1.5 text-center md:text-right text-sm md:text-base">
+          ✦ במחיר חבר קבוצה (תוספת מסובסדת)
+        </p>
+        <p className="text-xs text-white/55 mb-4 text-center md:text-right">
+          לא כלול במחיר החודשי. במחיר מסובסד משמעותית לחברי הקבוצה.
+        </p>
+        <ul className="space-y-2.5">
+          {subsidized.map((item) => (
+            <li key={item} className="flex items-start gap-3 text-sm">
+              <span className="text-[#93c5fd] mt-0.5 flex-shrink-0">+</span>
+              <span className="text-white/70">{item}</span>
             </li>
           ))}
         </ul>
