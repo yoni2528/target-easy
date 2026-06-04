@@ -49,9 +49,9 @@ export const PriceSection = () => (
       </div>
 
       <h2 className="text-3xl md:text-5xl font-black text-white mb-5 md:mb-7 leading-tight">
-        שווי שוק: <span className="line-through text-white/35">1,200 ₪</span>
+        עו״ד פלילי
         <br />
-        שלך כחבר קבוצה:
+        <span className="text-white/85">שתמיד יהיה שם</span>
       </h2>
 
       {/* Price hero */}
@@ -88,7 +88,7 @@ export const PriceSection = () => (
         </ul>
       </div>
 
-      {/* Why so cheap */}
+      {/* Why availability matters */}
       <div
         className="text-right rounded-xl p-5 mb-8 md:mb-10 max-w-xl mx-auto"
         style={{
@@ -97,11 +97,12 @@ export const PriceSection = () => (
         }}
       >
         <p className="text-xs md:text-sm font-bold text-[#fbbf24] mb-2 text-center md:text-right">
-          ✦ למה דווקא 14.90?
+          ✦ למה זה כל כך קריטי?
         </p>
         <p className="text-sm text-white/80 leading-relaxed text-center md:text-right">
-          עו״ד פלילי פרטי עולה <strong>800-1,200 ₪ לחודש</strong> בודד. בקבוצת רכישה של מאות חמושים —
-          הצוות מוכן לתת לכולנו את אותו השירות במחיר עלות. כי כל אחד מאיתנו פותח את הדלת לעוד אחד.
+          הדקות הראשונות של חקירה — <strong>הכי קריטיות</strong>. כל מילה נכנסת לפרוטוקול ותלווה
+          אותך לאורך כל התיק. לכן הסכמנו רק עם עו״ד פלילי <strong>שמתחייב להיות זמין 24/7</strong> —
+          לא מענה אוטומטי, לא "תחזור אלינו מחר", לא ימי חופש. כשאתה צריך אותו, הוא בקו. נקודה.
         </p>
       </div>
 
