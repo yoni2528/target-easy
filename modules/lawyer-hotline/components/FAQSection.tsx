@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+};
 
 const faqs = [
   {
@@ -32,21 +39,27 @@ export const FAQSection = () => {
   return (
     <section id="faq" className="py-16 md:py-24 px-4 md:px-6 bg-white">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-10 md:mb-14">
+        <motion.div
+          {...fadeUp}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-10 md:mb-14"
+        >
           <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[var(--accent-blue)] mb-3">
             ↓ שאלות נפוצות
           </p>
           <h2 className="text-2xl md:text-4xl font-black text-[#37374e]">
             כל מה ש<span className="text-[var(--accent-blue)]">חשבת</span> לשאול
           </h2>
-        </div>
+        </motion.div>
 
         <div className="space-y-2.5">
           {faqs.map((f, i) => {
             const open = openIdx === i;
             return (
-              <div
+              <motion.div
                 key={f.q}
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
                 className="rounded-xl bg-[#fafbfe] overflow-hidden transition-colors"
                 style={{
                   border: `1px solid ${open ? "var(--accent-blue)" : "#e8edf5"}`,
@@ -69,7 +82,7 @@ export const FAQSection = () => {
                     {f.a}
                   </div>
                 )}
-              </div>
+              </motion.div>
             );
           })}
         </div>

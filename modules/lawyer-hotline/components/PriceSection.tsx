@@ -1,6 +1,13 @@
 "use client";
 
-import { Users, Check, ArrowLeft } from "lucide-react";
+import { motion } from "framer-motion";
+import { Check, ArrowLeft } from "lucide-react";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+};
 
 function openContactModal() {
   if (typeof window !== "undefined") {
@@ -35,18 +42,11 @@ export const PriceSection = () => (
       }}
     />
 
-    <div className="relative z-10 max-w-3xl mx-auto">
-      <div
-        className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold"
-        style={{
-          background: "rgba(251,191,36,0.12)",
-          border: "1px solid rgba(251,191,36,0.40)",
-          color: "#fbbf24",
-        }}
-      >
-        <Users className="w-3.5 h-3.5" />
-        קבוצת רכישה · מאות חמושים בפנים
-      </div>
+    <motion.div
+      {...fadeUp}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className="relative z-10 max-w-3xl mx-auto"
+    >
 
       <h2 className="text-3xl md:text-5xl font-black text-white mb-5 md:mb-7 leading-tight">
         עו״ד פלילי
@@ -120,6 +120,6 @@ export const PriceSection = () => (
       <p className="text-xs text-white/45 mt-5">
         ביטול בקליק · ללא דמי הצטרפות · ללא התחייבות
       </p>
-    </div>
+    </motion.div>
   </section>
 );

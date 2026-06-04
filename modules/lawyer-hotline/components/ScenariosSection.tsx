@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Siren, FileWarning, Users } from "lucide-react";
 
 const scenarios = [
@@ -20,6 +21,12 @@ const scenarios = [
   },
 ];
 
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+};
+
 export const ScenariosSection = () => (
   <section
     id="what"
@@ -27,7 +34,11 @@ export const ScenariosSection = () => (
     style={{ borderTop: "1px solid #e8edf5" }}
   >
     <div className="max-w-5xl mx-auto">
-      <div className="text-center mb-10 md:mb-16">
+      <motion.div
+        {...fadeUp}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="text-center mb-10 md:mb-16"
+      >
         <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[var(--accent-blue)] mb-3">
           ↓ מתי זה שימושי
         </p>
@@ -38,12 +49,14 @@ export const ScenariosSection = () => (
           כל אזרח חמוש פוגש מצבים שבהם ייעוץ משפטי בזמן אמת יכול לעשות את כל ההבדל.
           זה בדיוק מה שאנחנו מספקים: ייעוץ מקצועי, ברגע שצריך, ללא בירוקרטיה.
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid md:grid-cols-3 gap-5">
-        {scenarios.map((s) => (
-          <div
+        {scenarios.map((s, i) => (
+          <motion.div
             key={s.title}
+            {...fadeUp}
+            transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="rounded-2xl p-6 md:p-7 bg-[#fafbfe] border border-[#e8edf5] hover:border-[var(--accent-blue)] transition-colors"
           >
             <div className="w-12 h-12 rounded-xl bg-[var(--accent-blue)]/10 flex items-center justify-center mb-4">
@@ -51,7 +64,7 @@ export const ScenariosSection = () => (
             </div>
             <h3 className="font-bold text-lg text-[#37374e] mb-2">{s.title}</h3>
             <p className="text-sm text-[#6b6b80] leading-relaxed">{s.body}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

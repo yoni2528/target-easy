@@ -1,6 +1,13 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { ArrowLeft, Shield, Clock, Phone } from "lucide-react";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+};
 
 function openContactModal() {
   if (typeof window !== "undefined") {
@@ -13,7 +20,11 @@ export const LawyerCTA = () => (
     id="contact"
     className="py-20 md:py-32 px-4 md:px-6 text-center bg-[#fafbfe]"
   >
-    <div className="max-w-lg mx-auto">
+    <motion.div
+      {...fadeUp}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="max-w-lg mx-auto"
+    >
       <h2 className="text-2xl md:text-4xl font-black text-[#37374e] mb-4">
         רוצה <span className="text-[var(--accent-blue)]">גיבוי משפטי</span>?
       </h2>
@@ -52,6 +63,6 @@ export const LawyerCTA = () => (
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   </section>
 );

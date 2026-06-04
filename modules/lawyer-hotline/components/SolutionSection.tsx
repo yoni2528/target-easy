@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { PhoneCall, MessageSquare, Repeat } from "lucide-react";
 
 const steps = [
@@ -23,13 +24,23 @@ const steps = [
   },
 ];
 
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+};
+
 export const SolutionSection = () => (
   <section
     className="py-16 md:py-24 px-4 md:px-6"
     style={{ background: "var(--bg-primary)" }}
   >
     <div className="max-w-5xl mx-auto">
-      <div className="text-center mb-12 md:mb-16">
+      <motion.div
+        {...fadeUp}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="text-center mb-12 md:mb-16"
+      >
         <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[var(--accent-blue)] mb-3">
           ↓ הפתרון
         </p>
@@ -39,12 +50,14 @@ export const SolutionSection = () => (
         <p className="text-[var(--text-muted)] max-w-2xl mx-auto">
           אנחנו מטפלים בכל הצד המשפטי. אתה מתרכז במה שחשוב: להישאר רגוע ולשמור על המשפחה.
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid md:grid-cols-3 gap-5">
-        {steps.map((s) => (
-          <div
+        {steps.map((s, i) => (
+          <motion.div
             key={s.n}
+            {...fadeUp}
+            transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="rounded-2xl p-6 md:p-7 relative"
             style={{
               background: "var(--bg-card)",
@@ -67,7 +80,7 @@ export const SolutionSection = () => (
               <h3 className="font-bold text-lg text-[var(--text-primary)] mb-2">{s.title}</h3>
               <p className="text-sm text-[var(--text-muted)] leading-relaxed">{s.body}</p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

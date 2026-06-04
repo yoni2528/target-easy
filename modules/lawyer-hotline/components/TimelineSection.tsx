@@ -1,5 +1,13 @@
 "use client";
 
+import { motion } from "framer-motion";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+};
+
 const events = [
   {
     time: "T+0",
@@ -30,7 +38,11 @@ const events = [
 export const TimelineSection = () => (
   <section id="timeline" className="py-16 md:py-24 px-4 md:px-6 bg-[#fafbfe]">
     <div className="max-w-3xl mx-auto">
-      <div className="text-center mb-12 md:mb-16">
+      <motion.div
+        {...fadeUp}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="text-center mb-12 md:mb-16"
+      >
         <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[var(--accent-blue)] mb-3">
           ↓ השעון שלך
         </p>
@@ -38,7 +50,7 @@ export const TimelineSection = () => (
           מה <span className="text-[var(--accent-blue)]">קורה</span> כשאתה מתקשר?
         </h2>
         <p className="text-[#6b6b80]">השעון מהרגע שאירוע מתחיל ועד שאתה חוזר לישון רגוע.</p>
-      </div>
+      </motion.div>
 
       <div className="relative">
         {/* Vertical line */}
@@ -48,8 +60,13 @@ export const TimelineSection = () => (
         />
 
         <div className="space-y-7 md:space-y-9">
-          {events.map((e) => (
-            <div key={e.time} className="relative pr-12 md:pr-16">
+          {events.map((e, i) => (
+            <motion.div
+              key={e.time}
+              {...fadeUp}
+              transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="relative pr-12 md:pr-16"
+            >
               {/* Dot */}
               <div
                 className="absolute right-0 top-1 w-9 h-9 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white text-[10px] md:text-xs font-black"
@@ -71,7 +88,7 @@ export const TimelineSection = () => (
                 </h3>
                 <p className="text-sm text-[#6b6b80] leading-relaxed">{e.body}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

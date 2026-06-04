@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { ArrowLeft, Scale } from "lucide-react";
 
 export const LawyerHero = () => {
@@ -41,38 +42,35 @@ export const LawyerHero = () => {
         strokeWidth={1}
       />
 
-      <div
-        className="relative z-10 max-w-3xl text-center"
-        style={{
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? "translateY(0)" : "translateY(20px)",
-          transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
-        }}
-      >
-        <div
-          className="inline-flex items-center gap-2 mb-5 md:mb-7 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide"
-          style={{
-            background: "rgba(96,165,250,0.10)",
-            border: "1px solid rgba(96,165,250,0.30)",
-            color: "#93c5fd",
-          }}
+      <div className="relative z-10 max-w-3xl text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-3xl md:text-6xl font-black text-white mb-4 md:mb-6 leading-[1.05]"
         >
-          ✦ קבוצת רכישה · מאות חמושים בפנים
-        </div>
-
-        <h1 className="text-3xl md:text-6xl font-black text-white mb-4 md:mb-6 leading-[1.05]">
           המגן המשפטי
           <br />
           <span className="text-[#fbbf24]">שכל חמוש צריך</span>
-        </h1>
+        </motion.h1>
 
-        <p className="text-base md:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed mb-8 md:mb-10">
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="text-base md:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed mb-8 md:mb-10"
+        >
           עו״ד פלילי בקו ישיר, 24/7.
           <br />
           ברגעים שבהם חשוב לדעת בדיוק מה לעשות.
-        </p>
+        </motion.p>
 
-        <div className="flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="flex items-center justify-center"
+        >
           <button
             type="button"
             onClick={() => {
@@ -87,11 +85,16 @@ export const LawyerHero = () => {
             אני רוצה להצטרף
             <ArrowLeft className="w-5 h-5" />
           </button>
-        </div>
+        </motion.div>
 
-        <p className="mt-6 text-xs md:text-sm text-white/45">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
+          className="mt-6 text-xs md:text-sm text-white/45"
+        >
           14.90 ₪ לחודש · ביטול בקליק · ללא התחייבות
-        </p>
+        </motion.p>
       </div>
     </section>
   );

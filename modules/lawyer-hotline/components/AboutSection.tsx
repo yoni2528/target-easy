@@ -1,6 +1,13 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Users, Crosshair, ArrowLeft } from "lucide-react";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+};
 
 export const AboutSection = () => (
   <section
@@ -9,7 +16,11 @@ export const AboutSection = () => (
     style={{ background: "var(--bg-primary)" }}
   >
     <div className="max-w-5xl mx-auto">
-      <div className="text-center mb-10 md:mb-14">
+      <motion.div
+        {...fadeUp}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="text-center mb-10 md:mb-14"
+      >
         <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-[var(--accent-blue)] mb-3">
           ↓ מי אנחנו
         </p>
@@ -20,11 +31,13 @@ export const AboutSection = () => (
           המגן המשפטי נולד מתוך כאב שראינו שוב ושוב בקהילה, וכשהבנו שאף אחד לא פותר אותו, החלטנו
           לפתור בעצמנו.
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid md:grid-cols-2 gap-5">
         {/* Brothers in Arms */}
-        <div
+        <motion.div
+          {...fadeUp}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="rounded-2xl p-6 md:p-8 bg-[var(--bg-card)]"
           style={{ border: "1px solid var(--border-subtle)" }}
         >
@@ -58,10 +71,12 @@ export const AboutSection = () => (
             הצטרפו לקהילה
             <ArrowLeft className="w-3.5 h-3.5" />
           </a>
-        </div>
+        </motion.div>
 
         {/* Matara */}
-        <div
+        <motion.div
+          {...fadeUp}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="rounded-2xl p-6 md:p-8 bg-[var(--bg-card)]"
           style={{ border: "1px solid var(--border-subtle)" }}
         >
@@ -95,13 +110,17 @@ export const AboutSection = () => (
             לאתר מטרה יד 2
             <ArrowLeft className="w-3.5 h-3.5" />
           </a>
-        </div>
+        </motion.div>
       </div>
 
       {/* Closing line */}
-      <p className="text-center text-sm text-[var(--text-muted)] mt-8 max-w-2xl mx-auto leading-relaxed">
+      <motion.p
+        {...fadeUp}
+        transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className="text-center text-sm text-[var(--text-muted)] mt-8 max-w-2xl mx-auto leading-relaxed"
+      >
         אנחנו לא מוכרים לך מוצר. אנחנו פותרים בעיה שגם אנחנו רצינו לפתור לעצמנו.
-      </p>
+      </motion.p>
     </div>
   </section>
 );
