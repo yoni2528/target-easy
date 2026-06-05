@@ -5,7 +5,8 @@ import Link from "next/link";
 import Script from "next/script";
 import { Check, ArrowLeft, Phone } from "lucide-react";
 
-const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
+const FB_PIXEL_ID =
+  process.env.NEXT_PUBLIC_FB_PIXEL_ID ?? "1182884463965088";
 
 export default function ThankYouPage() {
   useEffect(() => {

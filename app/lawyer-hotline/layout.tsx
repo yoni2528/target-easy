@@ -1,6 +1,9 @@
 import Script from "next/script";
 
-const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
+// Hard-coded Meta Pixel for the lawyer-hotline campaign. An env var override
+// can swap it out per environment (e.g. a staging pixel) without code change.
+const FB_PIXEL_ID =
+  process.env.NEXT_PUBLIC_FB_PIXEL_ID ?? "1182884463965088";
 
 export default function LawyerHotlineLayout({
   children,
