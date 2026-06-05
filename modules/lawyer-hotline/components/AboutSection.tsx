@@ -57,7 +57,7 @@ export const AboutSection = () => (
             אחד עם רישיון.
           </p>
           <a
-            href="https://bia-il.vercel.app/community"
+            href="https://brothers-in-arms.co.il/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--accent-blue)] hover:gap-2 transition-all"

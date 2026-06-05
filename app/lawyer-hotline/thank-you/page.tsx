@@ -78,7 +78,7 @@ export default function ThankYouPage() {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
-            href="https://bia-il.vercel.app/community"
+            href="https://brothers-in-arms.co.il/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-[#fbbf24] text-[#0a1628] font-bold rounded-full hover:scale-105 transition-transform"
