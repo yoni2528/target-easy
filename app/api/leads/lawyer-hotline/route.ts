@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
 
-// Telegram bot used to ping the team about new leads. Token is for the
-// dumbledore bot (same one used by other matara projects).
+// Telegram bot used to ping the team about new leads (dumbledore bot).
 const BOT_TOKEN = "8033422038:AAFqvFgMMZxM691cEPEwKr6dSwTDQ-YLgps";
 const CHAT_ID = "-1003852892227"; // פיתוח group
+
+// n8n production webhook that mirrors every lead into the Excel sheet
+// the team works from.
+const N8N_WEBHOOK =
+  "https://server.babyexpress.online/webhook/97ffb558-d0f9-4467-913c-86c35074e18e";
 
 function sanitize(s: unknown, max = 80): string {
   return String(s ?? "")
@@ -29,7 +33,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "מספר טלפון לא תקין" }, { status: 400 });
   }
 
-  const msg =
+  const userAgent = req.headers.get("user-agent") ?? "";
+  const referer = req.headers.get("referer") ?? "";
+  const submittedAt = new Date().toISOString();
+
+  // ── Notify Telegram + n8n in parallel; both are best-effort. ──
+  const telegramText =
     `🛡 *ליד חדש — המגן המשפטי*\n` +
     `\n` +
     `👤 ${name}\n` +
@@ -37,20 +46,39 @@ export async function POST(req: Request) {
     `\n` +
     `_מקור: lawyer-hotline landing_`;
 
-  try {
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+  const telegramPromise = fetch(
+    `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+    {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: CHAT_ID,
-        text: msg,
+        text: telegramText,
         parse_mode: "Markdown",
       }),
-    });
-  } catch (err) {
-    // Don't fail the customer if Telegram is down — log and continue
+    }
+  ).catch((err) => {
     console.error("telegram notify failed:", err);
-  }
+  });
+
+  const n8nPromise = fetch(N8N_WEBHOOK, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name,
+      phone,
+      product: "המגן המשפטי",
+      source: "lawyer-hotline",
+      submitted_at: submittedAt,
+      user_agent: userAgent.slice(0, 500),
+      referer: referer.slice(0, 500),
+      page_url: referer.slice(0, 500),
+    }),
+  }).catch((err) => {
+    console.error("n8n webhook failed:", err);
+  });
+
+  await Promise.allSettled([telegramPromise, n8nPromise]);
 
   return NextResponse.json({ ok: true });
 }
