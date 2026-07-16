@@ -7,7 +7,6 @@ const coverages = [
   { stat: "400K₪", title: "הגנה משפטית", desc: "עו״ד, משפט, ערעורים." },
   { stat: "3M₪", title: "נזקי צד ג׳", desc: "אתה לא משלם." },
   { stat: "כלול", title: "כיסוי טרור", desc: "מכוסה." },
-  { stat: "כלול", title: "גניבת נשק", desc: "תיק + החזר." },
 ];
 
 export const SolutionSection = () => {

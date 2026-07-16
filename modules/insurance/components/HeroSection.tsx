@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { InsuranceContactForm } from "./InsuranceContactForm";
 
 export const InsuranceHero = () => {
   const [loaded, setLoaded] = useState(false);
@@ -61,28 +62,21 @@ export const InsuranceHero = () => {
           transform: loaded ? "translateY(0)" : "translateY(20px)",
           transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s",
         }}>
-        חוץ מזה שהוא מביא לי <span className="font-black text-white">1,350₪</span> בשנה.
+        כיסוי צד ג׳ עד <span className="font-black text-white">3,000,000₪</span>, הגנה משפטית וקו חם 24/7.
       </p>
 
-      {/* CTA */}
-      <div className="relative z-10 mt-10"
+      {/* Contact form */}
+      <div className="relative z-10 mt-8 w-full max-w-sm"
         style={{
           opacity: loaded ? 1 : 0,
           transform: loaded ? "translateY(0)" : "translateY(20px)",
           transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 0.7s",
         }}>
-        <a href="#contact"
-          className="px-8 py-3.5 md:px-10 md:py-4 bg-[var(--accent-blue)] text-white font-bold text-base md:text-lg inline-block hover:scale-105 transition-transform"
-          style={{
-            borderRadius: "35px",
-            boxShadow: "0 12px 30px -5px rgba(0,0,0,0.4)",
-          }}>
-          קבלו הצעת מחיר
-        </a>
+        <InsuranceContactForm variant="compact" />
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 flex flex-col items-center gap-2 z-10"
+      <div className="absolute bottom-6 flex flex-col items-center gap-2 z-10"
         style={{ opacity: loaded ? 1 : 0, transition: "opacity 1s ease 1.5s" }}>
         <span className="text-xs text-white/50">גלול למטה</span>
         <span className="text-white/50 text-sm">↓</span>
