@@ -13,7 +13,7 @@ export const InsuranceContactForm = ({ variant = "full" }: Props) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [agreeContact, setAgreeContact] = useState(true);
-  const [wantOtherInsurance, setWantOtherInsurance] = useState(false);
+  const [wantOtherInsurance, setWantOtherInsurance] = useState(true);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle"
   );
