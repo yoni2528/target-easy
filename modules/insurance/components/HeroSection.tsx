@@ -9,7 +9,7 @@ export const InsuranceHero = () => {
   useEffect(() => { setLoaded(true); }, []);
 
   return (
-    <section className="relative min-h-[100dvh] flex flex-col items-center justify-center px-6 overflow-hidden">
+    <section className="relative min-h-[100dvh] flex flex-col items-center justify-center px-6 pt-32 pb-16 md:pt-24 md:pb-0 overflow-hidden">
       {/* Background image */}
       <Image
         src="/insurance-hero.jpg"
@@ -47,13 +47,16 @@ export const InsuranceHero = () => {
         }} />
 
       {/* Content */}
-      <h1 className="relative z-10 text-3xl md:text-6xl font-black text-white tracking-tight text-center"
+      <h1 className="relative z-10 text-5xl md:text-7xl font-black text-white tracking-tight text-center"
         style={{
           opacity: loaded ? 1 : 0,
           transform: loaded ? "translateY(0)" : "translateY(30px)",
           transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s",
         }}>
-        למה צריך ביטוח לאקדח?
+        <span className="block text-xl md:text-3xl font-bold text-white/80 tracking-normal mb-2">
+          לראשונה במדינת ישראל
+        </span>
+        ביטוח לחמושים
       </h1>
 
       <p className="relative z-10 text-base md:text-2xl text-white/80 text-center mt-4"
@@ -62,7 +65,7 @@ export const InsuranceHero = () => {
           transform: loaded ? "translateY(0)" : "translateY(20px)",
           transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s",
         }}>
-        כיסוי צד ג׳ עד <span className="font-black text-white">3,000,000₪</span>, הגנה משפטית וקו חם 24/7.
+        כמו שאין רכב בלי ביטוח חובה, אין נשק בלי כיסוי.
       </p>
 
       {/* Contact form */}
@@ -75,12 +78,6 @@ export const InsuranceHero = () => {
         <InsuranceContactForm variant="compact" />
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-6 flex flex-col items-center gap-2 z-10"
-        style={{ opacity: loaded ? 1 : 0, transition: "opacity 1s ease 1.5s" }}>
-        <span className="text-xs text-white/50">גלול למטה</span>
-        <span className="text-white/50 text-sm">↓</span>
-      </div>
     </section>
   );
 };
